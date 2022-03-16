@@ -1,2 +1,2 @@
 # RefoodFCUL
-University Project about refreshing Refood website.
+University project about refreshing Refood website.
