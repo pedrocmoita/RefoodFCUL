@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Special+Elite');
 $main-clr: #fff; 
 $secondary-clr: #EED202; 
@@ -10,10 +11,18 @@ body, html{
     min-height: 100vh;
     font-family: $main-font;
     background: radial-gradient(rgb(45, 45, 45), rgb(35, 35, 35), rgb(25, 25, 25), rgb(15, 15, 15));
+    box-sizing: border-box;
 
     p{
         font-size: 1.25rem;
     }
+
+    ::placeholder, input[type="date"], input[type="time"]{
+        font-family: 'Playfair Display', serif;
+    }
+
+    ::-webkit-datetime-edit-text { color: $secondary-clr;}
+    ::-webkit-datetime-edit{opacity: .75;}
 }
 
 .container{
@@ -21,6 +30,8 @@ body, html{
     max-width: 1450px;
     margin: 0 auto;
 }
+
+/*#####################  MAIN PAGE  #################*/
 
 .primary-header{
     background-color: $main-clr;
@@ -82,7 +93,7 @@ body, html{
             &::before, &::after{
                 position: absolute;
                 color: #f1efe6;
-                font-size: 8rem;
+                font-size: 6rem;
                 width: 4rem;
                 height: 4rem;
             }
@@ -90,13 +101,13 @@ body, html{
             &:before {
                 content: '“';
                 left: 0rem;
-                top: -3rem;
+                top: -3.5rem;
             }
             
             &:after {
                 content: '”';
                 right: 0rem;
-                bottom: -3.5rem;
+                bottom: -4rem;
             }
         }
     }
@@ -111,6 +122,10 @@ body, html{
     .fst-div__text, .refood-bag-img{
         margin-right: 1.5rem;
     }
+
+    img{
+        box-shadow: 0px 5px 30px 0px rgba(0,0,0,0.7);
+    }
 }
 
 .second-section{
@@ -122,6 +137,8 @@ body, html{
 
     hr{
         border-color: black;
+        background-color: black;
+        width: 75%;
     }
 
     h2{
@@ -163,7 +180,7 @@ footer{
     }
 }
 
-/*#####################  MAIN PAGE  #################*/
+/*#####################  LOGIN PAGE  #################*/
 
 .login-header{
     display: flex;
@@ -172,9 +189,9 @@ footer{
     padding-top: 2rem;
 
     a{
-        background-color: black;
+        background-color: $secondary-clr;
         text-decoration: none;
-        color: $secondary-clr;
+        color: black;
         font-weight: bold;
         padding: .75rem 1.5rem;
         font-size: 1.25rem;
@@ -196,10 +213,10 @@ footer{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #ffffffc0; 
-    border-radius: 10px;
+    background-color: $main-clr;
     padding: 2rem 4rem;
-    box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.35);
+    -webkit-box-shadow: -9px 35px 30px -29px #ffffff; 
+    box-shadow: -9px 35px 30px -29px #fcfcfc;
 
     h1{
         font-size: 3rem;
@@ -214,11 +231,12 @@ footer{
         border-radius: 5px;
         padding: .5rem;
         color: $main-clr;
+        border: 0;
+        box-shadow: 0px 20px 25px 0px rgba(0,0,0,0.25);
 
         &::placeholder{
+            font-size: 1.5rem;
             opacity: .75;
-            font-style: italic;
-            font-family: 'Courier New', Courier, monospace;
             margin: .5rem;
             color: $main-clr;
         }
@@ -232,6 +250,8 @@ footer{
 
         button{
             padding: 1rem 1.5rem;
+            font-family: $main-font;
+            font-weight: bold;
             margin: 1rem;
             cursor: pointer;
             transition: 150ms ease-in-out;
@@ -242,13 +262,146 @@ footer{
             text-decoration: none;
             display: inline-block;
             font-size: 1.125rem;
+            box-shadow: 0px 25px 30px 0px rgba(0,0,0,0.4);
 
             &:hover{
                 color: black;
-                background-color: #eed202b4; 
+                background-color: $secondary-clr;
+                box-shadow: 0px 20px 25px 0px rgba(253, 255, 118, 0.75);
             }
         }
     }
 }
 
-/* ################## LOGIN PAGE ################# */
+/* ################## SIGN-UP PAGE ################# */
+
+.volunteer-form, .institution-form{
+    max-width: 700px;
+    margin: 0rem auto;
+    padding: 1rem 2rem;
+    border-radius: 5rem;
+
+    h1{
+        text-align: center;
+        font-size: 2.5rem;
+    }
+
+    input, select{
+        width: 20rem;
+        font-size: 1.25rem;
+        background-color: rgb(45, 45, 45);
+        border-radius: 5px;
+        padding: .5rem;
+        margin: .5rem .25rem;
+        color: $main-clr;
+        border: 0;
+        box-shadow: 0px 20px 25px 0px rgba(0,0,0,0.25);
+    }
+
+    select, input[type="date"]{
+        cursor: pointer;
+        box-shadow: 0px 20px 25px 0px rgba(0,0,0,0.25);
+    }
+
+    label{
+        font-weight: bold;
+        font-size: 1.25rem;
+    }
+
+    .form__btn-area{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        margin: 1rem 0rem;
+
+        button{
+            padding: 1rem 1.5rem;
+            font-family: $main-font;
+            font-weight: bold;
+            margin: 1rem;
+            cursor: pointer;
+            transition: 150ms ease-in-out;
+            border: none;
+            color: white;
+            background-color: rgb(45, 45, 45);
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1.125rem;
+            box-shadow: 0px 25px 30px 0px rgba(0,0,0,0.4);
+
+            &:hover{
+                color: black;
+                background-color: $secondary-clr;
+                box-shadow: 0px 20px 25px 0px rgba(253, 255, 118, 0.75);
+            }
+        }
+    }
+
+    box-shadow: 0 4px  4px  rgba(218, 218, 218, 0.1),
+    0 1px  6px  rgba(218, 218, 218, 0.05),
+    0 8px  8px  rgba(212, 212, 212, 0.1), 
+    0 16px 16px rgba(218, 218, 218, 0.1), 
+    8px 32px 32px rgba(221, 221, 221, 0.15), 
+    8px 64px 64px rgba(231, 231, 231, 0.15);
+}
+
+.volunteer-form{
+    margin-top: 2rem;
+    background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+
+    h1{
+        margin-top: 1.25rem;
+        margin-bottom: 2rem;
+    }
+
+    .volunteer-select{
+        margin-left: 1.75rem;
+    }
+
+    textarea{
+        background: black;
+        color: $main-clr;
+    }
+
+    ::placeholder{
+        color: $main-clr;
+        opacity: .75;
+        font-size: 1.125rem;
+    }
+}
+
+.institution-div{
+    display: flex;
+    justify-content: center;
+
+    .institution-form{
+        position: absolute;
+        top: 88vh;
+        background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+        transition: 300ms cubic-bezier(0.25, 0.85, 0.25, 1.2);
+
+        h1{
+            color: $main-clr;
+            cursor: pointer;
+        }    
+
+        ::placeholder{
+            color: $main-clr;
+            opacity: .75;
+            font-size: 1.125rem;
+        }
+    }
+}
+
+.checkbox{
+    display: none;
+
+    &:checked ~ .institution-form{
+        transform: translateY(-64.5vh);
+    }
+
+    &:checked ~ .institution-form .fa-angle-up{
+        transform: rotate(180deg);
+    }
+}
