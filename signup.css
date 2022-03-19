@@ -16,12 +16,12 @@ input, select{
 
 select{
     padding: .125rem;
-    color: rgb(75, 75, 75);
+    color: rgb(125, 125, 125);
 }
 
 input[type="date"], select{
     cursor: pointer;
-    color: rgb(75, 75, 75);
+    color: rgb(125, 125, 125);
 }
 
 p, label{

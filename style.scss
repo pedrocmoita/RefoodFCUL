@@ -192,7 +192,7 @@ footer{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding-top: 2rem;
+    padding-top: 1rem;
 
     a{
         background-color: $secondary-clr;
@@ -219,10 +219,10 @@ footer{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: $main-clr;
+    background-image: linear-gradient(120deg, #9fbae4 0%, #ffffff 100%);
     padding: 2rem 4rem;
-    border-top: 1.5rem solid $secondary-clr;
-    border-bottom: 1.5rem solid $secondary-clr;
+    border-top: 1.5rem solid #eed202b6; 
+    border-bottom: 1.5rem solid #eed202b6; 
     border-top-left-radius: 2rem;
     border-top-right-radius: 2rem;
     border-bottom-left-radius: 2rem;
