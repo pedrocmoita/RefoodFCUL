@@ -1,0 +1,31 @@
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+header{
+    border: 1px solid black;
+    background: radial-gradient(#2d2d2d, #232323, #191919, #0f0f0f);
+    color: white;
+    padding: 1rem;
+    border-bottom-right-radius: 1.25rem;
+    border-bottom-left-radius: 1.25rem;
+}
+
+header p{
+    margin: 0;
+}
+
+.search-bar input{
+    max-width: 40rem;
+}
+
+.main-section{
+    background-image: url("food-serving-bg-img.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}

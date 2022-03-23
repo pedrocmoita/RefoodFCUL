@@ -16,20 +16,20 @@ body p, html p {
   font-size: 1.25rem;
 }
 
-body ::-webkit-input-placeholder, body input[type="date"], body input[type="time"], html ::-webkit-input-placeholder, html input[type="date"], html input[type="time"] {
-  font-family: 'Playfair Display', serif;
+body ::-webkit-input-placeholder, html ::-webkit-input-placeholder {
+  font-family: "Fredoka", sans-serif;
 }
 
-body :-ms-input-placeholder, body input[type="date"], body input[type="time"], html :-ms-input-placeholder, html input[type="date"], html input[type="time"] {
-  font-family: 'Playfair Display', serif;
+body :-ms-input-placeholder, html :-ms-input-placeholder {
+  font-family: "Fredoka", sans-serif;
 }
 
-body ::-ms-input-placeholder, body input[type="date"], body input[type="time"], html ::-ms-input-placeholder, html input[type="date"], html input[type="time"] {
-  font-family: 'Playfair Display', serif;
+body ::-ms-input-placeholder, html ::-ms-input-placeholder {
+  font-family: "Fredoka", sans-serif;
 }
 
-body ::placeholder, body input[type="date"], body input[type="time"], html ::placeholder, html input[type="date"], html input[type="time"] {
-  font-family: 'Playfair Display', serif;
+body ::placeholder, html ::placeholder {
+  font-family: "Fredoka", sans-serif;
 }
 
 body ::-webkit-datetime-edit-text, html ::-webkit-datetime-edit-text {
@@ -290,28 +290,25 @@ footer .copyright {
           transform: translate(-50%, -50%);
   background-image: linear-gradient(120deg, #9fbae4 0%, #ffffff 100%);
   padding: 2rem 4rem;
-  border-top: 1.5rem solid #eed202b6;
-  border-bottom: 1.5rem solid #eed202b6;
-  border-top-left-radius: 2rem;
-  border-top-right-radius: 2rem;
-  border-bottom-left-radius: 2rem;
-  border-bottom-right-radius: 2rem;
-  -webkit-box-shadow: 0px 15px 20px 0px rgba(253, 255, 118, 0.45);
-          box-shadow: 0px 15px 20px 0px rgba(253, 255, 118, 0.45);
+  -webkit-box-shadow: 0px 15px 20px 0px rgba(255, 255, 255, 0.45);
+          box-shadow: 0px 15px 20px 0px rgba(255, 255, 255, 0.45);
 }
 
 .login-form h1 {
   font-size: 3rem;
   margin-top: 0;
+  color: #2d2d2d;
+  font-weight: 400;
 }
 
 .login-form input {
   max-width: 17rem;
   font-size: 1.75rem;
-  background-color: #2d2d2d;
   padding: .75rem;
-  color: #fff;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
   border: 0;
+  color: #2d2d2d;
   -webkit-box-shadow: 0px 20px 25px 0px rgba(0, 0, 0, 0.25);
           box-shadow: 0px 20px 25px 0px rgba(0, 0, 0, 0.25);
 }
@@ -320,31 +317,32 @@ footer .copyright {
   font-size: 1.5rem;
   opacity: .75;
   margin: .5rem;
-  color: #fff;
+  color: #2d2d2d;
 }
 
 .login-form input:-ms-input-placeholder {
   font-size: 1.5rem;
   opacity: .75;
   margin: .5rem;
-  color: #fff;
+  color: #2d2d2d;
 }
 
 .login-form input::-ms-input-placeholder {
   font-size: 1.5rem;
   opacity: .75;
   margin: .5rem;
-  color: #fff;
+  color: #2d2d2d;
 }
 
 .login-form input::placeholder {
   font-size: 1.5rem;
   opacity: .75;
   margin: .5rem;
-  color: #fff;
+  color: #2d2d2d;
 }
 
 .login-form__input {
+  border-radius: 1rem;
   border: 2px solid #2d2d2d;
   margin-bottom: 1rem;
 }
