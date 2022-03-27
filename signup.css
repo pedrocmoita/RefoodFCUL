@@ -19,9 +19,10 @@ select{
     color: rgb(125, 125, 125);
 }
 
-input[type="date"], select{
+input[type="date"], select, .volunteer-select{
     cursor: pointer;
     color: rgb(125, 125, 125);
+    margin-left: 1rem;
 }
 
 p, label{
@@ -55,7 +56,7 @@ h1, a, ::placeholder, p, label{
 
 .btn{
     font-weight: bold;
-    transition: all 0.3s ease 0.1s;
+    transition: transform 300ms ease-in-out;
     box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.4);
 }
 
