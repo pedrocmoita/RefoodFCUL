@@ -33,7 +33,7 @@ if(isset($_POST['submit-btn'])){
                         </div>";
                 }else if(strlen("$number_charge") > 9){
                     $error = "Phone of the person in charge must have a maximum of 9 digits.";
-                    echo "<div style='position: absolute; top: 3%; left: 50%; transform: translate(-50%, -50%);' class='container mt-3 pt-4 pb-4 alert alert-danger alert-dismissible fade s$
+                    echo "<div style='position: absolute; top: 3%; left: 50%; transform: translate(-50%, -50%);' class='container mt-3 pt-4 pb-4 alert alert-danger alert-dismissible fade show' role'alert'>
                                 <button type='button' class='pt-4 close' data-dismiss='alert'>&times;</button>
                                 {$error}
                        </div>";
