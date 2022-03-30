@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300&display=swap");
+body {
+    font-family: "Fredoka", sans-serif;
+    margin: 0;
+    min-height: 100vh;
+  }
+  
+html {
+    box-sizing: border-box;
+}
+  
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+  
+.home-btn{
+  position: absolute; 
+  top: 0; 
+  font-weight: bold;
+  left: 0; 
+  margin: 1rem; 
+  text-decoration: none;
+  background-color: #EED202;
+  padding: .75rem;
+  color: black;
+  font-weight: bold;
+  transition: transform 100ms ease-in-out;
+}
+
+.home-btn:hover{
+  transform: translateY(-.25rem);
+  background-color: white;
+}
+
+.button{
+  cursor: pointer;
+  border: none;
+  font-weight: bold;
+  padding: .5rem .75rem;
+  background-color: #EED202;
+  color: black;
+  transition: transform 100ms ease-in-out;
+}
+
+.button:hover{
+  transform: translateY(-.25rem);
+  background-color: black;
+  color: white;
+}
+
+.column {
+    float: left;
+    width: 33.3%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+}
+  
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 8px;
+}
+  
+.about-section {
+    padding: 1.5rem;
+    text-align: center;
+    background: radial-gradient(#2d2d2d, #232323, #191919, #0f0f0f);
+    color: white;
+}
+  
+.container {
+    padding: 0 16px;
+}
+  
+.container::after, .row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+  
+.title {
+    color: grey;
+}
+
+h1{
+    color: #EED202;
+}
+  
+@media screen and (max-width: 650px) {
+  .column {
+      width: 100%;
+      display: block;
+  }
+}

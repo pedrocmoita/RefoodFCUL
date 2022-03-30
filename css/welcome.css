@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300&display=swap');
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+header{
+    background: white;
+    color: black;
+    padding: 1rem 2rem 1rem 2rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+header p{
+    margin: 0;
+}
+
+.lista{
+    background: radial-gradient(#2d2d2d, #232323, #191919, #0f0f0f);
+    color: white;
+}
+
+ul{
+    padding: 0;
+    list-style: none;
+}
+
+.container, .row, header{
+    font-family: "Fredoka", sans-serif;
+}
+
+.search-bar input{
+    max-width: 40rem;
+}
+
+.search-bar input, .search-bar button{
+    -webkit-box-shadow: 0px 5px 10px 0px rgba(0,0,0,.3); 
+    box-shadow: 0px 5px 10px 0px rgba(0,0,0,.3);
+}
+
+.main-section{
+    background-image: url("food-serving-bg-img.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+.fa-user{
+    margin-top: 1rem;
+    cursor: pointer;
+    color: black;
+    transition: transform 150ms ease-in-out;
+}
+
+.fa-user:hover{
+    color: #EED202;
+    transform: scale(1.125);
+}
+
+.modal-body{
+    margin: 0 auto;
+    width: 75%;
+}
+
+.modal-body input{
+    width: 100%;
+    margin: .5rem 0rem .5rem 0rem;
+}
