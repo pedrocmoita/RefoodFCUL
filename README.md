@@ -7,10 +7,8 @@ The website has a page witch everyone can access; there, it's possible to know m
 Once you signed up you can log in, and then you go to the main page. 
 There's an admin page only available for people that know a specific password and email, the administrators.
 
-<hr>
-
 # Back end
 We created a SQL data base and use MySql to upload some tables.
-We created:
+We implemented:
 - Login/Sign up system with PHP and HTML validation;
 - 
