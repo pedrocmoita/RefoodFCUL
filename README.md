@@ -1,6 +1,6 @@
 # RefoodFCUL
-University project about refreshing Refood website.<br>
-Full stack development website with BOOTSTRAP, CSS and SCSS in the front end and SQL and PHP in the back end.
+University project about refreshing Refood website. Full stack development.<br>
+Website with BOOTSTRAP, CSS and SCSS in the front end and SQL and PHP in the back end.
 
 # Front end
 The website has a page witch everyone can access; there, it's possible to know more about the concept and also the developers.
