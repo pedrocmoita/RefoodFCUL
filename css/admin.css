@@ -1,0 +1,153 @@
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300&display=swap");
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  background-color: #101827;
+  color: white;
+  margin: 0;
+  padding: 0;
+  font-family: "Fredoka", sans-serif;
+  /* #### SIDE BAR #### */
+  /* #### MAIN AREA #### */
+}
+
+body th {
+  padding: .5rem .75rem;
+  background-color: #212735;
+  border-radius: .5rem;
+}
+
+body td {
+  padding: .25rem .75rem;
+}
+
+body tr:hover {
+  background-color: rgba(195, 207, 244, 0.15);
+  cursor: default;
+}
+
+body .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+body .side-bar {
+  background-color: #212735;
+  color: white;
+  padding: 1rem;
+  margin-right: 2rem;
+  min-height: 100vh;
+  min-width: 14rem;
+}
+
+body .side-bar h1 {
+  margin-top: 0;
+}
+
+body .side-bar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: left;
+      -ms-flex-align: left;
+          align-items: left;
+}
+
+body .side-bar li {
+  margin: .5rem .5rem .5rem 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+body .side-bar button {
+  background-color: #212735;
+  color: white;
+  cursor: pointer;
+  border: 0;
+  border-bottom-left-radius: .5rem;
+  border: 1px solid white;
+  border-top: 0;
+  border-right: 0;
+  padding: .5rem;
+}
+
+body .side-bar button .fa-solid {
+  padding: .5rem 0rem .5rem .5rem;
+}
+
+body .side-bar button a {
+  text-decoration: none;
+  color: white;
+  padding: .75rem 1rem;
+  font-family: "Fredoka", sans-serif;
+  font-size: 1rem;
+}
+
+body .side-bar button:hover {
+  background-color: rgba(195, 207, 244, 0.25);
+  border-top-right-radius: .5rem;
+}
+
+body .side-bar .active {
+  color: #1AA7EC;
+}
+
+body .side-bar .active a {
+  color: #1AA7EC;
+}
+
+body .main-section .search-form {
+  margin: 1rem 2rem 2rem 0rem;
+}
+
+body .main-section .search-form__filter-section {
+  margin-top: 1rem;
+}
+
+body .main-section .search-form__filter-section select {
+  border-radius: .25rem;
+  border: 0;
+  padding: .35rem .5rem;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+body .main-section__search-bar, body .main-section__submit-btn {
+  border-radius: .25rem;
+  border: 0;
+  padding: .35rem .5rem;
+}
+
+body .main-section__search-bar {
+  min-width: 15rem;
+}
+
+body .main-section__submit-btn {
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+body .main-section__submit-btn:hover {
+  background-color: #1AA7EC;
+}
+/*# sourceMappingURL=admin.css.map */
