@@ -47,7 +47,7 @@ if(isset($_POST['submit-btn'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - ReFood</title>
+    <title>Login - ReFood FCUL</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/c63aba2ece.js" crossorigin="anonymous"></script>
 </head>
