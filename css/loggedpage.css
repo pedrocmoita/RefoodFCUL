@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300&display=swap');
+
+body{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	overflow-x: hidden;
+	min-height: 100vh;
+}
+
+header{
+	background-color: white;	
+	color: black;
+	padding: 1rem 2rem;
+	font-size: 1.25rem;
+	font-weight: bold;
+}
+
+header p{
+	margin: 0;
+}
+
+header a{
+	color: #EED202;
+}
+
+header a:hover{
+	color: black;
+	text-decoration: none;
+}
+
+ul{
+	padding: 0;
+	list-style: none;
+}
+
+form, .modal-content{
+	margin: 0;
+	border: 0;
+}
+
+.lista{
+	background: radial-gradient(#2d2d2d, #232323, #191919, #0f0f0f);
+	color: white;
+}
+
+.lista h4{
+	margin-top: 3rem;
+}
+
+.body{
+        font-family: "Fredoka", sans-serif;
+}
+
+.side-bar-list{
+	margin-top: 3rem;
+}
+
+.fa-user, .fa-circle-question{
+	cursor: pointer;
+	margin-left: 1.5rem;
+	color: black;
+	transition: transform 150ms ease-in-out;
+}
+
+.fa-user:hover, .fa-circle-question:hover{
+	color: #EED202;
+	transform: scale(1.125);
+}
+
+.modal-header, .modal-footer{
+	background: radial-gradient(#202020, #191919, #181818);
+	color: #EED202;
+}
+
+.modal-footer button{
+    border: 0;
+    border-radius: .25rem;
+    background-color: #EED202;
+    font-weight: bolder;
+    font-size: 1.125rem;
+    margin: .5rem .75rem;
+    padding: .25rem 1rem;
+    transition: 150ms ease-in-out;
+}
+
+.modal-footer button:hover{
+    background-color: white;
+}
+
+.main-section{
+	background-image: url("food-serving-bg-img.jpg");
+	background-size: cover;
+	background-position: center;
+	height: 90vh;
+}
+
+.search-bar{
+	margin-top: 2rem;
+	display: flex;
+	justify-content: center;
+}
+
+.search-bar input{
+	max-width: 40rem;
+}
+
+.search-bar input, .search-bar button{
+	-webkit-box-shadow: 0px 5px 10px 0px rgba(0,0,0,.3); 
+	box-shadow: 0px 5px 10px 0px rgba(0,0,0,.3);
+}
+
+.filter select{
+	background-color: #EED202;
+	border: 0;
+	border-radius: .25rem;
+	padding: .55rem;
+	-webkit-box-shadow: 0px 5px 10px 0px rgba(0,0,0,.3); 
+	box-shadow: 0px 5px 10px 0px rgba(0,0,0,.3);
+}
+
+.search-btn{
+    border: 0;
+    background-color: #EED202;
+    padding: .4rem .75rem;
+    border-radius: .25rem;
+}
