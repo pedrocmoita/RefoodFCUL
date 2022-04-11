@@ -14,7 +14,7 @@ if(isset($_POST['submit-btn'])){
         $personal_ID = htmlspecialchars($_POST['personal_ID']);
         $password = htmlspecialchars($_POST['password']);
 
-        $hashpass = password_hash('$password', PASSWORD_DEFAULT);
+        $hashpass = password_hash($password, PASSWORD_DEFAULT);
 
         $select_query = "SELECT * FROM Utilizador WHERE email='$email'";
         $result_select = mysqli_query($conn, $select_query);

@@ -1,43 +1,58 @@
 <?php
-
 include "abreconexao.php";
 
 if(isset($_POST['submit-btn'])){
 
-    $email = htmlspecialchars($_POST['email']);
-    $password = htmlspecialchars($_POST['password']);
+        $email = htmlspecialchars($_POST['email']);
+        $password = htmlspecialchars($_POST['password']);
 
-    $select_query = "SELECT * FROM Utilizador WHERE email='$email'";
-    $result_select = mysqli_query($conn, $select_query);
+        $query1 = "SELECT * FROM Utilizador WHERE email = '$email'";
+        $result1 = mysqli_query($conn, $query1);
 
-    $error = "";
+        if (mysqli_num_rows($result1) == 1){
 
-    if($email === 'admin_asw13@fculti.com' && $password === 'admin_password'){
-        header("Location: admin.php");
-    }else{
-        if(mysqli_num_rows($result_select) == 0){
-		$error = "Email or password incorrect.";
-                echo "<div style='position: absolute; top: 3%; left: 50%; transform: translate(-50%, -50%);' class='container mt-3 pt-4 pb-4 alert alert-danger alert-dismissible fade show' role='alert'>
-                	<button type='button' class='pt-4 close' data-dismiss='alert'>&times;</button>
-                	{$error}
-                     </div>";
-        }else{
-		$select_query_2 = "SELECT passwd FROM Utilizador WHERE email='$email'";
-		$result_select_2 = mysqli_query($conn, $select_query_2);
-                $row = mysqli_fecth_assoc($result_select_2);
+                $row = mysqli_fetch_assoc($result1);
+                $pass = $row['passwd'];
 
-		if(password_verify($password, $row['passwd'])){
-			 header("Location: welcome.php");
+                if (password_verify($password, $pass)){
 			
-		}else{
-			$error = "Email or password incorrect.";
+			$namequery = "SELECT * FROM Utilizador WHERE email = '$email'";
+			$nameresult = mysqli_query($conn, $namequery);
+			$namerow = mysqli_fetch_assoc($nameresult);
+			$username = $namerow['nome'];
+			
+			$volquery = "SELECT * FROM Voluntario WHERE email = '$email'";
+			$volresult = mysqli_query($conn, $volquery);			
+			$volrow = mysqli_num_rows($volresult);
+			
+			session_start();
+			$_SESSION['loggedin'] = true;
+			$_SESSION['username'] = $username;
+
+			if($volrow == 1){
+				header("location: welcome_voluntario.php");
+			}else{
+				header("location: welcome_instituicao.php");
+			}			
+
+                }else{
+                	$error = "Email or password incorrect.";
                		echo "<div style='position: absolute; top: 3%; left: 50%; transform: translate(-50%, -50%);' class='container mt-3 pt-4 pb-4 alert alert-danger alert-dismissible fade show' role='alert'>
                        		<button type='button' class='pt-4 close' data-dismiss='alert'>&times;</button>
                         	{$error}
                      	     </div>";
-		}
+                }
+        }else{
+                if($email === 'admin_asw13@fculti.com' && $password === 'admin_password'){
+                        header("Location: admin.php");
+                }else{
+                        $error = "Email or password incorrect.";
+                        echo "<div style='position: absolute; top: 3%; left: 50%; transform: translate(-50%, -50%);' class='container mt-3 pt-4 pb-4 alert alert-danger alert-dismissible fa$
+                                <button type='button' class='pt-4 close' data-dismiss='alert'>&times;</button>
+                                {$error}
+                             </div>";
+                }
         }
-    }
 }
 ?>
 
@@ -73,3 +88,4 @@ if(isset($_POST['submit-btn'])){
     </div>
 </body>
 </html>
+
