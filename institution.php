@@ -14,7 +14,7 @@ if(isset($_POST['submit-btn'])){
         $number_charge = htmlspecialchars($_POST['number_charge']); 
         $password = htmlspecialchars($_POST['password']);
 
-        $hashpass = password_hash('$password', PASSWORD_DEFAULT);
+        $hashpass = password_hash($password, PASSWORD_DEFAULT);
 
         $select_query = "SELECT * FROM Utilizador WHERE email='$email'";
         $result_select = mysqli_query($conn, $select_query);
@@ -52,7 +52,7 @@ if(isset($_POST['submit-btn'])){
                         $insert_query_2 = "INSERT INTO Utilizador VALUES('id', '$name', '$email', '$hashpass')";
                         $result_insert_2 = mysqli_query($conn, $insert_query_2);
 
-                        $success = "Registered with sucess :). You can now log into your account.";
+                        $success = "Registered with sucess. You can now log into your account.";
                         echo "<div style='position: absolute; top: 3%; left: 50%; transform: translate(-50%, -50%);' class='container mt-3 pt-4 pb-4 alert alert-success alert-dismissible fade show' role='alert'>
                                     <button type='button' class='pt-4 close' data-dismiss='alert'>&times;</button>
                                     {$success}

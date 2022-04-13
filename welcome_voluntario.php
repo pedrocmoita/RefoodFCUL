@@ -1,13 +1,26 @@
 <?php
-
 session_start();
 
 if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
 	header("location: login.php");
-	eixt;
+	exit;
 }
 
 $username = $_SESSION['username'];
+
+include "abreconexao.php";
+
+$query_gender = "SELECT * FROM Voluntario WHERE nome='$username'";
+$result_gender = mysqli_query($conn, $query_gender);
+$row_gender = mysqli_fetch_assoc($result_gender); 
+$gender = $row_gender["genero"];
+$welcome = '';
+
+if ($gender == 'Female'){
+	$welcome = 'Bem vinda ';
+}else{
+	$welcome = 'Bem vindo ';
+}
 
 ?>
 
@@ -28,8 +41,21 @@ $username = $_SESSION['username'];
     <div class="body">
         <header class="d-flex justify-content-between">
             <div>
-              <p>Bem-vindo(a) <?php echo $username ?> </p>
-              <p><a href="login.php" style="font-size: 1.125rem; margin: 0; padding: 0;">Logout</a></p>
+              <p><?php echo $welcome ?><?php echo $username ?> </p>
+              <p><a href="login.php" style="font-size: 1.125rem; margin: 0; padding: 0;" data-toggle="modal" data-target="#logout">Logout</a></p>
+              <div class="modal fade" id="logout">
+                <div class="modal-dialog">
+                  <div class="modal-content text-center p-2">
+                    <div class="modal-body">
+                      <p>Are you sure you want to logout of this session?</p>
+                      <div>
+                        <a href="login.php" class="btn btn-danger m-2 mt-3">Yes, logout</a>
+                        <button type="button" class="btn btn-success m-2 mt-3" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <p class="m-3"><span class="text-warning">RE</span>FOOD - FCUL</p>
             <div class="m-3">

@@ -8,19 +8,20 @@ if(isset($_POST['submit-btn'])){
 
         $query1 = "SELECT * FROM Utilizador WHERE email = '$email'";
         $result1 = mysqli_query($conn, $query1);
-
+	
         if (mysqli_num_rows($result1) == 1){
 
                 $row = mysqli_fetch_assoc($result1);
                 $pass = $row['passwd'];
-
-                if (password_verify($password, $pass)){
+		$teste = password_verify($password, $pass);
+		
+		if (password_verify($password, $pass)){
 			
 			$namequery = "SELECT * FROM Utilizador WHERE email = '$email'";
 			$nameresult = mysqli_query($conn, $namequery);
 			$namerow = mysqli_fetch_assoc($nameresult);
 			$username = $namerow['nome'];
-			
+
 			$volquery = "SELECT * FROM Voluntario WHERE email = '$email'";
 			$volresult = mysqli_query($conn, $volquery);			
 			$volrow = mysqli_num_rows($volresult);
@@ -41,12 +42,12 @@ if(isset($_POST['submit-btn'])){
                        		<button type='button' class='pt-4 close' data-dismiss='alert'>&times;</button>
                         	{$error}
                      	     </div>";
-                }
+              }
         }else{
                 if($email === 'admin_asw13@fculti.com' && $password === 'admin_password'){
                         header("Location: admin.php");
                 }else{
-                        $error = "Email or password incorrect.";
+                        $error = "It look like you don't have an account yet.";
                         echo "<div style='position: absolute; top: 3%; left: 50%; transform: translate(-50%, -50%);' class='container mt-3 pt-4 pb-4 alert alert-danger alert-dismissible fa$
                                 <button type='button' class='pt-4 close' data-dismiss='alert'>&times;</button>
                                 {$error}
