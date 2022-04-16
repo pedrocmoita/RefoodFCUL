@@ -101,27 +101,27 @@ $bd_cartao_cidadao =  $row_profile['cartao_cidadao'];
                     <div class="row">
                       <div class="col">
                         <p>Nome</p>	
-                        <input type="text" name="" value="<?php echo $username; ?>" placeholder="">
+                        <input type="text" name="updated_name" value="<?php echo $username; ?>" placeholder="Name">
                         <p>Email</p>
-                        <input type="text" name="" value="<?php echo $bd_email; ?>" placeholrder="">
+                        <input type="email" name="updated_email" value="<?php echo $bd_email; ?>" placeholrder="Email">
                         <p>Telemóvel</p>
-                        <input type="text" name="" value="<?php echo $bd_phone; ?>" placeholder="">
+                        <input type="number" name="updated_phone" value="<?php echo $bd_phone; ?>" placeholder="Number">
                         <p>Data Nascimento</p>
-                        <input type="date" name="" value="<?php echo $bd_nascimento; ?>" placholder="">
+                        <input type="date" name="updated_birth" value="<?php echo $bd_nascimento; ?>">
                         <p>Carta Condução</p>
-                        <input type="text" name="" value="<?php echo $bd_carta_cond;  ?>" placholder="">
+                        <input type="number" name="updated_drivers" value="<?php echo $bd_carta_cond;  ?>" placholder="Drivers license">
                       </div>
                       <div class="col">
                         <p>Distrito</p>
-                        <input type="text" name="" value="<?php echo $bd_distrito; ?>" placeholder="">
+                        <input type="text" name="updated_distrito" value="<?php echo $bd_distrito; ?>" placeholder="Distrito">
                         <p>Concelho</p>
-                        <input type="text" name="" value="<?php echo $bd_concelho; ?>" placholder="">
+                        <input type="text" name="updated_concelho" value="<?php echo $bd_concelho; ?>" placholder="Concelho">
                         <p>Freguesia</p>
-                        <input type="text" name="" value="<?php echo $bd_freguesia; ?>" placholder="">
+                        <input type="text" name="updated_freguesia" value="<?php echo $bd_freguesia; ?>" placholder="Freguesia">
                         <p>Cartão Cidadão</p>
-                        <input type="text" name="" value="<?php echo $bd_cartao_cidadao; ?>" placholder="">
+                        <input type="number" name="updated_cartao_cidadao" value="<?php echo $bd_cartao_cidadao; ?>" placholder="Personal ID">
                         <p>Password</p>
-                        <input type="text" name="" value="" placeholder="Insert new password">
+                        <input type="password" name="updated_password" value="" placeholder="Insert new password" required>
                       </div>
                     </div>
                     <div><button class="profile-form-btn" type="submit">Save</button></div>
