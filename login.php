@@ -21,20 +21,26 @@ if(isset($_POST['submit-btn'])){
 			$nameresult = mysqli_query($conn, $namequery);
 			$namerow = mysqli_fetch_assoc($nameresult);
 			$username = $namerow['nome'];
+			$userID = $namerow['id'];		
 
 			$volquery = "SELECT * FROM Voluntario WHERE email = '$email'";
 			$volresult = mysqli_query($conn, $volquery);			
-			$volrow = mysqli_num_rows($volresult);
+			$vol_num_row = mysqli_num_rows($volresult);
+                        $vol_id_row = mysqli_fetch_assoc($volresult);
+                        $vol_id = $vol_id_row['id'];
 			
 			session_start();
 			$_SESSION['loggedin'] = true;
 			$_SESSION['username'] = $username;
-
-			if($volrow == 1){
+			$_SESSION['userID'] = $userID;
+ 
+			if($vol_num_row == 1){
+                                $_SESSION['id'] = $vol_id;
 				header("location: welcome_voluntario.php");
 			}else{
+                                //$_SESSION['id'] = $inst_id;
 				header("location: welcome_instituicao.php");
-			}			
+			}	
 
                 }else{
                 	$error = "Email or password incorrect.";
