@@ -22,9 +22,9 @@ $gender = $row_gender["genero"];
 $welcome = '';
 
 if ($gender == 'Female'){
-	$welcome = 'Bem vinda ';
+	$welcome = 'Bem vinda  ';
 }else{
-	$welcome = 'Bem vindo ';
+	$welcome = 'Bem vindo  ';
 }
 
 //--------------BD Profile section----------------
@@ -82,31 +82,77 @@ if(isset($_POST['update-profile-btn'])){
                           {$error}
                       </div>";	
 		$alert = "Failed to update! Check your profile.";	
-                $alert_msg = "<div style='position: absolute; top: 3%; left: 50%; transform: translate(-50%, -50%);' class='mt-3 pt-4 pb-4 alert alert-danger alert-dismissible fa$
+                $alert_msg = "<div style='position: absolute; top: 3%; left: 50%; transform: translate(-50%, -50%);' class='mt-3 pt-4 pb-4 alert alert-danger alert-dismissible fade show' role='alert'>
                       <button type='button' class='pt-4 close' data-dismiss='alert'>&times;</button>
                       {$alert}
                       </div>";
 	 	echo $alert_msg;
+	
+	}else if(strlen($updated_drivers) > 11 || strlen($updated_cartao_cidadao) > 11){
+		$error = "Your drivers license or personal ID are incorrect.";
+		$error_msg = "<div class='container mt-2 mb-2 pt-2 pb-2 alert alert-danger alert-dismissible fade show' role='alert'>
+                        <button type='button' class='pt-2 close' data-dismiss='alert'>&times;</button>
+                          {$error}
+                      </div>";
+                $alert = "Failed to update! Check your profile.";
+                $alert_msg = "<div style='position: absolute; top: 3%; left: 50%; transform: translate(-50%, -50%);' class='mt-3 pt-4 pb-4 alert alert-danger alert-dismissible fade show' role='alert'>
+                      <button type='button' class='pt-4 close' data-dismiss='alert'>&times;</button>
+                      {$alert}
+                      </div>";
+                echo $alert_msg;
 
 	}else{
-		$update_query = "UPDATE Voluntario SET  nome='$updated_name', numero='$updated_phone', email='$updated_email', distrito='$updated_distrito',
-                concelho='$updated_concelho', freguesia='$updated_freguesia', data_nasc='$updated_birth', carta_cond='$updated_drivers',
-                cartao_cidadao='$updated_cartao_cidadao', passwd='$updated_hash_password' WHERE id='$user_id'";
-	        $result_update = mysqli_query($conn, $update_query);
 
-        	$update_query2 = "UPDATE Utilizador SET nome='$updated_name', email='$updated_email', passwd='$updated_hash_password' WHERE id='$ID'";
-        	$result_update2 = mysqli_query($conn, $update_query2);
+		if(is_numeric($updated_phone)){
+			$update_query = "UPDATE Voluntario SET  nome='$updated_name', numero='$updated_phone', email='$updated_email', distrito='$updated_distrito',
+                		concelho='$updated_concelho', freguesia='$updated_freguesia', data_nasc='$updated_birth', carta_cond='$updated_drivers',
+                		cartao_cidadao='$updated_cartao_cidadao', passwd='$updated_hash_password' WHERE id='$user_id'";
+	        	$result_update = mysqli_query($conn, $update_query);
 
-        	$_SESSION['username'] = $updated_name;
-        	header('location: welcome_voluntario.php');
+        		$update_query2 = "UPDATE Utilizador SET nome='$updated_name', email='$updated_email', passwd='$updated_hash_password' WHERE id='$ID'";
+        		$result_update2 = mysqli_query($conn, $update_query2);
+
+        		$_SESSION['username'] = $updated_name;
+        		header('location: welcome_voluntario.php');
+
+		}else{
+			$error = "Please insert a valid phone number.";
+			$error_msg = "<div class='container mt-2 mb-2 pt-2 pb-2 alert alert-danger alert-dismissible fade show' role='alert'>
+                          	<button type='button' class='pt-2 close' data-dismiss='alert'>&times;</button>
+                          	{$error}
+                      		</div>";	
+			$alert = "Failed to update! Check your profile.";	
+                	$alert_msg = "<div style='position: absolute; top: 3%; left: 50%; transform: translate(-50%, -50%);' class='mt-3 pt-4 pb-4 alert alert-danger alert-dismissible fade show' role='alert'>
+                      		<button type='button' class='pt-4 close' data-dismiss='alert'>&times;</button>
+                      		{$alert}
+                      		</div>";
+	 		echo $alert_msg;
+		}
 	}	
 
 }
 
 //----------------Preferences section---------------------
 
+if(isset($_POST['update-preferences-btn'])){
 
+	// se estiver na tabela, damos update se não, introduzimos o valor dado
 
+	$preferences_concelho = htmlspecialchars($_POST['preferences_concelho']);
+	$pickup_day_1 = htmlspecialchars($_POST['pickup_day_1']);
+	$pickup_day_2 = htmlspecialchars($_POST['pickup_day_2']);
+	$pickup_day_3 = htmlspecialchars($_POST['pickup_day_3']);
+	$pickup_period_1 = htmlspecialchars($_POST['pickup_period_1']);
+	$pickup_period_2 = htmlspecialchars($_POST['pickup_period_2']);
+	$pickup_period_3 = htmlspecialchars($_POST['pickup_period_3']);
+ 	
+	$preferences_query_1 = "INSERT INTO Dias VALUES('$user_id', '$preferences_concelho', '$pickup_day_1', '$pickup_period_1', '$pickup_day_2', 
+				'$pickup_period_2', '$pickup_day_3', '$pickup_period_3')";
+	$preferences_result_1 = mysqli_query($conn, $preferences_query_1);
+
+}
+
+//-------------------------------------------------------
 
 ?>
 
@@ -116,7 +162,7 @@ if(isset($_POST['update-profile-btn'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/welcome.css">
+    <link rel="stylesheet" href="css/welcomee.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -127,7 +173,7 @@ if(isset($_POST['update-profile-btn'])){
     <div class="body">
       <header class="d-flex justify-content-between">
         <div>
-          <p><?php echo $welcome ?><?php echo $username ?></p>
+          <p><?php echo $welcome ?> <?php echo $username ?></p>
             <p><a href="login.php" style="font-size: 1.125rem; margin: 0; padding: 0;" data-toggle="modal" data-target="#logout">Logout</a></p>
             <div class="modal fade" id="logout">
               <div class="modal-dialog">
@@ -192,57 +238,90 @@ if(isset($_POST['update-profile-btn'])){
                       </div>
                     </div>
 		    <?php echo $error_msg; ?>
-                    <div><button class="profile-form-btn" type="submit" name="update-profile-btn">Update Profile</button></div>
+                    <div><button class="profile-form-btn" type="submit" name="update-profile-btn">Update</button></div>
 		  </form>  
                 </div>
                 <div class="col-sm-5 p-0 mt-3 mb-3">
                   <h4 class="m-0">Preferências</h4>
                   <hr>
-                  <div>
                     <form action="" method="post">
-                      <input style="width: 50%;" type="text" placeholder="Concelho" required>
+                      <div>
+                        <label for="">Local de recolha</label><br>
+                        <input type="text" name="preferences_concelho" placeholder="Concelho" required>
+                      </div>
                       <div class="row mt-3"> 
-                        <div class="col">
-                          <label for="first_day">Dia 1</label>
-                          <select name="week_days" id="first_day">
-                            <option selected value="monday">Segunda</option>
-                            <option value="tuesday">Terça</option>
-                            <option value="wednesday">Quarta</option>
-                            <option value="thursday">Quinta</option>
-                            <option value="friday">Sexta</option>
-                          </select>
+                          <div class="col-sm">
+                          <label for="pickup_day">Dias de recolha</label>
+                            <div class="mb-3">
+                              <select name="pickup_day_1" id="pickup_day">
+				<option selected value="no_day_selected">None</option>
+                                <option value="segunda-feira">Segunda</option>
+                                <option value="terça-feira">Terça</option>
+                                <option value="quarta-feira">Quarta</option>
+                                <option value="quinta-feira">Quinta</option>
+                                <option value="sexta-feira">Sexta</option>
+                              </select>
+                            </div>
+                            <div class="mt-3 mb-3">
+                              <select name="pickup_day_2">
+                                <option selected value="no_day_selected">None</option>
+                                <option value="segunda-feira">Segunda</option>
+                                <option value="terça-feira">Terça</option>
+                                <option value="quarta-feira">Quarta</option>
+                                <option value="quinta-feira">Quinta</option>
+                                <option value="sexta-feira">Sexta</option>
+                              </select>
+                            </div>
+                            <div class="mt-3 mb-3">
+                              <select name="pickup_day_3">
+                                <option selected value="no_day_selected">None</option>
+                                <option value="segunda-feira">Segunda</option>
+                                <option value="terça-feira">Terça</option>
+                                <option value="quarta-feira">Quarta</option>
+                                <option value="quinta-feira">Quinta</option>
+                                <option value="sexta-feira">Sexta</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-sm">
+                          <label for="pickup_hr">Períodos de recolha</label>
+                            <div class="mb-3">
+                              <select name="pickup_period_1">
+				<option selected value="no_hour_selected">None</option>
+                                <option value="manha">Manhã (9:00hr - 11:00hr)</option>
+                                <option value="meio_dia">Meio do dia (12:00hr - 13:00hr)</option>
+                                <option value="tarde">Tarde (14:00hr - 17:00hr)</option>
+                                <option value="noite">Noite (18:00hr - 19:00hr)</option>
+                              </select>
+                            </div>
+                            <div class="mt-3 mb-3">
+                              <select name="pickup_period_2">
+                                <option value="no_hour_selected">None</option>
+                                <option value="manha">Manhã (9:00hr - 11:00hr)</option>
+                                <option value="meio_dia">Meio do dia (12:00hr - 13:00hr)</option>
+                                <option value="tarde">Tarde (14:00hr - 17:00hr)</option>
+                                <option value="noite">Noite (18:00hr - 19:00hr)</option>
+                              </select>
+                            </div>
+                            <div class="mt-3 mb-3">
+                              <select name="pickup_period_3">
+                                <option value="no_hour_selected">None</option>
+                                <option value="manha">Manhã (9:00hr - 11:00hr)</option>
+                                <option value="meio_dia">Meio do dia (12:00hr - 13:00hr)</option>
+                                <option value="tarde">Tarde (14:00hr - 17:00hr)</option>
+                                <option value="noite">Noite (18:00hr - 19:00hr)</option>
+                              </select>
+                            </div>
+                          </div>
                         </div>
-                        <div class="col">
-                          <label for="second_day">Dia 2<span class="text-danger">*</span></label>
-                          <select name="week_days" id="second_day">
-                            <option selected value="no_day2_selected">None</option>
-                            <option value="monday">Segunda</option>
-                            <option value="tuesday">Terça</option>
-                            <option value="wednesday">Quarta</option>
-                            <option value="thursday">Quinta</option>
-                            <option value="friday">Sexta</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="mt-2">
-                        <label for="day_period">Período dia</label>
-                        <select name="day_period" id="day_period">
-                          <option selected value="morning">Manhã</option>
-                          <option value="midday">Meio do dia</option>
-                          <option value="afternoon">Tarde</option>
-                          <option value="night">Noite</option>
-                        </select>
-                        <p><span class="text-danger">*</span> O segundo dia é opcional.</p>
-                      </div>
-		      <div><button class="profile-form-btn" type="submit">Save</button></div>
+                        <div><button class="profile-form-btn mt-1" type="submit" name="update-preferences-btn">Update</button></div>
                     </form>
-                  </div>
                 </div>
               </div>
               <!-- Modal footer -->
               <div class="modal-footer p-2">
                 <button type="button" data-dismiss="modal">Close</button>
-		          </div>
+	      </div>
             </div>
           </div>
         </div>

@@ -17,7 +17,7 @@ $username = $_SESSION['username'];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/loggedpage.css">
+    <link rel="stylesheet" href="css/welcome.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -28,7 +28,7 @@ $username = $_SESSION['username'];
     <div class="body">
     <header class="d-flex justify-content-between">
             <div>
-              <p>Bem-vindo(a) <?php echo $username ?> </p>
+              <p>Bem-vinda <?php echo $username ?> </p>
               <p><a href="login.php" style="font-size: 1.125rem; margin: 0; padding: 0;" data-toggle="modal" data-target="#logout">Logout</a></p>
               <div class="modal fade" id="logout">
                 <div class="modal-dialog">
@@ -53,7 +53,7 @@ $username = $_SESSION['username'];
         <!-- Profile Modal -->
         <div class="container">      
             <div class="modal" id="myModal">
-              <div class="modal-dialog modal-lg">
+              <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                   <form action="">
                     <!-- Modal Header -->
@@ -121,7 +121,7 @@ $username = $_SESSION['username'];
                       </div>
                     </div>
                     <!-- Modal footer -->
-                    <div class="modal-footer p-2">
+                    <div class="modal-footer">
                       <button type="submit" class="modal-save-btn">Save</button>
                       <button type="button" data-dismiss="modal">Close</button>
                     </div>
