@@ -61,17 +61,17 @@ if(isset($_POST['update-profile-btn'])){
 	
 	$error = '';
 	$error_msg = '';
-	$alert = '';
+	$alert = "Failed to update! Check your profile.";
+	$alert_msg = "<div style='position: absolute; top: 3%; left: 50%; transform: translate(-50%, -50%);' class='mt-3 pt-4 pb-4 alert alert-danger alert-dismissible fade show' role='alert'>
+			<button type='button' class='pt-4 close' data-dismiss='alert'>&times;</button>
+			{$alert}
+			</div>";
+
 	if(strlen("$updated_password") < 6 || strlen("$updated_password") > 20){
 		$error = "Password must have between 6 and 20 characters!";
                 $error_msg = "<div class='container mt-2 mb-2 pt-2 pb-2 alert alert-danger alert-dismissible fade show' role='alert'>
                           <button type='button' class='pt-2 close' data-dismiss='alert'>&times;</button>
                           {$error}
-                      </div>";
-		$alert = "Failed to update! Check your profile.";
-		$alert_msg = "<div style='position: absolute; top: 3%; left: 50%; transform: translate(-50%, -50%);' class='mt-3 pt-4 pb-4 alert alert-danger alert-dismissible fade show' role='alert'>
-                      <button type='button' class='pt-4 close' data-dismiss='alert'>&times;</button>
-                      {$alert}
                       </div>";
 		echo $alert_msg;
 
@@ -81,11 +81,6 @@ if(isset($_POST['update-profile-btn'])){
                           <button type='button' class='pt-2 close' data-dismiss='alert'>&times;</button>
                           {$error}
                       </div>";	
-		$alert = "Failed to update! Check your profile.";	
-                $alert_msg = "<div style='position: absolute; top: 3%; left: 50%; transform: translate(-50%, -50%);' class='mt-3 pt-4 pb-4 alert alert-danger alert-dismissible fade show' role='alert'>
-                      <button type='button' class='pt-4 close' data-dismiss='alert'>&times;</button>
-                      {$alert}
-                      </div>";
 	 	echo $alert_msg;
 	
 	}else if(strlen($updated_drivers) > 11 || strlen($updated_cartao_cidadao) > 11){
@@ -93,11 +88,6 @@ if(isset($_POST['update-profile-btn'])){
 		$error_msg = "<div class='container mt-2 mb-2 pt-2 pb-2 alert alert-danger alert-dismissible fade show' role='alert'>
                         <button type='button' class='pt-2 close' data-dismiss='alert'>&times;</button>
                           {$error}
-                      </div>";
-                $alert = "Failed to update! Check your profile.";
-                $alert_msg = "<div style='position: absolute; top: 3%; left: 50%; transform: translate(-50%, -50%);' class='mt-3 pt-4 pb-4 alert alert-danger alert-dismissible fade show' role='alert'>
-                      <button type='button' class='pt-4 close' data-dismiss='alert'>&times;</button>
-                      {$alert}
                       </div>";
                 echo $alert_msg;
 
@@ -121,22 +111,14 @@ if(isset($_POST['update-profile-btn'])){
                           	<button type='button' class='pt-2 close' data-dismiss='alert'>&times;</button>
                           	{$error}
                       		</div>";	
-			$alert = "Failed to update! Check your profile.";	
-                	$alert_msg = "<div style='position: absolute; top: 3%; left: 50%; transform: translate(-50%, -50%);' class='mt-3 pt-4 pb-4 alert alert-danger alert-dismissible fade show' role='alert'>
-                      		<button type='button' class='pt-4 close' data-dismiss='alert'>&times;</button>
-                      		{$alert}
-                      		</div>";
 	 		echo $alert_msg;
 		}
 	}	
-
 }
 
 //----------------Preferences section---------------------
 
 if(isset($_POST['update-preferences-btn'])){
-
-	// se estiver na tabela, damos update se não, introduzimos o valor dado
 
 	$preferences_concelho = htmlspecialchars($_POST['preferences_concelho']);
 	$pickup_day_1 = htmlspecialchars($_POST['pickup_day_1']);
@@ -145,15 +127,28 @@ if(isset($_POST['update-preferences-btn'])){
 	$pickup_period_1 = htmlspecialchars($_POST['pickup_period_1']);
 	$pickup_period_2 = htmlspecialchars($_POST['pickup_period_2']);
 	$pickup_period_3 = htmlspecialchars($_POST['pickup_period_3']);
- 	
-	$preferences_query_1 = "INSERT INTO Dias VALUES('$user_id', '$preferences_concelho', '$pickup_day_1', '$pickup_period_1', '$pickup_day_2', 
-				'$pickup_period_2', '$pickup_day_3', '$pickup_period_3')";
-	$preferences_result_1 = mysqli_query($conn, $preferences_query_1);
+  
+	$preferences_query = "SELECT * FROM Dias WHERE id='$user_id'";
+	$preferences_result = mysqli_query($conn, $preferences_query);
+
+	if(mysqli_num_rows($preferences_result) > 0){
+    		
+		$preferences_update_query = "UPDATE Dias SET concelho='$preferences_concelho', dia_semana_1='$pickup_day_1', periodo_dia_1='$pickup_period_1',
+					dia_semana_2='$pickup_day_2', periodo_dia_2='$pickup_period_2', dia_semana_3='$pickup_day_3', periodo_dia_3='$pickup_period_3' WHERE id='$user_id'"; 
+		$preferences_update_result = mysqli_query($conn, $preferences_update_query);
+	}else{
+
+		$preferences_insert_query = "INSERT INTO Dias VALUES('$user_id', '$preferences_concelho', '$pickup_day_1', '$pickup_period_1', '$pickup_day_2', 
+					'$pickup_period_2', '$pickup_day_3', '$pickup_period_3')";
+		$preferences_insert_result = mysqli_query($conn, $preferences_insert_query);
+  	}
 
 }
+//----------------BD Preferences section--------------------
 
-//-------------------------------------------------------
+//ir buscar os valores á tabela Dias para dar display
 
+//---------------------------------------------------------
 ?>
 
 <html lang="en">
@@ -162,7 +157,7 @@ if(isset($_POST['update-preferences-btn'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/welcomee.css">
+    <link rel="stylesheet" href="css/welcome.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -173,16 +168,16 @@ if(isset($_POST['update-preferences-btn'])){
     <div class="body">
       <header class="d-flex justify-content-between">
         <div>
-          <p><?php echo $welcome ?> <?php echo $username ?></p>
-            <p><a href="login.php" style="font-size: 1.125rem; margin: 0; padding: 0;" data-toggle="modal" data-target="#logout">Logout</a></p>
+          <p><?php echo $welcome ?> <span style="color: #EED202; margin-left: .125rem;"><?php echo $username ?></span></p>
+          <p><a class="logout" href="login.php" data-toggle="modal" data-target="#logout">Logout</a></p>
             <div class="modal fade" id="logout">
               <div class="modal-dialog">
                 <div class="modal-content text-center p-2">
                   <div class="modal-body">
                     <p>Are you sure you want to logout of this session?</p>
-                    <div>
-                      <a href="login.php" class="btn btn-danger m-2 mt-3">Yes, logout</a>
-                      <button type="button" class="btn btn-success m-2 mt-3" data-dismiss="modal">Close</button>
+                    <div class="mt-3">
+                      <a href="login.php" style="text-decoration: none; padding: .75rem 1rem;" class="logout-btn logout-yes m-2">Yes, logout</a>
+                      <a style="text-decoration: none; padding: .75rem 1rem; cursor:pointer;" class="logout-btn logout-close m-2" data-dismiss="modal">Close</a>
                     </div>
                   </div>
                 </div>
@@ -210,7 +205,7 @@ if(isset($_POST['update-preferences-btn'])){
                 <div class="col-sm-5 p-0 mt-3 mb-3">
                   <h4 class="m-0">Conta</h4>  
                   <hr>
-		  <form action="" method="post">
+		              <form action="" method="post">
                     <div class="row">
                       <div class="col">
                         <p>Nome</p>	
@@ -237,9 +232,9 @@ if(isset($_POST['update-preferences-btn'])){
                         <input type="password" name="updated_password" value="" placeholder="Insert new password" required>
                       </div>
                     </div>
-		    <?php echo $error_msg; ?>
+		                  <?php echo $error_msg; ?>
                     <div><button class="profile-form-btn" type="submit" name="update-profile-btn">Update</button></div>
-		  </form>  
+		              </form>  
                 </div>
                 <div class="col-sm-5 p-0 mt-3 mb-3">
                   <h4 class="m-0">Preferências</h4>
@@ -254,7 +249,7 @@ if(isset($_POST['update-preferences-btn'])){
                           <label for="pickup_day">Dias de recolha</label>
                             <div class="mb-3">
                               <select name="pickup_day_1" id="pickup_day">
-				<option selected value="no_day_selected">None</option>
+				                        <option selected value="no_day_selected">None</option>
                                 <option value="segunda-feira">Segunda</option>
                                 <option value="terça-feira">Terça</option>
                                 <option value="quarta-feira">Quarta</option>
@@ -287,7 +282,7 @@ if(isset($_POST['update-preferences-btn'])){
                           <label for="pickup_hr">Períodos de recolha</label>
                             <div class="mb-3">
                               <select name="pickup_period_1">
-				<option selected value="no_hour_selected">None</option>
+				                        <option selected value="no_hour_selected">None</option>
                                 <option value="manha">Manhã (9:00hr - 11:00hr)</option>
                                 <option value="meio_dia">Meio do dia (12:00hr - 13:00hr)</option>
                                 <option value="tarde">Tarde (14:00hr - 17:00hr)</option>
@@ -321,12 +316,11 @@ if(isset($_POST['update-preferences-btn'])){
               <!-- Modal footer -->
               <div class="modal-footer p-2">
                 <button type="button" data-dismiss="modal">Close</button>
-	      </div>
+	            </div>
             </div>
           </div>
         </div>
       </div>
-
       <!-- FAQS Modal -->
       <div class="container">      
         <div class="modal" id="myModal2">
