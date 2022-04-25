@@ -69,11 +69,8 @@ if(isset($_POST['update-inst-preferences-btn'])){
 	$pickup_day2 = htmlspecialchars($_POST['pickup_day2']);
 	$pickup_day3 = htmlspecialchars($_POST['pickup_day3']);
 	$open_pickup_day1 = htmlspecialchars($_POST['open_pickup_day1']);
-	$close_pickup_day1 = htmlspecialchars($_POST['close_pickup_day1']);
 	$open_pickup_day2 = htmlspecialchars($_POST['open_pickup_day2']);
-	$close_pickup_day2 = htmlspecialchars($_POST['close_pickup_day2']);
 	$open_pickup_day3 = htmlspecialchars($_POST['open_pickup_day3']);	
-	$open_pickup_day3 = htmlspecialchars($_POST['close_pickup_day3']);
 	$food_type_day1 = htmlspecialchars($_POST['food_type_day1']);
 	$food_type_day2 = htmlspecialchars($_POST['food_type_day2']);
 	$food_type_day3 = htmlspecialchars($_POST['food_type_day3']);
@@ -84,9 +81,9 @@ if(isset($_POST['update-inst-preferences-btn'])){
 	$food_quantity_day3 = htmlspecialchars($_POST['food_amount_day3']);
 	$amount_type_day3 = htmlspecialchars($_POST['amount_type_day3']);
 
-	$inst_preferences_insert_query = "INSERT INTO Doacao VALUES('$user_id', '$inst_preferences_concelho', '$inst_type', '$pickup_day1', '$open_pickup_day1', '$close_pickup_day1',
-				'$food_type_day1', '$food_quantity_day1', '$amount_type_day1', '$pickup_day2', '$open_pickup_day2', '$close_pickup_day2', '$food_type_day2', 
-				'$food_quantity_day2', '$amount_type_day2', '$pickup_day3', '$open_pickup_day3', '$close_pickup_day3', '$food_type_day3', '$food_quantity_day3',
+	$inst_preferences_insert_query = "INSERT INTO Doacao VALUES('$user_id', '$inst_preferences_concelho', '$inst_type', '$pickup_day1', '$open_pickup_day1',
+				'$food_type_day1', '$food_quantity_day1', '$amount_type_day1', '$pickup_day2', '$open_pickup_day2', '$food_type_day2', 
+				'$food_quantity_day2', '$amount_type_day2', '$pickup_day3', '$open_pickup_day3', '$food_type_day3', '$food_quantity_day3',
 				'$amount_type_day3')";
 
 	$inst_preferences_insert_result = mysqli_query($conn, $inst_preferences_insert_query);
@@ -240,18 +237,12 @@ if(isset($_POST['update-inst-preferences-btn'])){
                               <h5 class="mt-2 mb-2">Hora de recolha</h5>
                               <div class="mt-2 mb-2">
                                 <input type="time" id="pickup_hr" name="open_pickup_day1" min="09:00" max="19:00">
-                                às
-                                <input type="time" name="close_pickup_day1" min="10:00" max="20:00">
                               </div>
                               <div class="mt-2 mb-2">
                                 <input type="time" name="open_pickup_day2"  min="09:00" max="19:00">
-                                às
-                                <input type="time" name="close_pickup_day2" min="10:00" max="20:00">
                               </div>
                               <div class="mt-2 mb-2">
                                 <input type="time" name="open_pickup_day3" min="09:00" max="19:00">
-                                  às
-                                <input type="time" name="close_pickup_day3" min="10:00" max="20:00">
                               </div>
                             </div>
                             <div class="col-sm">
