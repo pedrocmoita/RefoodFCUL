@@ -58,6 +58,41 @@ if(isset($_POST['instituicao-profile-btn'])){
 
 }
 
+
+//---------------Preferences section--------------
+
+if(isset($_POST['update-inst-preferences-btn'])){
+
+	$inst_preferences_concelho = htmlspecialchars($_POST['inst_preferences_concelho']);
+	$inst_type = htmlspecialchars($_POST['$inst_type']);
+	$pickup_day1 = htmlspecialchars($_POST['pickup_day1']);
+	$pickup_day2 = htmlspecialchars($_POST['pickup_day2']);
+	$pickup_day3 = htmlspecialchars($_POST['pickup_day3']);
+	$open_pickup_day1 = htmlspecialchars($_POST['open_pickup_day1']);
+	$close_pickup_day1 = htmlspecialchars($_POST['close_pickup_day1']);
+	$open_pickup_day2 = htmlspecialchars($_POST['open_pickup_day2']);
+	$close_pickup_day2 = htmlspecialchars($_POST['close_pickup_day2']);
+	$open_pickup_day3 = htmlspecialchars($_POST['open_pickup_day3']);	
+	$open_pickup_day3 = htmlspecialchars($_POST['close_pickup_day3']);
+	$food_type_day1 = htmlspecialchars($_POST['food_type_day1']);
+	$food_type_day2 = htmlspecialchars($_POST['food_type_day2']);
+	$food_type_day3 = htmlspecialchars($_POST['food_type_day3']);
+	$food_quantity_day1 = htmlspecialchars($_POST['food_amount_day1']);
+	$amount_type_day1 = htmlspecialchars($_POST['amount_type_day1']);
+	$food_quantity_day2 = htmlspecialchars($_POST['food_amount_day2']);
+	$amount_type_day2 = htmlspecialchars($_POST['amount_type_day2']);
+	$food_quantity_day3 = htmlspecialchars($_POST['food_amount_day3']);
+	$amount_type_day3 = htmlspecialchars($_POST['amount_type_day3']);
+
+	$inst_preferences_insert_query = "INSERT INTO Doacao VALUES('$user_id', '$inst_preferences_concelho', '$inst_type', '$pickup_day1', '$open_pickup_day1', '$close_pickup_day1',
+				'$food_type_day1', '$food_quantity_day1', '$amount_type_day1', '$pickup_day2', '$open_pickup_day2', '$close_pickup_day2', '$food_type_day2', 
+				'$food_quantity_day2', '$amount_type_day2', '$pickup_day3', '$open_pickup_day3', '$close_pickup_day3', '$food_type_day3', '$food_quantity_day3',
+				'$amount_type_day3')";
+
+	$inst_preferences_insert_result = mysqli_query($conn, $inst_preferences_insert_query);
+}
+
+//------------------------------------------------
 ?>
 
 <html lang="en">
@@ -104,7 +139,6 @@ if(isset($_POST['instituicao-profile-btn'])){
             <div class="modal" id="myModal">
               <div class="modal-dialog modal-xl">
                 <div class="modal-content">
-                  <form action="" method="post">
                     <!-- Modal Header -->
                     <div class="modal-header">
                       <h4 class="modal-title">Profile</h4>
@@ -113,55 +147,58 @@ if(isset($_POST['instituicao-profile-btn'])){
                     <!-- Modal body -->
                     <div class="modal-body p-0">
                       <div class="p-4">
-                        <h3 class="m-0">Conta</h3>  
-                        <hr>
-                        <div class="row d-flex justify-content-around">
-                          <div class="col">
-                            <h5 class="mt-2 mb-2">Nome</h5>	
-                            <input type="text" class="w-50" name="updated_name" value="<?php echo $username?>" placeholder="Insert new name" required>
-                            <h5 class="mt-2 mb-2">Email</h5>
-                            <input type="email" class="w-50" name="updated_email" value="<?php echo $bd_email ?>" placeholder="Insert new email" required>
-                            <h5 class="mt-2 mb-2">Telemóvel</h5>
-                            <input type="text" class="w-50" name="updated_phone" value="<?php echo $bd_phone?>" placeholder="Insert new number" required>
-                            <h5 class="mt-2 mb-2">Pessoa responsável</h5>
-                            <input type="text" class="w-50" name="updated_person_charge" value="<?php echo $bd_name_charge ?>" placeholder="Insert new name" required>
-                            <h5 class="mt-2 mb-2">Número pessoa responsável</h5>
-                            <input type="text" class="w-50" name="updated_number_charge" value="<?php echo $bd_number_charge ?>" placeholder="Insert new number" required>
-			    <hr>
-                            <button class="profile-form-btn m-0" type="submit" name="instituicao-profile-btn"><i class="fa-regular fa-pen-to-square"></i><span class="ml-2">Update account</span></button>
+			<form action="" method="post">
+                          <h3 class="m-0">Conta</h3>  
+                          <hr>
+                          <div class="row d-flex justify-content-around">
+                            <div class="col">
+                              <h5 class="mt-2 mb-2">Nome</h5>	
+                              <input type="text" class="w-50" name="updated_name" value="<?php echo $username?>" placeholder="Insert new name" required>
+                              <h5 class="mt-2 mb-2">Email</h5>
+                              <input type="email" class="w-50" name="updated_email" value="<?php echo $bd_email ?>" placeholder="Insert new email" required>
+                              <h5 class="mt-2 mb-2">Telemóvel</h5>
+                              <input type="text" class="w-50" name="updated_phone" value="<?php echo $bd_phone?>" placeholder="Insert new number" required>
+                              <h5 class="mt-2 mb-2">Pessoa responsável</h5>
+                              <input type="text" class="w-50" name="updated_person_charge" value="<?php echo $bd_name_charge ?>" placeholder="Insert new name" required>
+                              <h5 class="mt-2 mb-2">Número pessoa responsável</h5>
+                              <input type="text" class="w-50" name="updated_number_charge" value="<?php echo $bd_number_charge ?>" placeholder="Insert new number" required>
+			      <hr>
+                              <button class="profile-form-btn m-0" type="submit" name="instituicao-profile-btn"><i class="fa-regular fa-pen-to-square"></i><span class="ml-2">Update account</span></button>
+                            </div>
+                            <div class="col">
+                              <h5 class="mt-2 mb-2">Distrito</h5>
+                              <input type="text" class="w-50" name="updated_distrito" value="<?php echo $bd_distrito ?>" placeholder="Insert new distrito" required>
+                              <h5 class="mt-2 mb-2">Concelho</h5>
+                              <input type="text" class="w-50" name="updated_concelho" value="<?php echo $bd_concelho ?>" placeholder="Insert new concelho" required>
+                              <h5 class="mt-2 mb-2">Freguesia</h5>
+                              <input type="text" class="w-50" name="updated_freguesia" value="<?php echo $bd_freguesia ?>" placeholder="Insert new freguesia" required>
+                              <h5 class="mt-2 mb-2">Morada</h5>
+                              <input type="text" class="w-50" name="updated_adress" value="<?php echo $bd_adress ?>" placeholder="Insert new adress" required>
+                              <h5 class="mt-2 mb-2">Password</h5>
+                              <input type="password" class="w-50" name="updated_password" value="" placeholder="Insert new password" required>
+                              <hr>
+			      <button class="delete-account-btn m-0" name="delete-account"><i class="fa-regular fa-trash-can"></i><span class="ml-2">Delete account</span></button>
+                            </div>
                           </div>
-                          <div class="col">
-                            <h5 class="mt-2 mb-2">Distrito</h5>
-                            <input type="text" class="w-50" name="updated_distrito" value="<?php echo $bd_distrito ?>" placeholder="Insert new distrito" required>
-                            <h5 class="mt-2 mb-2">Concelho</h5>
-                            <input type="text" class="w-50" name="updated_concelho" value="<?php echo $bd_concelho ?>" placeholder="Insert new concelho" required>
-                            <h5 class="mt-2 mb-2">Freguesia</h5>
-                            <input type="text" class="w-50" name="updated_freguesia" value="<?php echo $bd_freguesia ?>" placeholder="Insert new freguesia" required>
-                            <h5 class="mt-2 mb-2">Morada</h5>
-                            <input type="text" class="w-50" name="updated_adress" value="<?php echo $bd_adress ?>" placeholder="Insert new adress" required>
-                            <h5 class="mt-2 mb-2">Password</h5>
-                            <input type="password" class="w-50" name="updated_password" value="" placeholder="Insert new password" required>
-                            <hr>
-			    <button class="delete-account-btn m-0" name="delete-account"><i class="fa-regular fa-trash-can"></i><span class="ml-2">Delete account</span></button>
-                          </div>
-                        </div>  
+			</form>  
                       </div>
                       <div class="p-4">
+			<form action="" method="post">
                         <h3 class="m-0">Preferências</h3>
                         <hr>
                         <div class="row">
                           <div class="col">
                             <h5 class="mt-2 mb-2">Local de recolha</h5>
-                            <input type="text" placeholder="Concelho">
+                            <input type="text" name="inst_preferences_concelho" placeholder="Concelho">
                           </div>
                           <div class="col">
                             <h5 class="mt-2 mb-2">Tipo de instituição</h5>
-                            <select name="institution_type" id="institution_type">
-                              <option selected value="coffee">Café</option>
-                              <option value="restaurant">Restaurante</option>
-                              <option value="refectory">Refeitório</option>
-                              <option value="market">Supermercado</option>
-                              <option value="cooperative">Cooperativa</option>
+                            <select name="inst_type">
+                              <option selected value="Cafe">Café</option>
+                              <option value="Restaurante">Restaurante</option>
+                              <option value="Refeitorio">Refeitório</option>
+                              <option value="Supermercado">Supermercado</option>
+                              <option value="Cooperativa">Cooperativa</option>
                             </select>
                          </div>
                         </div>
@@ -170,7 +207,7 @@ if(isset($_POST['instituicao-profile-btn'])){
                           <div class="col-sm">
                             <h5 class="mt-2 mb-2">Dias de recolha</h5>
                               <div>
-                                <select class="mt-2 mb-2" name="pickup_day_1" id="pickup_day">
+                                <select class="mt-2 mb-2" name="pickup_day1" id="pickup_day">
                                   <option selected value="Segunda-feira">Segunda-feira</option>
                                   <option value="Terça-feira">Terça-feira</option>
                                   <option value="Quarta-feira">Quarta-feira</option>
@@ -179,8 +216,8 @@ if(isset($_POST['instituicao-profile-btn'])){
                                 </select>
                               </div>
                               <div>
-                                <select class="mt-2 mb-2" name="pickup_day_2">
-                                  <option selected value="no_day_selected">None</option>
+                                <select class="mt-2 mb-2" name="pickup_day2">
+                                  <option selected value="N/A">None</option>
                                   <option value="Segunda-feira">Segunda-feira</option>
                                   <option value="Terça-feira">Terça-feira</option>
                                   <option value="Quarta-feira">Quarta-feira</option>
@@ -189,8 +226,8 @@ if(isset($_POST['instituicao-profile-btn'])){
                                 </select>
                               </div>
                               <div>
-                                <select class="mt-2 mb-2" name="pickup_day_3">
-                                  <option selected value="no_day_selected">None</option>
+                                <select class="mt-2 mb-2" name="pickup_day3">
+                                  <option selected value="N/A">None</option>
                                   <option value="Segunda-feira">Segunda-feira</option>
                                   <option value="Terça-feira">Terça-feira</option>
                                   <option value="Quarta-feira">Quarta-feira</option>
@@ -202,76 +239,77 @@ if(isset($_POST['instituicao-profile-btn'])){
                             <div class="col-sm">
                               <h5 class="mt-2 mb-2">Hora de recolha</h5>
                               <div class="mt-2 mb-2">
-                                <input type="time" id="pickup_hr" name="open_pick_up_day1" min="09:00" max="19:00">
+                                <input type="time" id="pickup_hr" name="open_pickup_day1" min="09:00" max="19:00">
                                 às
-                                <input type="time" name="close_pick_up_day1" min="10:00" max="20:00">
+                                <input type="time" name="close_pickup_day1" min="10:00" max="20:00">
                               </div>
                               <div class="mt-2 mb-2">
-                                <input type="time" name="open_pick_up_day2"  min="09:00" max="19:00">
+                                <input type="time" name="open_pickup_day2"  min="09:00" max="19:00">
                                 às
-                                <input type="time" name="close_pick_up_day2" min="10:00" max="20:00">
+                                <input type="time" name="close_pickup_day2" min="10:00" max="20:00">
                               </div>
                               <div class="mt-2 mb-2">
-                                <input type="time" name="open_pick_up_day3" min="09:00" max="19:00">
+                                <input type="time" name="open_pickup_day3" min="09:00" max="19:00">
                                   às
-                                <input type="time" name="close_pick_up_day3" min="10:00" max="20:00">
+                                <input type="time" name="close_pickup_day3" min="10:00" max="20:00">
                               </div>
                             </div>
                             <div class="col-sm">
                               <h5 class="mt-2 mb-2">Tipos de alimentos</h5>
                               <div>
-                                <select class="mt-2 mb-2" name="food_type_1">
-                                  <option selected value="day_consumed">Consumo no dia</option>
-                                  <option value="long_consumed">Longa duração</option>
+                                <select class="mt-2 mb-2" name="food_type_day1">
+                                  <option selected value="Consumo no dia">Consumo no dia</option>
+                                  <option value="Longa duração">Longa duração</option>
                                 </select>
                               </div>
                               <div>
-                                <select class="mt-2 mb-2" name="food_type_2">
+                                <select class="mt-2 mb-2" name="food_type_day2">
 				  <option selected value="N/A">None</option>
-                                  <option value="day_consumed">Consumo no dia</option>
-                                  <option value="long_consumed">Longa duração</option>
+                                  <option value="Consumo no dia">Consumo no dia</option>
+                                  <option value="Longa duração">Longa duração</option>
                                 </select>
                               </div>
                               <div>
-                                <select class="mt-2 mb-2" name="food_type_3">
+                                <select class="mt-2 mb-2" name="food_type_day3">
 				  <option selected value="N/A">None</option>
-                                  <option value="day_consumed">Consumo no dia</option>
-                                  <option value="long_consumed">Longa duração</option>
+                                  <option value="Consumo no dia">Consumo no dia</option>
+                                  <option value="Longa duração">Longa duração</option>
                                 </select>
                               </div>
                             </div>
                             <div class="col-sm">
                               <h5 class="mt-2 mb-2">Quantidade de alimentos</h5>
                               <div class="mt-2 mb-2">
-                                <input style="width: 25%;" type="number">
-                                <select name="">
-                                  <option value="">Kg</option>
-                                  <option value="">Refeições</option>
+                                <input class="w-25" name="food_amount_day1" type="text">
+                                <select name="amount_type_day1">
+                                  <option value="Kg">Kg</option>
+                                  <option value="Refeições">Refeições</option>
                                 </select>
                               </div>
                               <div class="mt-2 mb-2">
-                                <input style="width: 25%;" type="number">
-                                  <select name="">
-                                    <option value="">Kg</option>
-                                    <option value="">Refeições</option>
+                                <input class="w-25" name="food_amount_day2" type="text">
+                                  <select name="amount_type_day2">
+                                    <option value="Kg">Kg</option>
+                                    <option value="Refeições">Refeições</option>
                                   </select>
                                 </div>
                                 <div class="mt-2 mb-2">
-                                  <input style="width: 25%;" type="number">
-                                  <select name="">
-                                    <option value="">Kg</option>
-                                    <option value="">Refeições</option>
+                                  <input class="w-25" name="food_amount_day3" type="text">
+                                  <select name="amount_type_day3">
+                                    <option value="Kg">Kg</option>
+                                    <option value="Refeições">Refeições</option>
                                   </select>
                                 </div>
                               </div>
                             </div>
+			    <button class="profile-form-btn m-0" type="submit" name="update-inst-preferences-btn"><i class="fa-regular fa-pen-to-square"></i><span class="ml-2">Update</span></button>
+			   </form>
                           </div>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer">
                       <button type="button" data-dismiss="modal">Close</button>
                     </div>
-                  </form>
                 </div>
               </div>
             </div>
