@@ -29,6 +29,12 @@ if(isset($_POST['submit-btn'])){
                         $vol_id_row = mysqli_fetch_assoc($volresult);
                         $vol_id = $vol_id_row['id'];
 			
+			$instquery = "SELECT * FROM Instituicao WHERE email = '$email'";
+			$instresult = mysqli_query($conn, $instquery);
+			$inst_num_row = mysqli_num_rows($instresult);
+			$inst_id_row = mysqli_fetch_assoc($instresult);
+			$inst_id = $inst_id_row['id'];
+						
 			session_start();
 			$_SESSION['loggedin'] = true;
 			$_SESSION['username'] = $username;
@@ -38,7 +44,7 @@ if(isset($_POST['submit-btn'])){
                                 $_SESSION['id'] = $vol_id;
 				header("location: welcome_voluntario.php");
 			}else{
-                                //$_SESSION['id'] = $inst_id;
+                                $_SESSION['id'] = $inst_id;
 				header("location: welcome_instituicao.php");
 			}	
 
