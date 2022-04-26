@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
@@ -45,26 +44,67 @@ if(isset($_POST['instituicao-profile-btn'])){
 
 	$updated_hash_password = password_hash($updated_password, PASSWORD_DEFAULT);
 
-	$update_query = "UPDATE Instituicao SET  nome='$updated_name', numero='$updated_phone', email='$updated_email', morada='$updated_adress', 
+  $error = '';
+	$error_msg = '';
+	$alert = "Failed to update! Check your profile.";
+	$alert_msg = "<div style='position: absolute; top: 3%; left: 50%; transform: translate(-50%, -50%);' class='mt-3 pt-4 pb-4 alert alert-danger alert-dismissible fade show' role='alert'>
+			<button type='button' class='pt-4 close' data-dismiss='alert'>&times;</button>
+			{$alert}
+			</div>";
+
+  if(strlen("$updated_password") < 6 || strlen("$updated_password") > 20){
+      $error = "Password must have between 6 and 20 characters!";
+      $error_msg = "<div class='container mt-2 mb-2 pt-2 pb-2 alert alert-danger alert-dismissible fade show' role='alert'>
+                    <button type='button' class='pt-2 close' data-dismiss='alert'>&times;</button>
+                    {$error}
+                    </div>";
+      echo $alert_msg;
+
+  }else if(strlen($updated_phone) > 9){
+		$error = "Phone number has a maximum of 9 digits!";
+		$error_msg = "<div class='container mt-2 mb-2 pt-2 pb-2 alert alert-danger alert-dismissible fade show' role='alert'>
+                          <button type='button' class='pt-2 close' data-dismiss='alert'>&times;</button>
+                          {$error}
+                      </div>";	
+	 	echo $alert_msg;
+
+  }else if(strlen("$updated_number_charge") > 9){
+		$error = "Phone of the person in charge must have a maximum of 9 digits.";
+		$error_msg = "<div class='container mt-2 mb-2 pt-2 pb-2 alert alert-danger alert-dismissible fade show' role='alert'>
+                        <button type='button' class='pt-2 close' data-dismiss='alert'>&times;</button>
+                          {$error}
+                      </div>";
+                echo $alert_msg;
+  }else{
+    if (is_numeric("$updated_phone") && is_numeric("$updated_number_charge")){
+
+      $update_query = "UPDATE Instituicao SET  nome='$updated_name', numero='$updated_phone', email='$updated_email', morada='$updated_adress', 
                     distrito='$updated_distrito', concelho='$updated_concelho', freguesia='$updated_freguesia', nome_contacto='$updated_person_charge', 
                     num_contacto='$updated_number_charge', passwd='$updated_hash_password' WHERE id='$user_id'";
-	$result_update = mysqli_query($conn, $update_query);
+	    $result_update = mysqli_query($conn, $update_query);
 
-	$update_query2 = "UPDATE Utilizador SET nome='$updated_name', email='$updated_email', passwd='$updated_hash_password' WHERE id='$ID'";
-	$result_update2 = mysqli_query($conn, $update_query2);
+	    $update_query2 = "UPDATE Utilizador SET nome='$updated_name', email='$updated_email', passwd='$updated_hash_password' WHERE id='$ID'";
+	    $result_update2 = mysqli_query($conn, $update_query2);
+	    
+      $_SESSION['username'] = $updated_name;
+	    header('location: welcome_instituicao.php');
 
-	$_SESSION['username'] = $updated_name;
-	header('location: welcome_instituicao.php');
-
+    }else{
+      $error = "Please insert valid phone numbers.";
+			$error_msg = "<div class='container mt-2 mb-2 pt-2 pb-2 alert alert-danger alert-dismissible fade show' role='alert'>
+                          	<button type='button' class='pt-2 close' data-dismiss='alert'>&times;</button>
+                          	{$error}
+                      		</div>";	
+	 		echo $alert_msg;
+    }
 }
 
-
-//---------------Preferences section--------------
+//---------------Preferences section-----------------
 
 if(isset($_POST['update-inst-preferences-btn'])){
 
-	$inst_preferences_concelho = htmlspecialchars($_POST['inst_preferences_concelho']);
-	$inst_type = htmlspecialchars($_POST['$inst_type']);
+	$inst_concelho = htmlspecialchars($_POST['inst_preferences_concelho']);
+	$inst_type = htmlspecialchars($_POST['$type']);
 	$pickup_day1 = htmlspecialchars($_POST['pickup_day1']);
 	$pickup_day2 = htmlspecialchars($_POST['pickup_day2']);
 	$pickup_day3 = htmlspecialchars($_POST['pickup_day3']);
@@ -81,15 +121,16 @@ if(isset($_POST['update-inst-preferences-btn'])){
 	$food_quantity_day3 = htmlspecialchars($_POST['food_amount_day3']);
 	$amount_type_day3 = htmlspecialchars($_POST['amount_type_day3']);
 
-	$inst_preferences_insert_query = "INSERT INTO Doacao VALUES('$user_id', '$inst_preferences_concelho', '$inst_type', '$pickup_day1', '$open_pickup_day1',
-				'$food_type_day1', '$food_quantity_day1', '$amount_type_day1', '$pickup_day2', '$open_pickup_day2', '$food_type_day2', 
-				'$food_quantity_day2', '$amount_type_day2', '$pickup_day3', '$open_pickup_day3', '$food_type_day3', '$food_quantity_day3',
-				'$amount_type_day3')";
+	$inst_preferences_insert_query = "INSERT INTO Doacao VALUES('$user_id', '$inst_concelho', '$inst_type', '$pickup_day1', '$open_pickup_day1',
+				'$food_type_day1', '$food_quantity_day1', '$amount_type_day1', '$pickup_day2', '$open_pickup_day2', '$food_type_day2', '$food_quantity_day2', 
+        '$amount_type_day2', '$pickup_day3', '$open_pickup_day3', '$food_type_day3', '$food_quantity_day3', '$amount_type_day3')";
 
 	$inst_preferences_insert_result = mysqli_query($conn, $inst_preferences_insert_query);
 }
 
-//------------------------------------------------
+//----------------BD Preferences section---------------------
+
+//-----------------------------------------------------------
 ?>
 
 <html lang="en">
@@ -144,7 +185,7 @@ if(isset($_POST['update-inst-preferences-btn'])){
                     <!-- Modal body -->
                     <div class="modal-body p-0">
                       <div class="p-4">
-			<form action="" method="post">
+			                  <form action="" method="post">
                           <h3 class="m-0">Conta</h3>  
                           <hr>
                           <div class="row d-flex justify-content-around">
@@ -159,7 +200,7 @@ if(isset($_POST['update-inst-preferences-btn'])){
                               <input type="text" class="w-50" name="updated_person_charge" value="<?php echo $bd_name_charge ?>" placeholder="Insert new name" required>
                               <h5 class="mt-2 mb-2">Número pessoa responsável</h5>
                               <input type="text" class="w-50" name="updated_number_charge" value="<?php echo $bd_number_charge ?>" placeholder="Insert new number" required>
-			      <hr>
+			                        <hr>
                               <button class="profile-form-btn m-0" type="submit" name="instituicao-profile-btn"><i class="fa-regular fa-pen-to-square"></i><span class="ml-2">Update account</span></button>
                             </div>
                             <div class="col">
@@ -174,13 +215,13 @@ if(isset($_POST['update-inst-preferences-btn'])){
                               <h5 class="mt-2 mb-2">Password</h5>
                               <input type="password" class="w-50" name="updated_password" value="" placeholder="Insert new password" required>
                               <hr>
-			      <button class="delete-account-btn m-0" name="delete-account"><i class="fa-regular fa-trash-can"></i><span class="ml-2">Delete account</span></button>
+			                        <button class="delete-account-btn m-0" name="delete-account"><i class="fa-regular fa-trash-can"></i><span class="ml-2">Delete account</span></button>
                             </div>
                           </div>
-			</form>  
+			                  </form>  
                       </div>
                       <div class="p-4">
-			<form action="" method="post">
+			                  <form action="" method="post">
                         <h3 class="m-0">Preferências</h3>
                         <hr>
                         <div class="row">
@@ -190,12 +231,13 @@ if(isset($_POST['update-inst-preferences-btn'])){
                           </div>
                           <div class="col">
                             <h5 class="mt-2 mb-2">Tipo de instituição</h5>
-                            <select name="inst_type">
+                            <select name="type">
                               <option selected value="Cafe">Café</option>
                               <option value="Restaurante">Restaurante</option>
                               <option value="Refeitorio">Refeitório</option>
                               <option value="Supermercado">Supermercado</option>
                               <option value="Cooperativa">Cooperativa</option>
+                              <option value="Outra">Outra</option>
                             </select>
                          </div>
                         </div>
@@ -255,14 +297,14 @@ if(isset($_POST['update-inst-preferences-btn'])){
                               </div>
                               <div>
                                 <select class="mt-2 mb-2" name="food_type_day2">
-				  <option selected value="N/A">None</option>
+                        				  <option selected value="N/A">None</option>
                                   <option value="Consumo no dia">Consumo no dia</option>
                                   <option value="Longa duração">Longa duração</option>
                                 </select>
                               </div>
                               <div>
                                 <select class="mt-2 mb-2" name="food_type_day3">
-				  <option selected value="N/A">None</option>
+				                          <option selected value="N/A">None</option>
                                   <option value="Consumo no dia">Consumo no dia</option>
                                   <option value="Longa duração">Longa duração</option>
                                 </select>
@@ -293,9 +335,9 @@ if(isset($_POST['update-inst-preferences-btn'])){
                                 </div>
                               </div>
                             </div>
-			    <button class="profile-form-btn m-0" type="submit" name="update-inst-preferences-btn"><i class="fa-regular fa-pen-to-square"></i><span class="ml-2">Update</span></button>
-			   </form>
-                          </div>
+			                      <button class="profile-form-btn m-0" type="submit" name="update-inst-preferences-btn"><i class="fa-regular fa-pen-to-square"></i><span class="ml-2">Update</span></button>
+			                    </form>
+                        </div>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer">
