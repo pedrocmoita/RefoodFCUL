@@ -205,7 +205,7 @@ if($bd_periodo_3 === 'no_hour_selected'){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Refood | FCUL</title>
-    <link rel="stylesheet" href="css/welcome.css">
+    <link rel="stylesheet" href="css/welcomee.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -266,7 +266,7 @@ if($bd_periodo_3 === 'no_hour_selected'){
                         <input type="date" name="updated_birth" value="<?php echo $bd_nascimento; ?>" required>
                         <h5 class="mt-2 mb-2">Carta Condução</h5>
                         <input type="text" name="updated_drivers" value="<?php echo $bd_carta_cond;  ?>" placeholder="Insert new license" required>
-                    	<button class="profile-form-btn" type="submit" name="update-profile-btn">Update</button>
+			<button class="profile-form-btn m-0 mt-3" type="submit" name="update-profile-btn"><i class="fa-regular fa-pen-to-square"></i><span class="ml-2">Update account</span></button>
 		      </div>
                       <div class="col">
                         <h5 class="mt-2 mb-2">Distrito</h5>
@@ -279,7 +279,7 @@ if($bd_periodo_3 === 'no_hour_selected'){
                         <input type="text" name="updated_cartao_cidadao" value="<?php echo $bd_cartao_cidadao; ?>" placeholder="Insert new ID" required>
                         <h5 class="mt-2 mb-2">Password</h5>
                         <input type="password" name="updated_password" value="" placeholder="Insert new password" required>
-                    	<button class="profile-form-btn" type="submit" name="delete-account">Delete account</button>
+			<button class="delete-account-btn m-0 mt-3" name="delete-account"><i class="fa-regular fa-trash-can"></i><span class="ml-2">Delete account</span></button>
 		      </div>
                     </div>
 		    <?php echo $error_msg; ?>
