@@ -11,6 +11,6 @@ There's an admin page only available for people that know a specific password an
 We created a SQL data base and used MySql to upload some tables.
 We have implemented with PHP:
 - Login/Sign up system (we used PHP and HTML for the form validation);
-- Update profile and select preferences;
+- Update profile and select/update preferences;
 - Search bar system for the users and admins;
 - Statistics and more info in the admin page.
