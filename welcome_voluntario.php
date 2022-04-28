@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
 	header("location: login.php");
 	exit;
@@ -66,6 +65,12 @@ if(isset($_POST['update-profile-btn'])){
 			<button type='button' class='pt-4 close' data-dismiss='alert'>&times;</button>
 			{$alert}
 			</div>";
+	
+	$success = "Profile updated with success!";
+        $success_msg = "<div style='position: absolute; top: 3%; left: 50%; transform: translate(-50%, -50%);' class='mt-3 pt-4 pb-4 alert alert-success alert-dismissible fade show' role='alert'>
+                        <button type='button' class='pt-4 close' data-dismiss='alert'>&times;</button>
+                        {$success}
+                        </div>";	
 
 	if(strlen("$updated_password") < 6 || strlen("$updated_password") > 20){
 		$error = "Password must have between 6 and 20 characters!";
@@ -92,7 +97,6 @@ if(isset($_POST['update-profile-btn'])){
                 echo $alert_msg;
 
 	}else{
-
 		if(is_numeric($updated_phone)){
 			$update_query = "UPDATE Voluntario SET  nome='$updated_name', numero='$updated_phone', email='$updated_email', distrito='$updated_distrito',
                 		concelho='$updated_concelho', freguesia='$updated_freguesia', data_nasc='$updated_birth', carta_cond='$updated_drivers',
@@ -104,7 +108,7 @@ if(isset($_POST['update-profile-btn'])){
 
         		$_SESSION['username'] = $updated_name;
         		header('location: welcome_voluntario.php');
-
+			echo $success_msg;
 		}else{
 			$error = "Please insert a valid phone number.";
 			$error_msg = "<div class='container mt-2 mb-2 pt-2 pb-2 alert alert-danger alert-dismissible fade show' role='alert'>
@@ -142,7 +146,6 @@ if(isset($_POST['update-preferences-btn'])){
 					'$pickup_period_2', '$pickup_day_3', '$pickup_period_3')";
 		$preferences_insert_result = mysqli_query($conn, $preferences_insert_query);
   	}
-
 	header('location: welcome_voluntario.php');
 }
 //----------------BD Preferences section--------------------
@@ -164,41 +167,33 @@ if($bd_dia_semana_1 === 'no_day_selected'){
 }else{
 	$bd_dia_semana_1 = $row_dias['dia_semana_1'];
 }
-
 if($bd_dia_semana_2 === 'no_day_selected'){
 	$bd_dia_semana_2 = '';
 }else{
 	$bd_dia_semana_2 = $row_dias['dia_semana_2'];
 }
-
 if($bd_dia_semana_3 === 'no_day_selected'){
 	$bd_dia_semana_3 = '';
 }else{
 	$bd_dia_semana_3 = $row_dias['dia_semana_3'];
 }
-
 if($bd_periodo_1 === 'no_hour_selected'){
 	$bd_periodo_1 = '';
 }else{
 	$bd_periodo_1 = $row_dias['periodo_dia_1'];	
 }
-
 if($bd_periodo_2 === 'no_hour_selected'){
 	$bd_periodo_2 = '';
 }else{
 	$bd_periodo_2 = $row_dias['periodo_dia_2'];
 }
-
 if($bd_periodo_3 === 'no_hour_selected'){
 	$bd_periodo_3 = '';
 }else{
 	$bd_periodo_3 = $row_dias['periodo_dia_3'];
 }
-
 //---------------------------------------------------------
-
 ?>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -245,13 +240,13 @@ if($bd_periodo_3 === 'no_hour_selected'){
             <div class="modal-content">
               <!-- Modal Header -->
               <div class="modal-header">
-                <h4 class="modal-title">Profile</h4>
+                <h3 class="modal-title">Profile</h3>
                 <button style="color: #EED202;" type="button" class="close" data-dismiss="modal">&times;</button>
               </div>
               <!-- Modal body -->
               <div class="profile modal-body row p-0 justify-content-around">
                 <div class="col-sm-5 p-0 mt-3 mb-3">
-                  <h4 class="m-0">Conta</h4>  
+                  <h3 class="m-0">Conta</h3>  
                   <hr>
 		  <form action="" method="post">
                     <div class="row">
@@ -266,7 +261,8 @@ if($bd_periodo_3 === 'no_hour_selected'){
                         <input type="date" name="updated_birth" value="<?php echo $bd_nascimento; ?>" required>
                         <h5 class="mt-2 mb-2">Carta Condução</h5>
                         <input type="text" name="updated_drivers" value="<?php echo $bd_carta_cond;  ?>" placeholder="Insert new license" required>
-			<button class="profile-form-btn m-0 mt-3" type="submit" name="update-profile-btn"><i class="fa-regular fa-pen-to-square"></i><span class="ml-2">Update account</span></button>
+			<hr>
+			<button class="profile-form-btn m-0" type="submit" name="update-profile-btn"><i class="fa-regular fa-pen-to-square"></i><span class="ml-2">Update account</span></button>
 		      </div>
                       <div class="col">
                         <h5 class="mt-2 mb-2">Distrito</h5>
@@ -279,31 +275,15 @@ if($bd_periodo_3 === 'no_hour_selected'){
                         <input type="text" name="updated_cartao_cidadao" value="<?php echo $bd_cartao_cidadao; ?>" placeholder="Insert new ID" required>
                         <h5 class="mt-2 mb-2">Password</h5>
                         <input type="password" name="updated_password" value="" placeholder="Insert new password" required>
-			<button class="delete-account-btn m-0 mt-3" name="delete-account"><i class="fa-regular fa-trash-can"></i><span class="ml-2">Delete account</span></button>
+			<hr>
+			<button class="delete-account-btn m-0" name="delete-account"><i class="fa-regular fa-trash-can"></i><span class="ml-2">Delete account</span></button>
 		      </div>
                     </div>
 		    <?php echo $error_msg; ?>
 		  </form>  
                 </div>
                 <div class="col-sm-5 p-0 mt-3 mb-3">
-                  <h4 class="m-0">Preferências</h4>
-		  <hr>
-		  <h5 class="mt-2 mb-2">Concelho</h5>
-		  <p><?php echo $bd_preferences_concelho ?></p>
-		  <div class="row">
-		  	<div class="col">
-				<h5 class="mt-2 mb-2">Dias de recolha</h5>
-				<p><?php echo $bd_dia_semana_1; ?></p>
-				<p><?php echo $bd_dia_semana_2; ?></p>
-				<p><?php echo $bd_dia_semana_3; ?></p>
-			</div>
-			<div class="col">
-				<h5 class="mt-2 mb-2">Períodos de recolha</h5>
-				<p><?php echo $bd_periodo_1; ?></p>
-				<p><?php echo $bd_periodo_2; ?></p>
-				<p><?php echo $bd_periodo_3; ?></p>
-			</div>
-		  </div>
+                  <h3 class="m-0">Preferências</h3>
 		  <hr>
                     <form action="" method="post">
                       <div>
@@ -315,8 +295,7 @@ if($bd_periodo_3 === 'no_hour_selected'){
                           <label for="pickup_day"><h5 class="mt-2 mb-2">Dias de recolha</h5></label>
                             <div class="mb-3">
                               <select name="pickup_day_1" id="pickup_day">
-				<option selected value="no_day_selected">None</option>
-                                <option value="segunda-feira">Segunda</option>
+                                <option selected value="segunda-feira">Segunda</option>
                                 <option value="terça-feira">Terça</option>
                                 <option value="quarta-feira">Quarta</option>
                                 <option value="quinta-feira">Quinta</option>
@@ -348,8 +327,7 @@ if($bd_periodo_3 === 'no_hour_selected'){
                           <label for="pickup_hr"><h5 class="mt-2 mb-2">Períodos de recolha</h5></label>
                             <div class="mb-3">
                               <select name="pickup_period_1">
-				<option selected value="no_hour_selected">None</option>
-                                <option value="manha">Manhã (9:00hr - 11:00hr)</option>
+                                <option selected value="manha">Manhã (9:00hr - 11:00hr)</option>
                                 <option value="meio do dia">Meio do dia (12:00hr - 13:00hr)</option>
                                 <option value="tarde">Tarde (14:00hr - 17:00hr)</option>
                                 <option value="noite">Noite (18:00hr - 19:00hr)</option>
@@ -375,8 +353,26 @@ if($bd_periodo_3 === 'no_hour_selected'){
                             </div>
                           </div>
                         </div>
-                        <div><button class="profile-form-btn mt-1" type="submit" name="update-preferences-btn">Update</button></div>
+			<hr>
+                        <button class="profile-form-btn m-0" type="submit" name="update-preferences-btn"><i class="fa-regular fa-trash-can"></i><span class="ml-2">Update Preferences</span></button>
                     </form>
+		    <hr>
+                    <h5 class="mt-2 mb-2">Concelho</h5>
+                    <p><?php echo $bd_preferences_concelho ?></p>
+                    <div class="row">
+                        <div class="col">
+                                <h5 class="mt-2 mb-2">Dias de recolha</h5>
+                                <p><?php echo $bd_dia_semana_1; ?></p>
+                                <p><?php echo $bd_dia_semana_2; ?></p>
+                                <p><?php echo $bd_dia_semana_3; ?></p>
+                        </div>
+                        <div class="col">
+                                <h5 class="mt-2 mb-2">Períodos de recolha</h5>
+                                <p><?php echo $bd_periodo_1; ?></p>
+                                <p><?php echo $bd_periodo_2; ?></p>
+                                <p><?php echo $bd_periodo_3; ?></p>
+                        </div>
+                    </div>
                 </div>
               </div>
               <!-- Modal footer -->
@@ -419,19 +415,30 @@ if($bd_periodo_3 === 'no_hour_selected'){
       <div class="row">
         <div class="lista col-lg-2 text-center">
           <div class="m-3">
-            <h4 class="text-warning">Instituições</h4>
-            <ul>
-              <li>Continente</li>
-              <li>Bom Dia</li>
-              <li>Compal</li>
-              <li>Refeitório</li>
-           </ul>
+            <h4 class="text-warning mt-5 mb-3">Instituições</h4>
+		<ul>
+			<?php
+            
+			$inst_match_query = "SELECT * FROM Instituicao WHERE concelho='$bd_preferences_concelho'";
+			$match_result = mysqli_query($conn, $inst_match_query);
+
+			if (mysqli_num_rows($match_result) > 0) {
+				while($row = mysqli_fetch_assoc($match_result)) {
+					echo "<li>" .  $row['nome'] . "</li>";
+				}
+				echo "</ul>";
+			}else {
+				echo "<span style='opacity: .75;'>Atualize as suas preferências de modo a ter correspondências.</span>";
+			}
+			//mysqli_close($conn);
+			?>
+		</ul>
           </div>
         </div>
         <div class="main-section col-lg-10 p-0"> 
           <div class="content">
             <form class="search-bar">
-              <input class="form-control m-3" type="text" placeholder="Search">
+              <input class="form-control m-3" type="text" placeholder="Pesquise uma instituição">
               <div class="filter m-3">
                 <select>
                   <option selected value="">Freguesia</option>

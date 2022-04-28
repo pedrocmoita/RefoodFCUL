@@ -89,7 +89,7 @@ if(isset($_POST['submit-btn'])){
     </header>
     <div class="teste">
    	 <form action="" method="post" class="login-form">
-            <h1>Login</h1>
+            <h1 style="margin-bottom: 2rem;">Login</h1>
             <div class="login-form__input" style="margin-bottom: 2rem;"><i class="fa-solid fa-envelope" style="margin: 1rem; color: rgb(45, 45, 45);"></i><input type="email" name="email" placeholder="name@example.com" required></div>
             <div class="login-form__input"><i class="fa-solid fa-key" style="margin: 1rem; color: rgb(45, 45, 45);"></i><input type="password" name="password" placeholder="password" required></div>
             <div class="login-form__btn-area">
