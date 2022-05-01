@@ -193,6 +193,13 @@ if($bd_periodo_3 === 'no_hour_selected'){
 	$bd_periodo_3 = $row_dias['periodo_dia_3'];
 }
 //---------------------------------------------------------
+if(isset($_POST['teste'])){
+ 		$searched_name = htmlspecialchars($_POST['searched_name']);
+                $selected_filter = htmlspecialchars($_POST['selected_filter']);
+
+                $search_query = "SELECT * FROM Instituicao WHERE $selected_filter LIKE '%$searched_name%'";
+               	$search_result = mysqli_query($conn, $search_query);
+}
 ?>
 <html lang="en">
 <head>
@@ -295,31 +302,31 @@ if($bd_periodo_3 === 'no_hour_selected'){
                           <label for="pickup_day"><h5 class="mt-2 mb-2">Dias de recolha</h5></label>
                             <div class="mb-3">
                               <select name="pickup_day_1" id="pickup_day">
-                                <option selected value="segunda-feira">Segunda</option>
-                                <option value="terça-feira">Terça</option>
-                                <option value="quarta-feira">Quarta</option>
-                                <option value="quinta-feira">Quinta</option>
-                                <option value="sexta-feira">Sexta</option>
+                                <option selected value="Segunda-feira">Segunda</option>
+                                <option value="Terça-feira">Terça</option>
+                                <option value="Quarta-feira">Quarta</option>
+                                <option value="Quinta-feira">Quinta</option>
+                                <option value="Sexta-feira">Sexta</option>
                               </select>
                             </div>
                             <div class="mt-3 mb-3">
                               <select name="pickup_day_2">
                                 <option selected value="no_day_selected">None</option>
-                                <option value="segunda-feira">Segunda</option>
-                                <option value="terça-feira">Terça</option>
-                                <option value="quarta-feira">Quarta</option>
-                                <option value="quinta-feira">Quinta</option>
-                                <option value="sexta-feira">Sexta</option>
+                                <option value="Segunda-feira">Segunda</option>
+                                <option value="Terça-feira">Terça</option>
+                                <option value="Quarta-feira">Quarta</option>
+                                <option value="Quinta-feira">Quinta</option>
+                                <option value="Sexta-feira">Sexta</option>
                               </select>
                             </div>
                             <div class="mt-3 mb-3">
                               <select name="pickup_day_3">
                                 <option selected value="no_day_selected">None</option>
-                                <option value="segunda-feira">Segunda</option>
-                                <option value="terça-feira">Terça</option>
-                                <option value="quarta-feira">Quarta</option>
-                                <option value="quinta-feira">Quinta</option>
-                                <option value="sexta-feira">Sexta</option>
+                                <option value="Segunda-feira">Segunda</option>
+                                <option value="Terça-feira">Terça</option>
+                                <option value="Quarta-feira">Quarta</option>
+                                <option value="Quinta-feira">Quinta</option>
+                                <option value="Sexta-feira">Sexta</option>
                               </select>
                             </div>
                           </div>
@@ -327,51 +334,59 @@ if($bd_periodo_3 === 'no_hour_selected'){
                           <label for="pickup_hr"><h5 class="mt-2 mb-2">Períodos de recolha</h5></label>
                             <div class="mb-3">
                               <select name="pickup_period_1">
-                                <option selected value="manha">Manhã (9:00hr - 11:00hr)</option>
-                                <option value="meio do dia">Meio do dia (12:00hr - 13:00hr)</option>
-                                <option value="tarde">Tarde (14:00hr - 17:00hr)</option>
-                                <option value="noite">Noite (18:00hr - 19:00hr)</option>
+                                <option selected value="Manhã">Manhã</option>
+                                <option value="Tarde">Tarde</option>
+                                <option value="Noite">Noite</option>
                               </select>
                             </div>
                             <div class="mt-3 mb-3">
                               <select name="pickup_period_2">
                                 <option value="no_hour_selected">None</option>
-                                <option value="manha">Manhã (9:00hr - 11:00hr)</option>
-                                <option value="meio do dia">Meio do dia (12:00hr - 13:00hr)</option>
-                                <option value="tarde">Tarde (14:00hr - 17:00hr)</option>
-                                <option value="noite">Noite (18:00hr - 19:00hr)</option>
+                                <option value="Manha">Manhã</option>
+                                <option value="Tarde">Tarde</option>
+                                <option value="Noite">Noite</option>
                               </select>
                             </div>
                             <div class="mt-3 mb-3">
                               <select name="pickup_period_3">
                                 <option value="no_hour_selected">None</option>
-                                <option value="manha">Manhã (9:00hr - 11:00hr)</option>
-                                <option value="meio do dia">Meio do dia (12:00hr - 13:00hr)</option>
-                                <option value="tarde">Tarde (14:00hr - 17:00hr)</option>
-                                <option value="noite">Noite (18:00hr - 19:00hr)</option>
+                                <option value="Manha">Manhã</option>
+                                <option value="Tarde">Tarde</option>
+                                <option value="Noite">Noite</option>
                               </select>
                             </div>
                           </div>
                         </div>
 			<hr>
-                        <button class="profile-form-btn m-0" type="submit" name="update-preferences-btn"><i class="fa-regular fa-trash-can"></i><span class="ml-2">Update Preferences</span></button>
+                        <button class="profile-form-btn m-0" type="submit" name="update-preferences-btn"><i class="fa-regular fa-pen-to-square"></i><span class="ml-2">Update Preferences</span></button>
                     </form>
-		    <hr>
-                    <h5 class="mt-2 mb-2">Concelho</h5>
-                    <p><?php echo $bd_preferences_concelho ?></p>
-                    <div class="row">
-                        <div class="col">
-                                <h5 class="mt-2 mb-2">Dias de recolha</h5>
+		    <button class="profile-form-btn m-0" data-toggle="modal" data-target="#preferenciasatuais"><i class="fa-regular fa-eye"></i><span class="ml-2">Show Current Preferences</span></button>
+		    <div class="modal fade" id="preferenciasatuais" tabindex="-1" role="dialog" aria-labelledby="PreferenciasAtuais" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content mt-5" styles="border-radius: 0;">
+                          <div class="modal-header" style="background: white; color: #EED202;">
+                            <h4 class="modal-title" id="preferenciasatuais">Current Preferences</h4>
+                          </div>
+                          <div class="modal-body" style="background: radial-gradient(#202020, #191919, #181818); color: white;">
+                          <h5 class="mt-2 mb-2" style="color: #EED202;">Concelho</h5>
+                            <p><?php echo $bd_preferences_concelho ?></p>
+                            <div class="row">
+                              <div class="col">
+                                <h5 class="mt-2 mb-2" style="color: #EED202;">Dias de recolha</h5>
                                 <p><?php echo $bd_dia_semana_1; ?></p>
                                 <p><?php echo $bd_dia_semana_2; ?></p>
                                 <p><?php echo $bd_dia_semana_3; ?></p>
-                        </div>
-                        <div class="col">
-                                <h5 class="mt-2 mb-2">Períodos de recolha</h5>
+                              </div>
+                              <div class="col">
+                                <h5 class="mt-2 mb-2" style="color: #EED202;">Períodos de recolha</h5>
                                 <p><?php echo $bd_periodo_1; ?></p>
                                 <p><?php echo $bd_periodo_2; ?></p>
                                 <p><?php echo $bd_periodo_3; ?></p>
+                              </div>
+                            </div>
+                          </div>
                         </div>
+                      </div>
                     </div>
                 </div>
               </div>
@@ -411,46 +426,66 @@ if($bd_periodo_3 === 'no_hour_selected'){
           </div>
         </div>
       </div>
-
       <div class="row">
         <div class="lista col-lg-2 text-center">
           <div class="m-3">
             <h4 class="text-warning mt-5 mb-3">Instituições</h4>
 		<ul>
-			<?php
-            
-			$inst_match_query = "SELECT * FROM Instituicao WHERE concelho='$bd_preferences_concelho'";
-			$match_result = mysqli_query($conn, $inst_match_query);
-
-			if (mysqli_num_rows($match_result) > 0) {
-				while($row = mysqli_fetch_assoc($match_result)) {
-					echo "<li>" .  $row['nome'] . "</li>";
-				}
+	           <?php            
+			$doacao_query = "SELECT * FROM Doacao WHERE concelho='$bd_preferences_concelho'";
+			$doacao_query_result = mysqli_query($conn, $doacao_query);
+			$echo = "";
+			if (mysqli_num_rows($doacao_query_result) > 0) {
+				while($row = mysqli_fetch_assoc($doacao_query_result)) {
+                 			if( ($bd_dia_semana_1 === $row['dia_semana_1']) || ($bd_dia_semana_1 === $row['dia_semana_2']) || ($bd_dia_semana_1 === $row['dia_semana_3']) ){
+                  				$echo = "ok";
+                  			}else if( ($bd_dia_semana_2 === $row['dia_semana_1']) || ($bd_dia_semana_2 === $row['dia_semana_2']) || ($bd_dia_semana_2 === $row['dia_semana_3']) ){
+                  				$echo = "ok";
+                  			}else if( ($bd_dia_semana_3 === $row['dia_semana_1']) || ($bd_dia_semana_3 === $row['dia_semana_2']) || ($bd_dia_semana_3 === $row['dia_semana_3']) ){
+                  				$echo = "ok";
+                  			}else{
+                  				$echo = "nok";
+                  			}
+                  			if ($echo === "ok"){
+                    				$id = $row['id'];
+                    				$query = "SELECT * FROM Instituicao WHERE id='$id'";
+                    				$result = mysqli_query($conn, $query);
+                    				$inst_row = mysqli_fetch_assoc($result);
+                    				echo "<li>" . $inst_row['nome'] . "</li>";
+                  			}					
+                		}
 				echo "</ul>";
 			}else {
 				echo "<span style='opacity: .75;'>Atualize as suas preferências de modo a ter correspondências.</span>";
 			}
-			//mysqli_close($conn);
-			?>
+			mysqli_close($conn);
+		    ?>
 		</ul>
           </div>
         </div>
         <div class="main-section col-lg-10 p-0"> 
           <div class="content">
-            <form class="search-bar">
-              <input class="form-control m-3" type="text" placeholder="Pesquise uma instituição">
+            <form action="" method="post" class="search-bar">
+              <input name="searched_name" class="form-control m-3" type="text" placeholder="Pesquise uma instituição">
               <div class="filter m-3">
-                <select>
-                  <option selected value="">Freguesia</option>
-                  <option value="">Concelho</option>
-                  <option value="">Distrito</option>
-                  <option value="">Tipo de instituição</option>
-                  <option value="">Tipo de doação</option>
+                <select name="selected_filter">
+                  <option selected value="freguesia">Freguesia</option>
+                  <option value="concelho">Concelho</option>
+                  <option value="distrito">Distrito</option>
                 </select>
               </div>
-              <button class="search-btn m-3" type="submit" name="submit-btn"><i class="fa fa-search"></i></button>
+              <button class="search-btn m-3" type="submit" name="teste"><i class="fa fa-search"></i></button>
             </form>
-          </div>  
+          </div>
+	 <p><?php 
+		if(mysqli_num_rows($search_result) > 0){
+                  while($row = mysqli_fetch_assoc($search_result)){
+                    echo $row['nome'] . "<br>";
+                  }  
+                } else{
+                  echo "I'm sorry, no results found...";
+                }
+	?></p>
         </div>
       </div>
     </div>
