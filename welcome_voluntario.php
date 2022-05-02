@@ -477,15 +477,19 @@ if(isset($_POST['teste'])){
               <button class="search-btn m-3" type="submit" name="teste"><i class="fa fa-search"></i></button>
             </form>
           </div>
-	 <p><?php 
-		if(mysqli_num_rows($search_result) > 0){
-                  while($row = mysqli_fetch_assoc($search_result)){
-                    echo $row['nome'] . "<br>";
-                  }  
-                } else{
-                  echo "I'm sorry, no results found...";
-                }
-	?></p>
+          <table>
+	  <?php 
+            if(mysqli_num_rows($search_result) > 0){
+                          while($row = mysqli_fetch_assoc($search_result)){
+                            echo "<tr><td>" . $row["nome"] . "</td><td>" . $row["numero"] . "</td><td>" . $row["email"] . "</td><td>" . $row["morada"] . "</td><td>" . 
+				$row["distrito"] . "</td><td>" . $row["concelho"] . "</td><td>" . $row["freguesia"] . "</td></tr>";
+                          }  
+                          echo "</table>";
+                        } else{
+                          echo "I'm sorry, no results found...";
+                        }
+          ?>
+          </table>
         </div>
       </div>
     </div>
