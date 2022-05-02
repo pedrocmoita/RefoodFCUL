@@ -197,8 +197,29 @@ if(isset($_POST['teste'])){
  		$searched_name = htmlspecialchars($_POST['searched_name']);
                 $selected_filter = htmlspecialchars($_POST['selected_filter']);
 
-                $search_query = "SELECT * FROM Instituicao WHERE $selected_filter LIKE '%$searched_name%'";
-               	$search_result = mysqli_query($conn, $search_query);
+		if($selected_filter == "freguesia" || $selected_filter == "concelho" || $selected_filter == "distrito"){
+                  $search_query = "SELECT * FROM Instituicao WHERE $selected_filter LIKE '%$searched_name%'";
+                  $search_result = mysqli_query($conn, $search_query);
+
+                }else if($selected_filter == "tipo_instituicao"){
+		  $search_query_2 = "SELECT * FROM Doacao WHERE $selected_filter LIKE '%$searched_name%'";
+                  $search_result_2 = mysqli_query($conn, $search_query_2);
+                  $InstNomes_arr = array();
+        	  $InstType_arr = array(); 
+		  $InstConcelho_arr = array();
+	          while($row_2 = mysqli_fetch_assoc($search_result_2)){
+                    $search_inst_id = $row_2['id'];
+                    $search_inst_query = "SELECT * FROM Instituicao WHERE id='$search_inst_id'";
+                    $search_inst_result = mysqli_query($conn, $search_inst_query);
+                    $inst = mysqli_fetch_assoc($search_inst_result);
+		    $new = array_push($InstNomes_arr, $inst['nome']);
+		    $new1 = array_push($InstType_arr, $row_2['tipo_instituicao']);
+                    $new2 = array_push($InstConcelho_arr, $row_2['concelho']);
+                  }
+                  $arrlength = count($InstNomes_arr);
+                }else{
+                  echo "something went wrong!";
+                }
 }
 ?>
 <html lang="en">
@@ -472,6 +493,7 @@ if(isset($_POST['teste'])){
                   <option selected value="freguesia">Freguesia</option>
                   <option value="concelho">Concelho</option>
                   <option value="distrito">Distrito</option>
+                  <option value="tipo_instituicao">Tipo Instituição</option>
                 </select>
               </div>
               <button class="search-btn m-3" type="submit" name="teste"><i class="fa fa-search"></i></button>
@@ -480,14 +502,38 @@ if(isset($_POST['teste'])){
           <table>
 	  <?php 
             if(mysqli_num_rows($search_result) > 0){
-                          while($row = mysqli_fetch_assoc($search_result)){
-                            echo "<tr><td>" . $row["nome"] . "</td><td>" . $row["numero"] . "</td><td>" . $row["email"] . "</td><td>" . $row["morada"] . "</td><td>" . 
-				$row["distrito"] . "</td><td>" . $row["concelho"] . "</td><td>" . $row["freguesia"] . "</td></tr>";
-                          }  
-                          echo "</table>";
-                        } else{
-                          echo "I'm sorry, no results found...";
-                        }
+		echo "<tr><th></th><th>Nome</th><th>Morada</th><th>Distrito</th><th>Concelho</th><th>Freguesia</th></tr>";
+              while($row = mysqli_fetch_assoc($search_result)){
+                echo '<tr><td><i class="fa-solid fa-file-lines" data-toggle="modal" data-target="#info"></i>  
+                      <div class="modal" id="info">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Modal Heading</h4>
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                Modal body..
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div></td><td>' . 
+		      $row["nome"] . "</td><td>" . $row["morada"] . "</td><td>" . $row["distrito"] . "</td><td>" . $row["concelho"] . "</td><td>" . $row["freguesia"] . "</td></tr>";
+              }
+              echo "</table>";
+
+            }else if(mysqli_num_rows($search_result_2) > 0){
+		echo "<tr><th>Nome</th><th>Tipo Instituição</th><th>Concelho Recolha</th></tr>"; 
+               for($x = 0; $x < $arrlength; $x++) {
+                  echo "<tr><td>" . $InstNomes_arr[$x] . "</td><td>" . $InstType_arr[$x] . "</td><td>" . $InstConcelho_arr[$x] . "</td></tr>";
+                }              
+              echo "</table>";
+            }else{
+              echo "I'm sorry, no results found...";
+            }
           ?>
           </table>
         </div>
