@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
@@ -12,12 +11,9 @@ $user_id = $_SESSION['id'];
 $ID = $_SESSION['userID'];
 
 include "abreconexao.php";
-
 //--------------BD Profile section----------------
-
 $nova_query = "SELECT * FROM Instituicao WHERE id='$user_id'";
 $novo_result = mysqli_query($conn, $nova_query);
-
 $row_profile = mysqli_fetch_assoc($novo_result);
 $bd_email = $row_profile['email'];
 $bd_phone = $row_profile['numero'];
@@ -27,9 +23,7 @@ $bd_freguesia =	$row_profile['freguesia'];
 $bd_adress = $row_profile['morada'];
 $bd_name_charge = $row_profile['nome_contacto'];
 $bd_number_charge =  $row_profile['num_contacto'];
-
 //-------------Updating Profile section-----------
-
 if(isset($_POST['instituicao-profile-btn'])){
 
 	$updated_name = htmlspecialchars($_POST['updated_name']);
@@ -42,7 +36,6 @@ if(isset($_POST['instituicao-profile-btn'])){
 	$updated_freguesia = htmlspecialchars($_POST['updated_freguesia']);
 	$updated_adress = htmlspecialchars($_POST['updated_adress']);
 	$updated_password = htmlspecialchars($_POST['updated_password']);
-
 	$updated_hash_password = password_hash($updated_password, PASSWORD_DEFAULT);
 
 	$error = '';
@@ -100,7 +93,6 @@ if(isset($_POST['instituicao-profile-btn'])){
 	}
 }
 //---------------Preferences section--------------
-
 if(isset($_POST['update-inst-preferences-btn'])){
 
 	$inst_concelho = htmlspecialchars($_POST['inst_preferences_concelho']);
@@ -120,7 +112,6 @@ if(isset($_POST['update-inst-preferences-btn'])){
 	$amount_type_day2 = htmlspecialchars($_POST['amount_type_day2']);
 	$food_quantity_day3 = htmlspecialchars($_POST['food_amount_day3']);
 	$amount_type_day3 = htmlspecialchars($_POST['amount_type_day3']);
-
 	$preferences_query = "SELECT * FROM Doacao WHERE id='$user_id'";
 	$preferences_result = mysqli_query($conn, $preferences_query);
 
@@ -144,7 +135,7 @@ $doacao_bd_query = "SELECT * FROM Doacao WHERE id='$user_id'";
 $result_doacao_bd = mysqli_query($conn, $doacao_bd_query);
 $row_doacao = mysqli_fetch_assoc($result_doacao_bd);
 $bd_preferences_concelho = $row_doacao['concelho'];
-$bd_preferences_inst_type = $row_doacao['tipo_instituicao'];
+$bd_preferences_inst_type = $row_doacao['tipo_instituiao'];
 $bd_dia_semana_1 = $row_doacao['dia_semana_1'];
 $bd_hr_inic_dia_1 = $row_doacao['hr_inic_dia_1'];
 $bd_tipo_dia_1 = $row_doacao['tipo_dia_1'];
@@ -161,15 +152,26 @@ $bd_tipo_dia_3 = $row_doacao['tipo_dia_3'];
 $bd_quant_dia_3 = $row_doacao['quant_dia_3'];
 $bd_quant_tipo_dia_3 = $row_doacao['quant_tipo_dia_3'];
 //-----------------------SEARCH BAR------------------------
+if(isset($_POST['teste'])){
+  $searched_name = htmlspecialchars($_POST['searched_name']);
+             $selected_filter = htmlspecialchars($_POST['selected_filter']);
 
+  if($selected_filter == "freguesia" || $selected_filter == "concelho" || $selected_filter == "distrito"){
+              $search_query = "SELECT * FROM Voluntario WHERE $selected_filter LIKE '%$searched_name%'";
+              $search_result = mysqli_query($conn, $search_query);
+  }else{
+              echo "Something went wrong!";
+  }
+}
+//---------------------------------------------------------
 ?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/welcomee.css">
+    <title>Refood | FCUL</title>
+    <link rel="stylesheet" href="css/main_welcome.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -372,22 +374,14 @@ $bd_quant_tipo_dia_3 = $row_doacao['quant_tipo_dia_3'];
 			   </form>
 			   <button class="profile-form-btn m-0" data-toggle="modal" data-target="#preferenciasatuais"><i class="fa-regular fa-eye"></i><span class="ml-2">Show Current Preferences</span></button>
 			   <div class="modal fade" id="preferenciasatuais" tabindex="-1" role="dialog" aria-labelledby="PreferenciasAtuais" aria-hidden="true">
-                           <div class="modal-dialog modal-lg" role="document">
+                           <div class="modal-dialog" role="document">
                              <div class="modal-content mt-5" styles="border-radius: 0;">
                                <div class="modal-header" style="background: white; color: #EED202;">
                                  <h4 class="modal-title" id="preferenciasatuais">Current Preferences</h4>
                                </div>
                                <div class="modal-body" style="background: radial-gradient(#202020, #191919, #181818); color: white;">
-                               	 <div class="row">
-				    <div class="col">
-				      <h5 class="mt-2 mb-2" style="color: #EED202;">Concelho</h5>
-                                      <p><?php echo $bd_preferences_concelho ?></p>
-				    </div>
-                                    <div class="col">
-				      <h5 class="mt-2 mb-2" style="color: #EED202;">Tipo Instituição</h5>
-                                      <p><?php echo $bd_preferences_inst_type; ?><p>
-				    </div>
-				 </div>
+                                 <h5 class="mt-2 mb-2" style="color: #EED202;">Concelho</h5>
+                                 <p><?php echo $bd_preferences_concelho ?></p>
                                  <div class="row">
                                    <div class="col">
                                      <h5 class="mt-2 mb-2" style="color: #EED202;">Dias de recolha</h5>
@@ -396,23 +390,10 @@ $bd_quant_tipo_dia_3 = $row_doacao['quant_tipo_dia_3'];
                                      <p><?php echo $bd_dia_semana_3; ?></p>
                                    </div>
                                    <div class="col">
-                                     <h5 class="mt-2 mb-2" style="color: #EED202;">Hora de recolha</h5>
-                                     <p><?php echo $bd_hr_inic_dia_1; ?></p>
-                                     <p><?php echo $bd_hr_inic_dia_2; ?></p>
-                                     <p><?php echo $bd_hr_inic_dia_3; ?></p>
+                                     <h5 class="mt-2 mb-2" style="color: #EED202;">Períodos de recolha</h5>
+                                     <p><?php echo $bd_preferences_concelho; ?></p>
+                                     <p><?php echo $bd_preferences_inst_type; ?></p>
                                    </div>
-				   <div class="col">
-			             <h5 class="mt-2 mb-2" style="color: #EED202;">Tipos de Alimentos</h5>
-				     <p><?php echo $bd_tipo_dia_1; ?></p>
-                                     <p><?php echo $bd_tipo_dia_2; ?></p>
-                                     <p><?php echo $bd_tipo_dia_3; ?></p>
-				   </div>
-				   <div class="col">
-				     <h5 class="mt-2 mb-2" style="color: #EED202;">Quantidade e tipo Alimentos</h5>	   
-                                     <p><?php echo $bd_quant_dia_1 . " " . $bd_quant_tipo_dia_1 ?></p>
-                                     <p><?php echo $bd_quant_dia_2 . " " . $bd_quant_tipo_dia_2 ?></p>
-                                     <p><?php echo $bd_quant_dia_3 . " " . $bd_quant_tipo_dia_3 ?></p>
-				   </div>
                                  </div>
                                </div>
                              </div>
@@ -460,7 +441,7 @@ $bd_quant_tipo_dia_3 = $row_doacao['quant_tipo_dia_3'];
           <div class="m-3">
             <h4 class="text-warning">Voluntários</h4>
             <ul>
-	    <?php            
+            <?php            
 	      $dias_query = "SELECT * FROM Dias WHERE concelho='$bd_preferences_concelho'";
               $dias_query_result = mysqli_query($conn, $dias_query);
               $echo = "";
@@ -494,18 +475,51 @@ $bd_quant_tipo_dia_3 = $row_doacao['quant_tipo_dia_3'];
         </div>
         <div class="main-section col-lg-10 p-0"> 
           <div class="content">
-            <form class="search-bar">
-              <input class="form-control m-3" type="text" placeholder="Search">
+            <form action="" method="post" class="search-bar">
+              <input name="searched_name" class="form-control m-3" type="text" placeholder="Pesquise um voluntário...">
               <div class="filter m-3">
-                <select>
-                  <option selected value="">Freguesia</option>
-                  <option value="">Concelho</option>
-                  <option value="">Distrito</option>
+                <select name="selected_filter">
+                  <option selected value="freguesia">Freguesia</option>
+                  <option value="concelho">Concelho</option>
+                  <option value="distrito">Distrito</option>
                 </select>
               </div>
-              <button class="search-btn m-3" type="submit" name="submit-btn"><i class="fa fa-search"></i></button>
+              <button class="search-btn m-3" type="submit" name="teste"><i class="fa fa-search"></i></button>
             </form>
-          </div>  
+          </div>
+          <table class="d-flex justify-content-center mt-5">
+	  <?php 
+            if(mysqli_num_rows($search_result) > 0){
+	      echo "<tr><th></th><th>Nome</th><th>Distrito</th><th>Concelho</th><th>Freguesia</th></tr>";
+              while($row = mysqli_fetch_assoc($search_result)){
+                echo '<tr><td><i class="fa-solid fa-address-card" data-toggle="modal" data-target="#info"></i>  
+                      <div class="modal" id="info">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">Info</h5>
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">' . 
+				'<div><p style="color: #EED202;">Contactos</p>' . 
+					'<p><i class="fa-solid fa-mobile mr-2"></i>' . $row['numero'] . '</p>' . 
+					'<p><i class="fa-solid fa-envelope mr-2"></i>' . $row['email'] . '</p>' . 
+				'</div>' .
+				'<div><p style="color: #EED202;">Concelho de Recolha</p>' . '</div>' . 
+                           '</div>
+                            <div class="modal-footer">
+                                <button type="button" class="m-0" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div></td><td>' . $row["nome"] . "</td><td>" . $row["distrito"] . "</td><td>" . $row["concelho"] . "</td><td>" . $row["freguesia"] . "</td></tr>";
+              }
+              echo "</table>";
+            }else{
+              echo "No results found yet...";
+            }
+          ?>
+          </table>  
         </div>
       </div>
     </div>
