@@ -139,10 +139,30 @@ if(isset($_POST['update-inst-preferences-btn'])){
 	}
 	header('location: welcome_instituicao.php');
 }
+//---------------------BD PREFERENCES-------------------------
+$doacao_bd_query = "SELECT * FROM Doacao WHERE id='$user_id'";
+$result_doacao_bd = mysqli_query($conn, $doacao_bd_query);
+$row_doacao = mysqli_fetch_assoc($result_doacao_bd);
+$bd_preferences_concelho = $row_doacao['concelho'];
+$bd_preferences_inst_type = $row_doacao['tipo_instituicao'];
+$bd_dia_semana_1 = $row_doacao['dia_semana_1'];
+$bd_hr_inic_dia_1 = $row_doacao['hr_inic_dia_1'];
+$bd_tipo_dia_1 = $row_doacao['tipo_dia_1'];
+$bd_quant_dia_1 = $row_doacao['quant_dia_1'];
+$bd_quant_tipo_dia_1 = $row_doacao['quant_tipo_dia_1'];
+$bd_dia_semana_2 = $row_doacao['dia_semana_2'];
+$bd_hr_inic_dia_2 = $row_doacao['hr_inic_dia_2'];
+$bd_tipo_dia_2 = $row_doacao['tipo_dia_2'];
+$bd_quant_dia_2 = $row_doacao['quant_dia_2'];
+$bd_quant_tipo_dia_2 = $row_doacao['quant_tipo_dia_2'];
+$bd_dia_semana_3 = $row_doacao['dia_semana_3'];
+$bd_hr_inic_dia_3 = $row_doacao['hr_inic_dia_3'];
+$bd_tipo_dia_3 = $row_doacao['tipo_dia_3'];
+$bd_quant_dia_3 = $row_doacao['quant_dia_3'];
+$bd_quant_tipo_dia_3 = $row_doacao['quant_tipo_dia_3'];
+//-----------------------SEARCH BAR------------------------
 
-//------------------------------------------------
 ?>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -348,9 +368,57 @@ if(isset($_POST['update-inst-preferences-btn'])){
                               </div>
                             </div>
 			    <hr>
-			    <button class="profile-form-btn m-0" type="submit" name="update-inst-preferences-btn"><i class="fa-regular fa-pen-to-square"></i><span class="ml-2">Update</span></button>
+			    <button class="profile-form-btn m-0" type="submit" name="update-inst-preferences-btn"><i class="fa-regular fa-pen-to-square"></i><span class="ml-2">Update Preferences</span></button>
 			   </form>
-                          </div>
+			   <button class="profile-form-btn m-0" data-toggle="modal" data-target="#preferenciasatuais"><i class="fa-regular fa-eye"></i><span class="ml-2">Show Current Preferences</span></button>
+			   <div class="modal fade" id="preferenciasatuais" tabindex="-1" role="dialog" aria-labelledby="PreferenciasAtuais" aria-hidden="true">
+                           <div class="modal-dialog modal-lg" role="document">
+                             <div class="modal-content mt-5" styles="border-radius: 0;">
+                               <div class="modal-header" style="background: white; color: #EED202;">
+                                 <h4 class="modal-title" id="preferenciasatuais">Current Preferences</h4>
+                               </div>
+                               <div class="modal-body" style="background: radial-gradient(#202020, #191919, #181818); color: white;">
+                               	 <div class="row">
+				    <div class="col">
+				      <h5 class="mt-2 mb-2" style="color: #EED202;">Concelho</h5>
+                                      <p><?php echo $bd_preferences_concelho ?></p>
+				    </div>
+                                    <div class="col">
+				      <h5 class="mt-2 mb-2" style="color: #EED202;">Tipo Instituição</h5>
+                                      <p><?php echo $bd_preferences_inst_type; ?><p>
+				    </div>
+				 </div>
+                                 <div class="row">
+                                   <div class="col">
+                                     <h5 class="mt-2 mb-2" style="color: #EED202;">Dias de recolha</h5>
+                                     <p><?php echo $bd_dia_semana_1; ?></p>
+                                     <p><?php echo $bd_dia_semana_2; ?></p>
+                                     <p><?php echo $bd_dia_semana_3; ?></p>
+                                   </div>
+                                   <div class="col">
+                                     <h5 class="mt-2 mb-2" style="color: #EED202;">Hora de recolha</h5>
+                                     <p><?php echo $bd_hr_inic_dia_1; ?></p>
+                                     <p><?php echo $bd_hr_inic_dia_2; ?></p>
+                                     <p><?php echo $bd_hr_inic_dia_3; ?></p>
+                                   </div>
+				   <div class="col">
+			             <h5 class="mt-2 mb-2" style="color: #EED202;">Tipos de Alimentos</h5>
+				     <p><?php echo $bd_tipo_dia_1; ?></p>
+                                     <p><?php echo $bd_tipo_dia_2; ?></p>
+                                     <p><?php echo $bd_tipo_dia_3; ?></p>
+				   </div>
+				   <div class="col">
+				     <h5 class="mt-2 mb-2" style="color: #EED202;">Quantidade e tipo Alimentos</h5>	   
+                                     <p><?php echo $bd_quant_dia_1 . " " . $bd_quant_tipo_dia_1 ?></p>
+                                     <p><?php echo $bd_quant_dia_2 . " " . $bd_quant_tipo_dia_2 ?></p>
+                                     <p><?php echo $bd_quant_dia_3 . " " . $bd_quant_tipo_dia_3 ?></p>
+				   </div>
+                                 </div>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                       </div>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer">
@@ -392,10 +460,35 @@ if(isset($_POST['update-inst-preferences-btn'])){
           <div class="m-3">
             <h4 class="text-warning">Voluntários</h4>
             <ul>
-              <li>André</li>
-              <li>João</li>
-              <li>Afonso</li>
-              <li>Pedro</li>
+	    <?php            
+	      $dias_query = "SELECT * FROM Dias WHERE concelho='$bd_preferences_concelho'";
+              $dias_query_result = mysqli_query($conn, $dias_query);
+              $echo = "";
+              if (mysqli_num_rows($dias_query_result) > 0) {
+                while($row = mysqli_fetch_assoc($dias_query_result)) {
+                              if( ($bd_dia_semana_1 === $row['dia_semana_1']) || ($bd_dia_semana_1 === $row['dia_semana_2']) || ($bd_dia_semana_1 === $row['dia_semana_3']) ){
+                                  $echo = "ok";
+                                }else if( ($bd_dia_semana_2 === $row['dia_semana_1']) || ($bd_dia_semana_2 === $row['dia_semana_2']) || ($bd_dia_semana_2 === $row['dia_semana_3']) ){
+                                  $echo = "ok";
+                                }else if( ($bd_dia_semana_3 === $row['dia_semana_1']) || ($bd_dia_semana_3 === $row['dia_semana_2']) || ($bd_dia_semana_3 === $row['dia_semana_3']) ){
+                                  $echo = "ok";
+                                }else{
+                                  $echo = "nok";
+                                }
+                                if ($echo === "ok"){
+                                    $id = $row['id'];
+                                    $query = "SELECT * FROM Voluntario WHERE id='$id'";
+                                    $result = mysqli_query($conn, $query);
+                                    $vol_row = mysqli_fetch_assoc($result);
+                                    echo "<li>" . $vol_row['nome'] . "</li>";
+                                }					
+                            }
+                echo "</ul>";
+              }else {
+                echo "<span style='opacity: .75;'>Atualize as suas preferências de modo a ter correspondências.</span>";
+              }
+              mysqli_close($conn);
+            ?>
            </ul>
           </div>
         </div>
