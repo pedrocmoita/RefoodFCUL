@@ -163,7 +163,23 @@ if(isset($_POST['teste'])){
               echo "Something went wrong!";
   }
 }
-//---------------------------------------------------------
+//---------------------------STATS-----------------------------
+
+$vol_stats = "SELECT MAX(id) AS maximumID FROM Voluntario";
+$vol_stats_result = mysqli_query($conn, $vol_stats);
+$vol_stats_row = mysqli_fetch_assoc($vol_stats_result);
+$vol_maximumID = $vol_stats_row['maximumID'];
+
+$inst_stats = "SELECT MAX(id) AS maximumID FROM Instituicao";
+$inst_stats_result = mysqli_query($conn, $inst_stats);
+$inst_stats_row = mysqli_fetch_assoc($inst_stats_result);
+$inst_maximumID = $inst_stats_row['maximumID'];
+
+$users_stats = "SELECT MAX(id) AS maximumID FROM Utilizador";
+$users_stats_result = mysqli_query($conn, $users_stats);
+$users_stats_row = mysqli_fetch_assoc($users_stats_result);
+$users_maximumID = $users_stats_row['maximumID'];
+//------------------------------------------------------------
 ?>
 <html lang="en">
 <head>

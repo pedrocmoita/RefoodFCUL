@@ -499,23 +499,26 @@ if(isset($_POST['teste'])){
               <button class="search-btn m-3" type="submit" name="teste"><i class="fa fa-search"></i></button>
             </form>
           </div>
-          <table>
+          <table class="d-flex justify-content-center mt-5">
 	  <?php 
             if(mysqli_num_rows($search_result) > 0){
 		echo "<tr><th></th><th>Nome</th><th>Morada</th><th>Distrito</th><th>Concelho</th><th>Freguesia</th></tr>";
               while($row = mysqli_fetch_assoc($search_result)){
-                echo '<tr><td><i class="fa-solid fa-file-lines" data-toggle="modal" data-target="#info"></i>  
+		echo '<tr><td><i class="fa-solid fa-address-card" data-toggle="modal" data-target="#info"></i>  
                       <div class="modal" id="info">
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h4 class="modal-title">Modal Heading</h4>
+                              <h5 class="modal-title">Info</h5>
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
-                            <div class="modal-body">' . $row['numero'] . $row['email'] . '</div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            </div>
+                            <div class="modal-body">' . 
+				'<div><p style="color: #EED202;">Contactos</p>' . 
+					'<p><i class="fa-solid fa-mobile mr-2"></i>' . $row['numero'] . '</p>' . 
+					'<p><i class="fa-solid fa-envelope mr-2"></i>' . $row['email'] . '</p>' . 
+				'</div>' .
+				'<div><p style="color: #EED202;">Concelho de Recolha</p>' . '</div>' . 
+                           '</div>
                           </div>
                         </div>
                       </div></td><td>' . 
@@ -530,7 +533,7 @@ if(isset($_POST['teste'])){
                 }              
               echo "</table>";
             }else{
-              echo "I'm sorry, no results found...";
+              echo "<tr><td>No results found yet...</td></tr>";
             }
           ?>
           </table>
