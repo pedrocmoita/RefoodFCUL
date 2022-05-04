@@ -192,7 +192,7 @@ if($bd_periodo_3 === 'no_hour_selected'){
 }else{
 	$bd_periodo_3 = $row_dias['periodo_dia_3'];
 }
-//---------------------------------------------------------
+//-------------------------SEARCH BAR---------------------------
 if(isset($_POST['teste'])){
  		$searched_name = htmlspecialchars($_POST['searched_name']);
                 $selected_filter = htmlspecialchars($_POST['selected_filter']);
@@ -221,6 +221,22 @@ if(isset($_POST['teste'])){
                   echo "something went wrong!";
                 }
 }
+//--------------------------STATS----------------------------
+$vol_stats = "SELECT MAX(id) AS maximumID FROM Voluntario";
+$vol_stats_result = mysqli_query($conn, $vol_stats);
+$vol_stats_row = mysqli_fetch_assoc($vol_stats_result);
+$vol_maximumID = $vol_stats_row['maximumID'];
+
+$inst_stats = "SELECT MAX(id) AS maximumID FROM Instituicao";
+$inst_stats_result = mysqli_query($conn, $inst_stats);
+$inst_stats_row = mysqli_fetch_assoc($inst_stats_result);
+$inst_maximumID = $inst_stats_row['maximumID'];
+
+$users_stats = "SELECT MAX(id) AS maximumID FROM Utilizador";
+$users_stats_result = mysqli_query($conn, $users_stats);
+$users_stats_row = mysqli_fetch_assoc($users_stats_result);
+$users_maximumID = $users_stats_row['maximumID'];
+//----------------------------------------------------------
 ?>
 <html lang="en">
 <head>
@@ -228,12 +244,14 @@ if(isset($_POST['teste'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Refood | FCUL</title>
-    <link rel="stylesheet" href="css/main_welcome.css">
+    <link rel="stylesheet" href="css/welcome.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/c63aba2ece.js" crossorigin="anonymous"></script>
+    <script defer src="./script/script.js"></script>
 </head>
 <body>
     <div class="body">
@@ -537,6 +555,30 @@ if(isset($_POST['teste'])){
             }
           ?>
           </table>
+	  <p class="text-center mt-5 font-weight-bold" style="color: white;">O <span style="color: #EED202;">IMPACTO</span> REFOOD EM <span style="color: black;">NÚMEROS.</span></p>
+          <div class="row d-flex justify-content-center mt-5">
+            <div class="col-lg-2">
+               <div class="counter-box">
+                  <i class="fa fa-group"></i>
+                  <span class="counter"><?php echo $users_maximumID; ?></span>
+                  <p>Utilizadores</p>
+               </div>
+            </div>
+            <div class="col-lg-2">
+              <div class="counter-box">
+                <i class="fa-solid fa-building-columns"></i>
+                <span class="counter"><?php echo $inst_maximumID; ?></span>
+                <p>Instituições</p>
+              </div>
+            </div>
+            <div class="col-lg-2">
+               <div class="counter-box">
+                <i class="fa  fa-user"></i>
+                <span class="counter"><?php echo $vol_maximumID; ?></span>
+                <p>Voluntários</p>
+              </div>
+            </div>
+          </div>	
         </div>
       </div>
     </div>
