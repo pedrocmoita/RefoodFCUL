@@ -1,3 +1,18 @@
+<?php
+include "abreconexao.php";
+
+if(isset($_POST['submit-btn'])){
+  $searched_name = htmlspecialchars($_POST['searched_name']);
+  $selected_filter = htmlspecialchars($_POST['selected_filter']);
+
+ if($selected_filter == "freguesia" || $selected_filter == "concelho" || $selected_filter == "distrito" || $selected_filter == "nome"){
+    $search_query = "SELECT * FROM Instituicao WHERE $selected_filter LIKE '%$searched_name%'";
+    $search_result = mysqli_query($conn, $search_query);
+  }else{
+    echo "something went wrong!";
+  }
+}
+?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -20,16 +35,16 @@
             </ul>
         </div>
         <div class="main-section">
-            <form action="" method="" class="search-form">
-                <input class="main-section__search-bar" type="text" placeholder="Search.." name="search">
+        <form action="" method="post" class="search-form">
+                <input class="main-section__search-bar" type="text" placeholder="Search.." name="searched_name">
                 <button class="main-section__submit-btn" type="submit" name="submit-btn"><i class="fa fa-search"></i></button>
                 <div class="search-form__filter-section">
                   <label for="filter">Filter by:</label>
-                  <select id="filter">
-                    <option value="">Freguesia</option>
-                    <option value="">Concelho</option>
-                    <option value="">Distrito</option>
-                    <option value="" selected>Name</option>
+                  <select id="filter" name="selected_filter">
+                    <option value="freguesia" selected >Freguesia</option>
+                    <option value="concelho">Concelho</option>
+                    <option value="distrito">Distrito</option>
+                    <option value="nome">Nome</option>
                   </select>
                 </div>
             </form>
@@ -47,25 +62,27 @@
                     <th>Password</th>
                 </tr>
                 <?php
-                    include "abreconexao.php";
-
                     $query = "SELECT * FROM Instituicao";
-
                     $result = mysqli_query($conn, $query);
 
                     if (mysqli_num_rows($result) > 0) {
                             while($row = mysqli_fetch_assoc($result)) {
-                                echo "<tr><td>" . $row["nome"]. " </td><td>" . $row["numero"]. "</td><td>" . $row["email"]. "</td><td>"
-                                . $row["morada"]. "</td><td>" . $row["distrito"]. "</td><td>" . $row["concelho"]. "</td><td>"
-                                . $row["freguesia"]. "</td><td>" . $row["nome_contacto"]. "</td><td>". $row["num_contacto"]. "</td><td>" 
-                                . $row["passwd"]. "</td></tr>";
+                                echo "<tr><td> " . $row["nome"]. " </td><td>" . $row["numero"]. " </td><td>" . $row["email"]. " </td><td>"
+                                . $row["morada"]. " </td><td>" . $row["distrito"]. " </td><td>" . $row["concelho"]. " </td><td>"
+                                . $row["freguesia"]. " </td><td>" . $row["nome_contacto"]. " </td><td>". $row["num_contacto"]. " </td><td>" 
+                                . $row["passwd"]. " </td></tr>";
                             }
                     	echo "</table>";
                     } else {
        	 	           echo "Não existem utilizadores";
                     }
 
-                    mysqli_close($conn);
+                    if(mysqli_num_rows($search_result) > 0){
+                        while($row = mysqli_fetch_assoc($search_result)){
+                          echo "</tr><td> " . $row["nome"] . " </td><td> " . $row["email"] . " </td><td> " . $row["passwd"] . " </td><tr>";
+                          }
+                        echo "</table>";
+                    }
                 ?>
             </table>
         </div>
