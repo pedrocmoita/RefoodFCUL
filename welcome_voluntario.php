@@ -197,7 +197,7 @@ if(isset($_POST['teste'])){
  		$searched_name = htmlspecialchars($_POST['searched_name']);
                 $selected_filter = htmlspecialchars($_POST['selected_filter']);
 
-		if($selected_filter == "freguesia" || $selected_filter == "concelho" || $selected_filter == "distrito"){
+		if($selected_filter == "freguesia" || $selected_filter == "concelho" || $selected_filter == "distrito" || $selected_filter == "nome"){
                   $search_query = "SELECT * FROM Instituicao WHERE $selected_filter LIKE '%$searched_name%'";
                   $search_result = mysqli_query($conn, $search_query);
 
@@ -512,6 +512,7 @@ $users_maximumID = $users_stats_row['maximumID'];
                   <option value="concelho">Concelho</option>
                   <option value="distrito">Distrito</option>
                   <option value="tipo_instituicao">Tipo Instituição</option>
+                  <option value="nome">Nome</option>
                 </select>
               </div>
               <button class="search-btn m-3" type="submit" name="teste"><i class="fa fa-search"></i></button>
@@ -524,19 +525,28 @@ $users_maximumID = $users_stats_row['maximumID'];
               while($row = mysqli_fetch_assoc($search_result)){
 		echo '<tr><td><i class="fa-solid fa-address-card" data-toggle="modal" data-target="#info"></i>  
                       <div class="modal" id="info">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog modal-lg">
                           <div class="modal-content">
                             <div class="modal-header">
                               <h5 class="modal-title">Info</h5>
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
-                            <div class="modal-body">' . 
-				'<div><p style="color: #EED202;">Contactos</p>' . 
-					'<p><i class="fa-solid fa-mobile mr-2"></i>' . $row['numero'] . '</p>' . 
-					'<p><i class="fa-solid fa-envelope mr-2"></i>' . $row['email'] . '</p>' . 
-				'</div>' .
-				'<div><p style="color: #EED202;">Concelho de Recolha</p>' . '</div>' . 
-                           '</div>
+                            <div class="modal-body"> 
+                              <div class="row">
+                                <div class="col">
+                                  <p style="color: #EED202;">Contactos</p>
+                                  <p><i class="fa-solid fa-mobile mr-2"></i>' . $row['numero'] . '</p>' .
+                                  '<p><i class="fa-solid fa-envelope mr-2"></i>' . $row['email'] . '</p>' .
+                                  '<p style="color: #EED202;">Concelho Recolha</p>
+                                  <p><i class="fa-solid fa-location-dot mr-2"></i>teste</p> 
+                                  <p style="color: #EED202;"><button>Avaliar Instituição</button></p>
+                                  <p style="color: #EED202;"><button>Solicitar Recolha</button></p>  
+				</div>
+                                <div class="col" style="border: 1px solid black;">
+                               	  <p>CHAT</p>
+                                </div>
+                               </div> 
+                            </div>
                           </div>
                         </div>
                       </div></td><td>' . 

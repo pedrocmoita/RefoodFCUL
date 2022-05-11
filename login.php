@@ -34,20 +34,23 @@ if(isset($_POST['submit-btn'])){
 			$inst_num_row = mysqli_num_rows($instresult);
 			$inst_id_row = mysqli_fetch_assoc($instresult);
 			$inst_id = $inst_id_row['id'];
-						
-			session_start();
-			$_SESSION['loggedin'] = true;
-			$_SESSION['username'] = $username;
-			$_SESSION['userID'] = $userID;
  
-			if($vol_num_row == 1){
+                        if($vol_num_row == 1){
+                                session_start();
+                                $_SESSION['loggedin'] = true;
+                                $_SESSION['username'] = $username;
+                                $_SESSION['userID'] = $userID;
                                 $_SESSION['id'] = $vol_id;
 				header("location: welcome_voluntario.php");
-			}else{
+			}
+                        if($inst_num_row == 1){
+                                session_start();
+                                $_SESSION['loggedin'] = true;
+                                $_SESSION['username'] = $username;
+                                $_SESSION['userID'] = $userID;
                                 $_SESSION['id'] = $inst_id;
 				header("location: welcome_instituicao.php");
-			}	
-
+			}							
                 }else{
                 	$error = "Email or password incorrect.";
                		echo "<div style='position: absolute; top: 3%; left: 50%; transform: translate(-50%, -50%);' class='container mt-3 pt-4 pb-4 alert alert-danger alert-dismissible fade show' role='alert'>

@@ -49,7 +49,6 @@ if(isset($_POST['submit-btn'])){
                 </div>
             </form>
             <table>
-                <tr>
                     <th>Nome</th>
                     <th>Número</th>
                     <th>Email</th>
@@ -60,30 +59,17 @@ if(isset($_POST['submit-btn'])){
                     <th>Nome de contacto</th>
                     <th>Nr de contacto</th>
                     <th>Password</th>
-                </tr>
-                <?php
-                    $query = "SELECT * FROM Instituicao";
-                    $result = mysqli_query($conn, $query);
-
-                    if (mysqli_num_rows($result) > 0) {
-                            while($row = mysqli_fetch_assoc($result)) {
-                                echo "<tr><td> " . $row["nome"]. " </td><td>" . $row["numero"]. " </td><td>" . $row["email"]. " </td><td>"
-                                . $row["morada"]. " </td><td>" . $row["distrito"]. " </td><td>" . $row["concelho"]. " </td><td>"
-                                . $row["freguesia"]. " </td><td>" . $row["nome_contacto"]. " </td><td>". $row["num_contacto"]. " </td><td>" 
-                                . $row["passwd"]. " </td></tr>";
-                            }
-                    	echo "</table>";
-                    } else {
-       	 	           echo "Não existem utilizadores";
+              <?php 
+                if(mysqli_num_rows($search_result) > 0){
+                  while($row2 = mysqli_fetch_assoc($search_result)){
+                    echo "</tr><td> " . $row2["nome"]. " </td><td>" . $row2["numero"]. " </td><td>" . $row2["email"]. " </td><td>"
+                    . $row2["morada"]. " </td><td>" . $row2["distrito"]. " </td><td>" . $row2["concelho"]. " </td><td>"
+                    . $row2["freguesia"]. " </td><td>" . $row2["nome_contacto"]. " </td><td>". $row2["num_contacto"]. " </td><td>" 
+                    . $row2["passwd"]. " </td></tr>";
                     }
-
-                    if(mysqli_num_rows($search_result) > 0){
-                        while($row = mysqli_fetch_assoc($search_result)){
-                          echo "</tr><td> " . $row["nome"] . " </td><td> " . $row["email"] . " </td><td> " . $row["passwd"] . " </td><tr>";
-                          }
-                        echo "</table>";
-                    }
-                ?>
+                  echo "</table>";
+                }
+              ?>
             </table>
         </div>
     </div>

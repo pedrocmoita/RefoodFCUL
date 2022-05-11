@@ -153,7 +153,7 @@ $bd_quant_dia_3 = $row_doacao['quant_dia_3'];
 $bd_quant_tipo_dia_3 = $row_doacao['quant_tipo_dia_3'];
 //-----------------------SEARCH BAR------------------------
 if(isset($_POST['teste'])){
-              $searched_name = htmlspecialchars($_POST['searched_name']);
+  $searched_name = htmlspecialchars($_POST['searched_name']);
              $selected_filter = htmlspecialchars($_POST['selected_filter']);
 
   if($selected_filter == "freguesia" || $selected_filter == "concelho" || $selected_filter == "distrito" || $selected_filter == "nome"){
@@ -391,13 +391,13 @@ $users_maximumID = $users_stats_row['maximumID'];
 			   </form>
 			   <button class="profile-form-btn m-0" data-toggle="modal" data-target="#preferenciasatuais"><i class="fa-regular fa-eye"></i><span class="ml-2">Show Current Preferences</span></button>
 			   <div class="modal fade" id="preferenciasatuais" tabindex="-1" role="dialog" aria-labelledby="PreferenciasAtuais" aria-hidden="true">
-                           <div class="modal-dialog" role="document">
+                           <div class="modal-dialog modal-lg" role="document">
                              <div class="modal-content mt-5" styles="border-radius: 0;">
                                <div class="modal-header" style="background: white; color: #EED202;">
                                  <h4 class="modal-title" id="preferenciasatuais">Current Preferences</h4>
                                </div>
                                <div class="modal-body" style="background: radial-gradient(#202020, #191919, #181818); color: white;">
-                                 <h5 class="mt-2 mb-2" style="color: #EED202;">Concelho de Recolha</h5>
+                                 <h5 class="mt-2 mb-2" style="color: #EED202;">Concelho</h5>
                                  <p><?php echo $bd_preferences_concelho ?></p>
                                  <div class="row">
                                    <div class="col">
@@ -409,20 +409,20 @@ $users_maximumID = $users_stats_row['maximumID'];
                                    <div class="col">
                                      <h5 class="mt-2 mb-2" style="color: #EED202;">Hora de recolha</h5>
                                      <p><?php echo $bd_hr_inic_dia_1; ?></p>
-                                     <p><?php echo $bd_hr_inic_dia_2 ?></p>
-                                     <p><?php echo $bd_hr_inic_dia_3 ?></p>
+                                     <p><?php echo $bd_hr_inic_dia_2; ?></p>
+                                     <p><?php echo $bd_hr_inic_dia_3; ?></p>
                                    </div>
                                    <div class="col">
                                      <h5 class="mt-2 mb-2" style="color: #EED202;">Tipos de alimentos</h5>
-                                     <p><?php echo $bd_tipo_dia_1 ?></p>
-                                     <p><?php echo $bd_tipo_dia_2 ?></p>
-                                     <p><?php echo $bd_tipo_dia_3 ?></p>
+                                     <p><?php echo $bd_tipo_dia_1; ?></p>
+                                     <p><?php echo $bd_tipo_dia_2; ?></p>
+                                     <p><?php echo $bd_tipo_dia_3; ?></p>
                                    </div>
                                    <div class="col">
                                      <h5 class="mt-2 mb-2" style="color: #EED202;">Quantidade de alimentos</h5>
-                                     <p><?php echo  $bd_quant_dia_1 . " " . $bd_quant_tipo_dia_1 ?></p>
-                                     <p><?php echo  $bd_quant_dia_2 . " " . $bd_quant_tipo_dia_2 ?></p>
-                                     <p><?php echo  $bd_quant_dia_3 . " " . $bd_quant_tipo_dia_3 ?></p>
+                                     <p><?php echo  $bd_quant_dia_1 . " " . $bd_quant_tipo_dia_1; ?></p>
+                                     <p><?php echo  $bd_quant_dia_2 . " " . $bd_quant_tipo_dia_2; ?></p>
+                                     <p><?php echo  $bd_quant_dia_3 . " " . $bd_quant_tipo_dia_3; ?></p>
                                    </div>
                                  </div>
                                </div>
@@ -472,7 +472,7 @@ $users_maximumID = $users_stats_row['maximumID'];
             <h4 class="text-warning">Voluntários</h4>
             <ul>
             <?php            
-	            $dias_query = "SELECT * FROM Dias WHERE concelho='$bd_preferences_concelho'";
+	      $dias_query = "SELECT * FROM Dias WHERE concelho='$bd_preferences_concelho'";
               $dias_query_result = mysqli_query($conn, $dias_query);
               $echo = "";
               if (mysqli_num_rows($dias_query_result) > 0) {
@@ -532,11 +532,11 @@ $users_maximumID = $users_stats_row['maximumID'];
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body">' . 
-                          '<div><p style="color: #EED202;">Contactos</p>' . 
-                            '<p><i class="fa-solid fa-mobile mr-2"></i>' . $row['numero'] . '</p>' . 
-                            '<p><i class="fa-solid fa-envelope mr-2"></i>' . $row['email'] . '</p>' . 
-                          '</div>' .
-                          '<div><p style="color: #EED202;">Concelho de Recolha</p>' . '</div>' . 
+				'<div><p style="color: #EED202;">Contactos</p>' . 
+					'<p><i class="fa-solid fa-mobile mr-2"></i>' . $row['numero'] . '</p>' . 
+					'<p><i class="fa-solid fa-envelope mr-2"></i>' . $row['email'] . '</p>' . 
+				'</div>' .
+				'<div><p style="color: #EED202;">Concelho de Recolha</p>' . '</div>' . 
                            '</div>
                           </div>
                         </div>
