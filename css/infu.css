@@ -1,0 +1,38 @@
+body{
+        background: radial-gradient(#2d2d2d, #232323, #191919, #0f0f0f);
+}
+
+.body{
+        margin-top: 2rem;
+        color: white;
+}
+
+.chat{
+        border-radius: 1rem;
+        border: 1px solid black;
+        margin-right: 1rem;
+        background-color: white;
+        color: black;
+        position: relative;
+}
+
+.header{
+        background-color: white;
+        padding: 1rem;
+}
+
+.send-msg-form{
+	position: absolute;
+	bottom: 1rem;
+	left: 1rem;
+	width: 90%;
+}
+
+.msg-input{
+	width: 100%;
+}
+
+.send-msg-btn{
+	border-radius: 1rem;
+	padding: .5rem .75rem;
+}
