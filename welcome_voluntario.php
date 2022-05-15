@@ -246,6 +246,7 @@ $users_maximumID = $users_stats_row['maximumID'];
     <title>Refood | FCUL</title>
     <link rel="stylesheet" href="css/welcome.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -258,7 +259,7 @@ $users_maximumID = $users_stats_row['maximumID'];
       <header class="d-flex justify-content-between">
         <div>
           <p><?php echo $welcome ?> <span style="color: #EED202; margin-left: .125rem;"><?php echo $username ?></span></p>
-          <p><i class="fa-regular fa-circle-left mt-1" data-toggle="modal" data-target="#logout"></i></p>
+          <p><i class="fa-solid fa-right-from-bracket mt-1" data-toggle="modal" data-target="#logout"></i></p>
 	    <div class="modal fade" id="logout">
               <div class="modal-dialog">
                 <div class="modal-content text-center p-2">
@@ -521,36 +522,21 @@ $users_maximumID = $users_stats_row['maximumID'];
           <table class="d-flex justify-content-center mt-5">
 	  <?php 
             if(mysqli_num_rows($search_result) > 0){
-		echo "<tr><th></th><th>Nome</th><th>Morada</th><th>Distrito</th><th>Concelho</th><th>Freguesia</th></tr>";
+		echo "<tr><th>Nome</th><th>Morada</th><th>Distrito</th><th>Concelho</th><th>Freguesia</th></tr>";
               while($row = mysqli_fetch_assoc($search_result)){
-		echo '<tr><td><i class="fa-solid fa-address-card" data-toggle="modal" data-target="#info"></i>  
-                      <div class="modal" id="info">
-                        <div class="modal-dialog modal-lg">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title">Info</h5>
-                              <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-                            <div class="modal-body"> 
-                              <div class="row">
-                                <div class="col">
-                                  <p style="color: #EED202;">Contactos</p>
-                                  <p><i class="fa-solid fa-mobile mr-2"></i>' . $row['numero'] . '</p>' .
-                                  '<p><i class="fa-solid fa-envelope mr-2"></i>' . $row['email'] . '</p>' .
-                                  '<p style="color: #EED202;">Concelho Recolha</p>
-                                  <p><i class="fa-solid fa-location-dot mr-2"></i>teste</p> 
-                                  <p style="color: #EED202;"><button>Avaliar Instituição</button></p>
-                                  <p style="color: #EED202;"><button>Solicitar Recolha</button></p>  
-				</div>
-                                <div class="col" style="border: 1px solid black;">
-                               	  <p>CHAT</p>
-                                </div>
-                               </div> 
-                            </div>
-                          </div>
-                        </div>
-                      </div></td><td>' . 
-		      $row["nome"] . "</td><td>" . $row["morada"] . "</td><td>" . $row["distrito"] . "</td><td>" . $row["concelho"] . "</td><td>" . $row["freguesia"] . "</td></tr>";
+		$id = $row['id'];
+		$nome = $row['nome'];
+		$morada = $row['morada'];
+		$distrito = $row['distrito'];
+		$concelho = $row['concelho'];
+		$freguesia = $row['freguesia'];
+    		echo 	'<tr>
+			<td>' . '<button class="profile-form-btn m-0 mr-3"><a class="info-btn" href="info.php?infoid=' . $id . '">Info</a></button>' . $nome . '</td>
+			<td>' . $morada . '</td>
+			<td>' . $distrito . '</td>
+			<td>' . $concelho . '</td>
+			<td>' . $freguesia . '</td>
+			</tr>';
               }
               echo "</table>";
 

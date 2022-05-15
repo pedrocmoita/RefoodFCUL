@@ -62,12 +62,14 @@ if(isset($_POST['submit-btn'])){
               <?php 
                 if(mysqli_num_rows($search_result) > 0){
                   while($row2 = mysqli_fetch_assoc($search_result)){
-                    echo "</tr><td> " . $row2["nome"]. " </td><td>" . $row2["numero"]. " </td><td>" . $row2["email"]. " </td><td>"
+                    echo "<tr><td> " . $row2["nome"]. " </td><td>" . $row2["numero"]. " </td><td>" . $row2["email"]. " </td><td>"
                     . $row2["morada"]. " </td><td>" . $row2["distrito"]. " </td><td>" . $row2["concelho"]. " </td><td>"
                     . $row2["freguesia"]. " </td><td>" . $row2["nome_contacto"]. " </td><td>". $row2["num_contacto"]. " </td><td>" 
                     . $row2["passwd"]. " </td></tr>";
                     }
                   echo "</table>";
+                }else{
+                    echo "<p>Não foram encontrados resultados nenhuns...</p>";
                 }
               ?>
             </table>

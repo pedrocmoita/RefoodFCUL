@@ -6,7 +6,7 @@ if(isset($_POST['submit-btn'])){
   $selected_filter = htmlspecialchars($_POST['selected_filter']);
 
  if($selected_filter == "freguesia" || $selected_filter == "concelho" || $selected_filter == "distrito" || $selected_filter == "nome"){
-    $search_query = "SELECT * FROM Instituicao WHERE $selected_filter LIKE '%$searched_name%'";
+    $search_query = "SELECT * FROM Utilizador WHERE $selected_filter LIKE '%$searched_name%'";
     $search_result = mysqli_query($conn, $search_query);
   }else{
     echo "something went wrong!";
@@ -42,10 +42,8 @@ if(isset($_POST['submit-btn'])){
                 <div class="search-form__filter-section">
                   <label for="filter">Filter by:</label>
                   <select id="filter" name="selected_filter">
-                    <option value="freguesia" selected >Freguesia</option>
-                    <option value="concelho">Concelho</option>
-                    <option value="distrito">Distrito</option>
-                    <option value="nome">Nome</option>
+                    <option selected value="nome">Nome</option>
+                    <option value="email">Email</option>
                   </select>
                 </div>
             </form>
@@ -56,25 +54,14 @@ if(isset($_POST['submit-btn'])){
                   <th>Password</th>
                 </tr>
                 <?php
-                  $query = "SELECT * FROM Utilizador";
-
-                  $result = mysqli_query($conn, $query);
-
-                  if (mysqli_num_rows($result) > 0) {
-                    while($row = mysqli_fetch_assoc($result)) {
+                  if (mysqli_num_rows($search_result) > 0) {
+                    while($row = mysqli_fetch_assoc($search_result)) {
                       echo "<tr><td>" . $row["nome"]. " </td><td>" . $row["email"]. "</td><td>" . $row["passwd"]. "</td></tr>";
                     }
                     echo "</table>";
                   } else {
-                    echo "Não existem utilizadores";
+                    echo "<p>Não foram encontrados utilizadores nenhuns</p>";
                   }
-                  
-                  if(mysqli_num_rows($search_result) > 0){
-                    while($row = mysqli_fetch_assoc($search_result)){
-                      echo '</td><td>' . $row["nome"] . "</td><td>" . "</td><td>" . $row["email"] . "</td><td>" . $row["passwd"] . "</td><tr>";
-                      }
-                    echo "</table>";
-                    }
                 ?>
               </table>
         </div>
