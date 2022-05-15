@@ -7,29 +7,29 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
 }
 
 if(isset($_GET['infoid'])){
-	$id=$_GET['infoid'];
+	$inst_id=$_GET['infoid']; // inst id
 }
 
-$username = $_SESSION['username'];
-$user_id = $_SESSION['id'];
-$ID = $_SESSION['userID'];
+$username = $_SESSION['username']; //volunteer name
+$user_id = $_SESSION['id'];  // volunteer id
+$ID = $_SESSION['userID']; // volunteer user id
 
-//-------------------------------EVALUATE INSTITUTION---------------------------------------
-$query = "SELECT * FROM Instituicao WHERE id = '$id'";
+$query = "SELECT * FROM Instituicao WHERE id = '$inst_id'";
 $result = mysqli_query($conn, $query);
 $row = mysqli_fetch_assoc($result);
-$numero = $row['numero'];
-$email = $row['email'];
-$nome = $row['nome'];
+$numero = $row['numero']; //inst number
+$email = $row['email']; //inst email
+$nome = $row['nome']; //inst name
+//-------------------------------EVALUATE INSTITUTION---------------------------------------
 if(isset($_POST['avaliacao'])){
   $rating = $_POST['rating'];
   if(strlen($rating) < 1){ 
       $rating = 5; 
   }
-  $rating_query = "SELECT * FROM Avalicao WHERE de='$user_id' AND para='$id'";
+  $rating_query = "SELECT * FROM Avalicao WHERE de='$user_id' AND para='$inst_id'";
   $rating_result = mysqli_query($conn, $rating_query);
   if(mysqli_num_rows($rating_result) == 0){
-      $new_rating_query = "INSERT INTO Avalicao VALUES(id, '$user_id', '$id', '$rating')";
+      $new_rating_query = "INSERT INTO Avalicao VALUES(id, '$user_id', '$inst_id', '$rating')";
       $new_rating_result = mysqli_query($conn, $new_rating_query);
   }else{
       $update_rating_query = "UPDATE Avalicao SET avalicao = '$rating' WHERE de='$user_id'";
@@ -37,7 +37,7 @@ if(isset($_POST['avaliacao'])){
   }
 }
 //------------------------------------AVERAGE EVALUATION----------------------------------
-	$classif_query = "SELECT AVG(avalicao) AS media FROM Avalicao WHERE para='$id'";
+	$classif_query = "SELECT AVG(avalicao) AS media FROM Avalicao WHERE para='$inst_id'";
 	$classif_result = mysqli_query($conn, $classif_query);
 	$ruw = mysqli_fetch_assoc($classif_result);
 	$classif = round($ruw['media'], 1);
@@ -66,8 +66,10 @@ if(isset($_POST['avaliacao'])){
 <div class="container-md body">
 <div class="row">
         <div class="col">
-		<h3 style="color: #EED202;" class="mb-3"><?php echo $nome . '  <span style="font-size: 1rem;">(' . $classif . ')</span>'?></h3>
-                <h5 style="color: #EED202;">Contactos</h5>
+		<h1 style="color: #EED202;" class="mb-3"><?php echo $nome . '  <span style="font-size: 1rem;">(' . $classif . ')</span>'?></h1>
+		<?php echo '<input type="text" value="'.$nome.'" id="para" hidden/>' ?>
+		<?php echo '<input type="text" value="'.$username.'" id="de" hidden/>' ?>
+                <h3 style="color: #EED202;">Contactos</h3>
                 <p><i class="fa-solid fa-phone mr-2" style="color: #EED202;"></i><?php echo $numero; ?></p>
                 <p><i class="fa-solid fa-envelope mr-2" style="color: #EED202;"></i><?php echo $email; ?></p>
                 <form class="rating-css" method="post" action="">
@@ -87,20 +89,63 @@ if(isset($_POST['avaliacao'])){
                 </form>
                 <p style="color: #EED202;"><button class="profile-form-btn m-0">Solicitar Recolha</button></p>
         </div>
-        <div class="col chat">
-                <h5>CHAT</h5>
-		<form class="send-msg-form">
+        <div class="col chat" style="overflow-y: scroll; overflow-x: hidden;">
+                <h5>Chat</h5>
+		<div class="chat-area">
+			<?php 
+				$chats = "SELECT * FROM Mensagens WHERE (de='$user_id' AND para='$inst_id') OR (de='$inst_id' AND para='$user_id')";
+				$chat_result = mysqli_query($conn, $chats);
+				while($chat = mysqli_fetch_assoc($chat_result)){
+        				if($chat['de'] == $user_id){
+            					echo "<div style='text-align: right;'>
+                    					<p style='background-color: lightblue; word-wrap: break-word; 
+                        					display: inline-block; padding: .5rem; border-radius: .75rem; max-width: 70%;'>
+                        					".$chat["message"]."
+                    					</p>
+                					</div>";
+        				}else{
+            					echo "<div style='text-align:left;'>
+                    					<p style='background-color: lightblue; word-wrap: break-word; display: inline-block;
+                        					padding: .5rem; border-radius: .75rem; max-width: 70%;'>
+                        					".$chat["message"]."
+                    					</p>
+                					</div>";
+        				}
+    				}
+			?>
+		</div>
+		<div class="send-msg-form" >
 			<div class="row">
 				<div class="col-md-10">
-					<input type="text" class="msg-input" name="msg">
+					<input type="text" class="msg-input" id="msg-input">
 				</div>
 				<div class="col-md-2">
-					<button type="submit" name="send-msg-btn" class="send-msg-btn"><i class="fa-solid fa-paper-plane"></i></button>
+					<button class="send-msg-btn" id="send"><i class="fa-solid fa-paper-plane"></i></button>
 				</div>
 			</div>
-		</form>
+		</div>
 	</div>
 </div>
 </div>
 </body>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+        $(document).ready(function(){
+                $("#send").on("click", function(){
+                        $.ajax({
+                                url: "insertMsg.php",
+                                method: "POST",
+                                data:{
+                                        de: $("#de").val(),
+                                        para: $("#para").val(),
+                                        message: $("msg-input").val()
+                                },
+                                dataType: "text",
+                                success:function(data){
+                                        $("#msg-input").val("");
+                                }
+                        });
+                });
+        });
+</script>
 </html>
