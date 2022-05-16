@@ -50,12 +50,13 @@ if(isset($_POST['avaliacao'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReFood</title>
     <link rel="stylesheet" href="css/welcome.css">
-    <link rel="stylesheet" href="css/infu.css">
+    <link rel="stylesheet" href="css/info.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/c63aba2ece.js" crossorigin="anonymous"></script>
+    <script defer src="script/script.js"></script>
 </head>
 <body>
 <div class="header">
@@ -89,8 +90,8 @@ if(isset($_POST['avaliacao'])){
                 </form>
                 <p style="color: #EED202;"><button class="profile-form-btn m-0">Solicitar Recolha</button></p>
         </div>
-        <div class="col chat" style="overflow-y: scroll; overflow-x: hidden;">
-                <h5>Chat</h5>
+        <div class="col chat">
+                <h2 style="color: #EED202;">Chat</h2>
 		<div class="chat-area" id="chat-area">
 			<?php 
 				$chats = "SELECT * FROM Mensagens WHERE (de='$user_id' AND para='$inst_id') OR (de='$inst_id' AND para='$user_id')";
@@ -99,14 +100,14 @@ if(isset($_POST['avaliacao'])){
         				if($chat['de'] == $user_id){
             					echo "<div style='text-align: right;'>
                     					<p style='background-color: lightblue; word-wrap: break-word; 
-                        					display: inline-block; padding: .5rem; border-radius: .75rem; max-width: 70%;'>
+                        					display: inline-block; padding: .5rem; border-radius: .75rem; max-width: 70%; margin: .5rem;'>
                         					".$chat["message"]."
                     					</p>
                 					</div>";
         				}else{
             					echo "<div style='text-align:left;'>
                     					<p style='background-color: lightblue; word-wrap: break-word; display: inline-block;
-                        					padding: .5rem; border-radius: .75rem; max-width: 70%;'>
+                        					padding: .5rem; border-radius: .75rem; max-width: 70%; margin: .5rem;'>
                         					".$chat["message"]."
                     					</p>
                 					</div>";
@@ -169,6 +170,17 @@ if(isset($_POST['avaliacao'])){
 		document.getElementById('chat-form').reset();
 		return false;
         }
+</script>
+<script>
+var element = document.getElementById("chat-area");
+element.scrollTop = element.scrollHeight;
+
+function updateScroll(){
+    var element = document.getElementById("chat-area");
+    element.scrollTop = element.scrollHeight;
+}
+//once a second
+setInterval(updateScroll, 1000);
 </script>
 </body>
 </html>
