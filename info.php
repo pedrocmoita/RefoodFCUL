@@ -67,8 +67,8 @@ if(isset($_POST['avaliacao'])){
 <div class="row">
         <div class="col">
 		<h1 style="color: #EED202;" class="mb-3"><?php echo $nome . '  <span style="font-size: 1rem;">(' . $classif . ')</span>'?></h1>
-		<?php echo '<input type="text" value="'.$nome.'" id="para" hidden/>' ?>
-		<?php echo '<input type="text" value="'.$username.'" id="de" hidden/>' ?>
+		<input type="hidden" id="de" value="<?php echo $user_id; ?>">
+		<input type="hidden" id="para" value="<?php echo $inst_id; ?>">
                 <h3 style="color: #EED202;">Contactos</h3>
                 <p><i class="fa-solid fa-phone mr-2" style="color: #EED202;"></i><?php echo $numero; ?></p>
                 <p><i class="fa-solid fa-envelope mr-2" style="color: #EED202;"></i><?php echo $email; ?></p>
@@ -91,7 +91,7 @@ if(isset($_POST['avaliacao'])){
         </div>
         <div class="col chat" style="overflow-y: scroll; overflow-x: hidden;">
                 <h5>Chat</h5>
-		<div class="chat-area">
+		<div class="chat-area" id="chat-area">
 			<?php 
 				$chats = "SELECT * FROM Mensagens WHERE (de='$user_id' AND para='$inst_id') OR (de='$inst_id' AND para='$user_id')";
 				$chat_result = mysqli_query($conn, $chats);
@@ -113,39 +113,62 @@ if(isset($_POST['avaliacao'])){
         				}
     				}
 			?>
+			<script type="text/javascript">
+				$(function(){
+					const de = $('#de').val();
+					const para = $('#para').val();
+					const dataStr = 'de='+de+'&para='+para;
+					setInterval(function(){
+						$.ajax({
+							type: 'GET',
+							url: 'chat_loader.php',
+							data: dataStr,
+							success:function(e){
+								$('#chat-area').html(e);
+							}
+						}); 
+					}, 100);
+				});
+			</script>
 		</div>
 		<div class="send-msg-form" >
-			<div class="row">
+			<form method="POST" class="row" id="chat-form">
 				<div class="col-md-10">
-					<input type="text" class="msg-input" id="msg-input">
+					<input type="hidden" id="de" value="<?php echo $user_id; ?>">
+			                <input type="hidden" id="para" value="<?php echo $inst_id; ?>">
+					<input type="text" class="msg-input" id="message" placeholder="Type Message...">
 				</div>
 				<div class="col-md-2">
-					<button class="send-msg-btn" id="send"><i class="fa-solid fa-paper-plane"></i></button>
+					<button onclick="return chat_validation()" class="send-msg-btn" id="send"><i class="fa-solid fa-paper-plane"></i></button>
 				</div>
-			</div>
+			</form>
 		</div>
 	</div>
 </div>
 </div>
-</body>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript">
-        $(document).ready(function(){
-                $("#send").on("click", function(){
-                        $.ajax({
-                                url: "insertMsg.php",
-                                method: "POST",
-                                data:{
-                                        de: $("#de").val(),
-                                        para: $("#para").val(),
-                                        message: $("msg-input").val()
-                                },
-                                dataType: "text",
-                                success:function(data){
-                                        $("#msg-input").val("");
-                                }
-                        });
-                });
-        });
+        function chat_validation(){
+                const textmsg = $('#message').val();
+		const de = $('#de').val();
+		const para = $('#para').val();
+		if(textmsg == ""){
+			alert("Type something...");
+			return false;
+		}
+		const datastr = 'message='+textmsg+'&de='+de+'&para='+para;;
+
+		$.ajax({
+			url: 'chatlog.php',
+			type: 'POST',
+			data: datastr,
+			success:function(e){
+				$('#chat-area').html(e);
+			}
+		});
+		document.getElementById('chat-form').reset();
+		return false;
+        }
 </script>
+</body>
 </html>
