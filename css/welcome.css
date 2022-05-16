@@ -57,13 +57,13 @@ ul{
     transform: scale(1.125);
 }
 
-.fa-circle-left, .fa-address-card{
+.fa-right-from-bracket, .fa-address-card, .fa-arrow-left{
     color: black;
     cursor: pointer;
     transition: transform 150ms ease-in-out;
 }
 
-.fa-circle-left:hover, .fa-address-card:hover{
+.fa-right-from-bracket:hover, .fa-address-card:hover, .fa-arrow-left:hover{
     color: #EED202;
     transform: scale(1.125);
 }
@@ -138,6 +138,7 @@ ul{
     padding: .25rem 1rem;
     margin-top: 1.25rem;
     transition: 150ms ease-in-out;
+    text-decoration: none;
 }
 
 .profile-form-btn:hover, .delete-account-btn:hover{
@@ -231,4 +232,38 @@ table td, th{
     font-weight: bolder;
     color: #666;
     line-height: 1rem;
+}
+
+.rating-css div {
+    color: #ffe400;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    padding: 1rem 0rem 0rem 0rem;
+}
+
+.rating-css input {
+    display: none;
+}
+
+.rating-css input + label {
+    font-size: 60px;
+    cursor: pointer;
+}
+
+.rating-css input:checked + label ~ label {
+    color: #838383;
+}
+
+.rating-css label:active {
+    transform: scale(0.8);
+    transition: 0.3s ease;
+}
+
+.fa-star::before{
+    font-size: 1.5rem;
+}
+
+.info-btn{
+	text-decoration: none;
+	color: white;
 }

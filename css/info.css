@@ -1,0 +1,52 @@
+body{
+        background: radial-gradient(#2d2d2d, #232323, #191919, #0f0f0f);
+}
+
+.body{
+        margin-top: 2rem;
+        color: white;
+}
+
+.chat{
+	overflow: hidden;
+}
+
+.chat-area{
+	background-color: white;
+	height: 25rem;
+	border: 1px solid black;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	position: relative;
+	border-radius: 1rem;
+	color: black;
+	padding: 1rem;
+	margin-bottom: 1rem;
+}
+
+.header{
+        background-color: white;
+        padding: 1rem;
+}
+
+.chat-form{
+        display: inline-block;
+}
+
+.msg-input{
+	width: 100%;
+}
+
+.send-msg-btn{
+	border: 0;
+	border-radius: .25rem;
+	background-color: #EED202;
+	font-weight: bolder;
+	padding: .5rem .75rem;
+	transition: 150ms ease-in-out;
+}
+
+.send-msg-btn:hover{
+	background-color: black;
+	color: #EED202;
+}
