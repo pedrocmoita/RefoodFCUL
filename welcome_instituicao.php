@@ -523,24 +523,18 @@ $users_maximumID = $users_stats_row['maximumID'];
             if(mysqli_num_rows($search_result) > 0){
 	      echo "<tr><th></th><th>Nome</th><th>Distrito</th><th>Concelho</th><th>Freguesia</th></tr>";
               while($row = mysqli_fetch_assoc($search_result)){
-                echo '<tr><td><i class="fa-solid fa-address-card" data-toggle="modal" data-target="#info"></i>  
-                      <div class="modal" id="info">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title">Info</h5>
-                              <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-                            <div class="modal-body">' . 
-				'<div><p style="color: #EED202;">Contactos</p>' . 
-					'<p><i class="fa-solid fa-mobile mr-2"></i>' . $row['numero'] . '</p>' . 
-					'<p><i class="fa-solid fa-envelope mr-2"></i>' . $row['email'] . '</p>' . 
-				'</div>' .
-				'<div><p style="color: #EED202;">Concelho de Recolha</p>' . '</div>' . 
-                           '</div>
-                          </div>
-                        </div>
-                      </div></td><td>' . $row["nome"] . "</td><td>" . $row["distrito"] . "</td><td>" . $row["concelho"] . "</td><td>" . $row["freguesia"] . "</td></tr>";
+        	$id = $row['id'];
+		$nome = $row['nome'];
+		$distrito = $row['distrito'];
+		$concelho = $row['concelho'];
+		$freguesia = $row['freguesia'];
+	        echo '<tr>
+		<td>' . '<button class="profile-form-btn m-0 mr-3"><a class="info-btn" href="inst_info.php?Infoid=' . $id . '">Info</a></button></td>
+		<td>' . $nome . '</td> 
+		<td>' . $distrito . '</td>
+		<td>' . $concelho . '</td>
+		<td>'. $freguesia . '</td>
+		</tr>';
               }
               echo "</table>";
             }else{

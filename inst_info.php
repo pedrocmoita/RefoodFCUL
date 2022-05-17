@@ -6,35 +6,35 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
 	exit;
 }
 
-if(isset($_GET['infoid'])){
-	$inst_id=$_GET['infoid']; // inst id
+if(isset($_GET['Infoid'])){
+	$vol_id=$_GET['Infoid']; // volunteer id
 }
 
-$username = $_SESSION['username']; //volunteer name
-$user_id = $_SESSION['id'];  // volunteer id
-$ID = $_SESSION['userID']; // volunteer user id
+$username = $_SESSION['username']; //institution name
+$user_id = $_SESSION['id'];  // institution id
+$ID = $_SESSION['userID']; // institution user id
 
-$query = "SELECT * FROM Instituicao WHERE id = '$inst_id'";
+$query = "SELECT * FROM Voluntario WHERE id = '$vol_id'";
 $result = mysqli_query($conn, $query);
 $row = mysqli_fetch_assoc($result);
-$numero = $row['numero']; //inst number
-$email = $row['email']; //inst email
-$nome = $row['nome']; //inst name
+$numero = $row['numero']; //volunteer number
+$email = $row['email']; //volunteer email
+$nome = $row['nome']; //volunteer name
 
-$doacao_query = "SELECT * FROM Doacao WHERE id = '$inst_id'";
-$doacao_result = mysqli_query($conn, $doacao_query);
-$doacao_row = mysqli_fetch_assoc($doacao_result);
-$concelho_recolha = $doacao_row['concelho'];
+$dias_query = "SELECT * FROM Dias WHERE id = '$vol_id'";
+$dias_result = mysqli_query($conn, $dias_query);
+$dias_row = mysqli_fetch_assoc($dias_result);
+$concelho_recolha = $dias_row['concelho'];
 //-------------------------------EVALUATE INSTITUTION---------------------------------------
 if(isset($_POST['avaliacao'])){
   $rating = $_POST['rating'];
   if(strlen($rating) < 1){ 
       $rating = 5; 
   }
-  $rating_query = "SELECT * FROM Avalicao WHERE de='$user_id' AND para='$inst_id'";
+  $rating_query = "SELECT * FROM Avalicao WHERE de='$user_id' AND para='$vol_id'";
   $rating_result = mysqli_query($conn, $rating_query);
   if(mysqli_num_rows($rating_result) == 0){
-      $new_rating_query = "INSERT INTO Avalicao VALUES(id, '$user_id', '$inst_id', '$rating')";
+      $new_rating_query = "INSERT INTO Avalicao VALUES(id, '$user_id', '$vol_id', '$rating')";
       $new_rating_result = mysqli_query($conn, $new_rating_query);
   }else{
       $update_rating_query = "UPDATE Avalicao SET avalicao = '$rating' WHERE de='$user_id'";
@@ -42,7 +42,7 @@ if(isset($_POST['avaliacao'])){
   }
 }
 //------------------------------------AVERAGE EVALUATION----------------------------------
-	$classif_query = "SELECT AVG(avalicao) AS media FROM Avalicao WHERE para='$inst_id'";
+	$classif_query = "SELECT AVG(avalicao) AS media FROM Avalicao WHERE para='$vol_id'";
 	$classif_result = mysqli_query($conn, $classif_query);
 	$ruw = mysqli_fetch_assoc($classif_result);
 	$classif = round($ruw['media'], 1);
@@ -66,20 +66,20 @@ if(isset($_POST['avaliacao'])){
 <body>
 <div class="header">
 	<div class="container-md">
-		<a href="welcome_voluntario.php"><i class="fa-solid fa-arrow-left"></i></a>
+		<a href="welcome_instituicao.php"><i class="fa-solid fa-arrow-left"></i></a>
 	</div>
 </div>
 <div class="container-md body">
-<div class="row">
+	<div class="row">
         <div class="col">
 		<h1 style="color: #EED202;" class="mb-3"><?php echo $nome . '  <span style="font-size: 1rem;">(' . $classif . '&starf;)</span>'?></h1>
 		<input type="hidden" id="de" value="<?php echo $user_id; ?>">
-		<input type="hidden" id="para" value="<?php echo $inst_id; ?>">
+		<input type="hidden" id="para" value="<?php echo $vol_id; ?>">
                 <h3 style="color: #EED202;">Contactos</h3>
                 <p><i class="fa-solid fa-phone mr-2" style="color: #EED202;"></i><?php echo $numero; ?></p>
                 <p><i class="fa-solid fa-envelope mr-2" style="color: #EED202;"></i><?php echo $email; ?></p>
-		<h3 style="color: #EED202;">Concelho Recolha</h3>
-		<p><i class="fa-solid fa-map-location-dot mr-2" style="color: #EED202;"></i><?php echo $concelho_recolha; ?></p>
+		<h3 style="color: #EED202;">Concelho de Recolha</h3>
+		<p><i class="fa-solid fa-map-location-dot mr-2" style="color: #EED202;"></i><?php echo $concelho_recolha ?></p>
                 <form class="rating-css" method="post" action="">
                         <div class="star-icon">
                                 <input type="radio" name="rating" value="1" id="rating1">
@@ -95,13 +95,13 @@ if(isset($_POST['avaliacao'])){
                         </div>
                         <button type="submit" name="avaliacao" class="profile-form-btn m-0">Avaliar Instituição</button>
                 </form>
-                <p style="color: #EED202;"><button class="profile-form-btn m-0">Solicitar Recolha</button></p>
+                <p style="color: #EED202;"><button class="profile-form-btn m-0">Aceitar Recolha</button></p>
         </div>
         <div class="col chat">
                 <h2 style="color: #EED202;">Chat</h2>
 		<div class="chat-area" id="chat-area">
 			<?php 
-				$chats = "SELECT * FROM Mensagens WHERE (de='$user_id' AND para='$inst_id') OR (de='$inst_id' AND para='$user_id')";
+				$chats = "SELECT * FROM Mensagens WHERE (de='$user_id' AND para='$vol_id') OR (de='$vol_id' AND para='$user_id')";
 				$chat_result = mysqli_query($conn, $chats);
 				while($chat = mysqli_fetch_assoc($chat_result)){
         				if($chat['de'] == $user_id){
@@ -143,7 +143,7 @@ if(isset($_POST['avaliacao'])){
 			<form method="POST" class="row" id="chat-form">
 				<div class="col-md-10">
 					<input type="hidden" id="de" value="<?php echo $user_id; ?>">
-			                <input type="hidden" id="para" value="<?php echo $inst_id; ?>">
+			                <input type="hidden" id="para" value="<?php echo $vol_id; ?>">
 					<input type="text" class="msg-input" id="message" placeholder="Type Message...">
 				</div>
 				<div class="col-md-2">

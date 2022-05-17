@@ -14,7 +14,7 @@ while($chat = mysqli_fetch_assoc($chat_result)){
               		</div>";
 	}else{
             	echo "<div style='text-align:left;'>
-                    	<p style='background-color: lightblue; word-wrap: break-word; display: inline-block; padding: .5rem; border-radius: .75rem; max-width: 70%;'>
+                    	<p style='background-color: antiquewhite; word-wrap: break-word; display: inline-block; padding: .5rem; border-radius: .75rem; max-width: 70%;'>
                         ".$chat["message"]."
                    	</p>
                 	</div>";
