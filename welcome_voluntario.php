@@ -522,7 +522,7 @@ $users_maximumID = $users_stats_row['maximumID'];
           <table class="d-flex justify-content-center mt-5">
 	  <?php 
             if(mysqli_num_rows($search_result) > 0){
-		echo "<tr><th>Nome</th><th>Morada</th><th>Distrito</th><th>Concelho</th><th>Freguesia</th></tr>";
+		echo "<tr><th></th><th>Nome</th><th>Morada</th><th>Distrito</th><th>Concelho</th><th>Freguesia</th></tr>";
               while($row = mysqli_fetch_assoc($search_result)){
 		$id = $row['id'];
 		$nome = $row['nome'];
@@ -531,7 +531,8 @@ $users_maximumID = $users_stats_row['maximumID'];
 		$concelho = $row['concelho'];
 		$freguesia = $row['freguesia'];
     		echo 	'<tr>
-			<td>' . '<button class="profile-form-btn m-0 mr-3"><a class="info-btn" href="info.php?infoid=' . $id . '">Info</a></button>' . $nome . '</td>
+			<td>' . '<button class="profile-form-btn m-0 mr-3"><a style="text-decoration: none;" class="info-btn" href="info.php?infoid=' . $id . '">Info</a></button></td>
+			<td>' . $nome . '</td>
 			<td>' . $morada . '</td>
 			<td>' . $distrito . '</td>
 			<td>' . $concelho . '</td>

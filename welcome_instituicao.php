@@ -529,7 +529,7 @@ $users_maximumID = $users_stats_row['maximumID'];
 		$concelho = $row['concelho'];
 		$freguesia = $row['freguesia'];
 	        echo '<tr>
-		<td>' . '<button class="profile-form-btn m-0 mr-3"><a class="info-btn" href="inst_info.php?Infoid=' . $id . '">Info</a></button></td>
+		<td>' . '<button class="profile-form-btn m-0 mr-3"><a class="info-btn" style="text-decoration: none;" href="inst_info.php?Infoid=' . $id . '">Info</a></button></td>
 		<td>' . $nome . '</td> 
 		<td>' . $distrito . '</td>
 		<td>' . $concelho . '</td>

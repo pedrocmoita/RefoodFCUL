@@ -95,7 +95,12 @@ if(isset($_POST['avaliacao'])){
                         </div>
                         <button type="submit" name="avaliacao" class="profile-form-btn m-0">Avaliar Instituição</button>
                 </form>
-                <p style="color: #EED202;"><button class="profile-form-btn m-0">Solicitar Recolha</button></p>
+		<form method="post" action="">
+			<div>Dia 1<input type="checkbox"></div>
+			<div>Dia 2<input type="checkbox"></div>
+			<div>Dia 3<input type="checkbox"></div>
+	                <p style="color: #EED202;"><button class="profile-form-btn m-0">Solicitar Recolha</button></p>
+		</form>
         </div>
         <div class="col chat">
                 <h2 style="color: #EED202;">Chat</h2>
