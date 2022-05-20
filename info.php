@@ -23,8 +23,7 @@ $nome = $row['nome']; //inst name
 
 $doacao_query = "SELECT * FROM Doacao WHERE id = '$inst_id'";
 $doacao_result = mysqli_query($conn, $doacao_query);
-$doacao_row = mysqli_fetch_assoc($doacao_result);
-$concelho_recolha = $doacao_row['concelho'];
+
 //-------------------------------EVALUATE INSTITUTION---------------------------------------
 if(isset($_POST['avaliacao'])){
   $rating = $_POST['rating'];
@@ -61,6 +60,7 @@ if(isset($_POST['avaliacao'])){
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/c63aba2ece.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script defer src="script/script.js"></script>
 </head>
 <body>
@@ -79,7 +79,7 @@ if(isset($_POST['avaliacao'])){
                 <p><i class="fa-solid fa-phone mr-2" style="color: #EED202;"></i><?php echo $numero; ?></p>
                 <p><i class="fa-solid fa-envelope mr-2" style="color: #EED202;"></i><?php echo $email; ?></p>
 		<h3 style="color: #EED202;">Concelho Recolha</h3>
-		<p><i class="fa-solid fa-map-location-dot mr-2" style="color: #EED202;"></i><?php echo $concelho_recolha; ?></p>
+		<p><i class="fa-solid fa-map-location-dot mr-2" style="color: #EED202;"></i><?php  ?></p>
                 <form class="rating-css" method="post" action="">
                         <div class="star-icon">
                                 <input type="radio" name="rating" value="1" id="rating1">
@@ -95,12 +95,51 @@ if(isset($_POST['avaliacao'])){
                         </div>
                         <button type="submit" name="avaliacao" class="profile-form-btn m-0">Avaliar Instituição</button>
                 </form>
-		<form method="post" action="">
-			<div>Dia 1<input type="checkbox"></div>
-			<div>Dia 2<input type="checkbox"></div>
-			<div>Dia 3<input type="checkbox"></div>
-	                <p style="color: #EED202;"><button class="profile-form-btn m-0">Solicitar Recolha</button></p>
-		</form>
+		<!--<form method="POST" action="" id="donation-form">-->
+			<?php
+				if(mysqli_num_rows($doacao_result) > 0){
+			 ?>
+			<table>
+				<tr>
+				<th>Dia</th>
+				<th>Horas</th>
+				<th>Tipo</th>
+				<th>Quantidade</th>
+				<th>Recolher</th>
+				</tr>
+			<?php
+				 while($doacao_row = mysqli_fetch_assoc($doacao_result)){
+			?>
+				  <tr>
+				  <td><?php echo $doacao_row['dia_semana_1'] ?></td>
+				  <td><?php echo $doacao_row['hr_inic_dia_1'] ?></td>
+				  <td><?php echo $doacao_row['tipo_dia_1'] ?></td>
+				  <td><?php echo $doacao_row['quant_dia_1'] . " " . $doacao_row['quant_tipo_dia_1']; ?></td>
+				  <td><input type="checkbox" class="get_value" value="dia1_choosen"></td>
+				  </tr>
+                                  <tr>
+                                  <td><?php echo $doacao_row['dia_semana_2'] ?></td>
+                                  <td><?php echo $doacao_row['hr_inic_dia_2'] ?></td>
+                                  <td><?php echo $doacao_row['tipo_dia_2'] ?></td>
+                                  <td><?php echo $doacao_row['quant_dia_2'] . " " . $doacao_row['quant_tipo_dia_2']; ?></td>
+                                  <td><input type="checkbox" class="get_value" value="dia2_choosen"></td>
+                                  </tr>
+                                  <tr>
+                                  <td><?php echo $doacao_row['dia_semana_3'] ?></td>
+                                  <td><?php echo $doacao_row['hr_inic_dia_3'] ?></td>
+                                  <td><?php echo $doacao_row['tipo_dia_3'] ?></td>
+                                  <td><?php echo $doacao_row['quant_dia_3'] . " " . $doacao_row['quant_tipo_dia_3']; ?></td>
+                                  <td><input type="checkbox" class="get_value" value="dia3_choosen"></td>
+                                  </tr>
+			<?php
+				 }
+			?>
+	                </table>
+			<?php
+				}
+			?>
+			<button name="donation-submit-btn" id="donation-submit-btn" class="profile-form-btn m-0">Solicitar Recolha</button>
+		<!--</form>-->
         </div>
         <div class="col chat">
                 <h2 style="color: #EED202;">Chat</h2>
@@ -158,8 +197,11 @@ if(isset($_POST['avaliacao'])){
 		</div>
 	</div>
 </div>
+
+<div id="result"></div>
+
 </div>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
 <script type="text/javascript">
         function chat_validation(){
                 const textmsg = $('#message').val();
@@ -183,6 +225,31 @@ if(isset($_POST['avaliacao'])){
 		return false;
         }
 </script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#donation-submit-btn').click(function(){
+			var donations = [];
+			
+			$('.get_value').each(function(){
+				if($(this).is(":checked")){
+					donations.push($(this).val());
+				}
+			});
+
+			donations = donations.toString();
+			$.ajax({
+				url: "donations.php",
+				method: "POST",
+				data: {donations:donations},
+				success:function(e){
+					$('#result').html(e);
+				}
+			});	
+		});
+	});
+</script>
+
 <script>
 var element = document.getElementById("chat-area");
 element.scrollTop = element.scrollHeight;
@@ -194,5 +261,6 @@ function updateScroll(){
 //once a second
 setInterval(updateScroll, 1000);
 </script>
+
 </body>
 </html>
