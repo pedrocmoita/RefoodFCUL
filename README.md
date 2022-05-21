@@ -3,10 +3,10 @@ University project about refreshing Refood website. Full stack development.<br>
 We used HTML, BOOTSTRAP, CSS, SCSS and JS in the front end and SQL, PHP and AJAX in the back end.
 
 # Front end
-The website has a page which everyone can access; there, it's possible to know more about the concept and also the developers.
-Once you signed up (as a volunteer or institution) you can log in, and then you go to the main page. 
-In the main page you can set your preferences and uptade them, search for institutions or volunteers and talk to them as well as classify them and reserve the day you want to pick up the donation if you are a volunteer.
-There's an admin page only available for people that know a specific password and email, the administrators.
+<p>The website has a page which everyone can access; there, it's possible to know more about the concept and also the developers.</p>
+<p>Once you signed up (as a volunteer or institution) you can log in, and then you go to the main page.</p> 
+<p>In the main page you can set your preferences and uptade them, search for institutions or volunteers and talk to them as well as classify them and reserve the day you want to pick up the donation if you are a volunteer.</p>
+<p>There's an admin page only available for people that know a specific password and email, the administrators.</p>
 
 # Back end
 We created a SQL data base and used MySql to upload some tables.
