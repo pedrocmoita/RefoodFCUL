@@ -13,6 +13,7 @@ if(isset($_GET['infoid'])){
 $username = $_SESSION['username']; //volunteer name
 $user_id = $_SESSION['id'];  // volunteer id
 $ID = $_SESSION['userID']; // volunteer user id
+$_SESSION['inst_id'] = $inst_id;
 
 $query = "SELECT * FROM Instituicao WHERE id = '$inst_id'";
 $result = mysqli_query($conn, $query);
@@ -41,10 +42,10 @@ if(isset($_POST['avaliacao'])){
   }
 }
 //------------------------------------AVERAGE EVALUATION----------------------------------
-	$classif_query = "SELECT AVG(avalicao) AS media FROM Avalicao WHERE para='$inst_id'";
-	$classif_result = mysqli_query($conn, $classif_query);
-	$ruw = mysqli_fetch_assoc($classif_result);
-	$classif = round($ruw['media'], 1);
+$classif_query = "SELECT AVG(avalicao) AS media FROM Avalicao WHERE para='$inst_id'";
+$classif_result = mysqli_query($conn, $classif_query);
+$ruw = mysqli_fetch_assoc($classif_result);
+$classif = round($ruw['media'], 1);
 //----------------------------------------------------------------------------------------
 ?>
 <html lang="en">
@@ -95,52 +96,64 @@ if(isset($_POST['avaliacao'])){
                         </div>
                         <button type="submit" name="avaliacao" class="profile-form-btn m-0">Avaliar Instituição</button>
                 </form>
-		<!--<form method="POST" action="" id="donation-form">-->
-			<?php
-				if(mysqli_num_rows($doacao_result) > 0){
-			 ?>
+		<h3 style="color: #EED202;">Dias de Recolha Disponiveis</h3>
+		<form method="POST" action="">
 			<table>
-				<tr>
-				<th>Dia</th>
-				<th>Horas</th>
-				<th>Tipo</th>
-				<th>Quantidade</th>
-				<th>Recolher</th>
-				</tr>
 			<?php
-				 while($doacao_row = mysqli_fetch_assoc($doacao_result)){
-			?>
-				  <tr>
-				  <td><?php echo $doacao_row['dia_semana_1'] ?></td>
-				  <td><?php echo $doacao_row['hr_inic_dia_1'] ?></td>
-				  <td><?php echo $doacao_row['tipo_dia_1'] ?></td>
-				  <td><?php echo $doacao_row['quant_dia_1'] . " " . $doacao_row['quant_tipo_dia_1']; ?></td>
-				  <td><input type="checkbox" class="get_value" value="dia1_choosen"></td>
-				  </tr>
-                                  <tr>
-                                  <td><?php echo $doacao_row['dia_semana_2'] ?></td>
-                                  <td><?php echo $doacao_row['hr_inic_dia_2'] ?></td>
-                                  <td><?php echo $doacao_row['tipo_dia_2'] ?></td>
-                                  <td><?php echo $doacao_row['quant_dia_2'] . " " . $doacao_row['quant_tipo_dia_2']; ?></td>
-                                  <td><input type="checkbox" class="get_value" value="dia2_choosen"></td>
-                                  </tr>
-                                  <tr>
-                                  <td><?php echo $doacao_row['dia_semana_3'] ?></td>
-                                  <td><?php echo $doacao_row['hr_inic_dia_3'] ?></td>
-                                  <td><?php echo $doacao_row['tipo_dia_3'] ?></td>
-                                  <td><?php echo $doacao_row['quant_dia_3'] . " " . $doacao_row['quant_tipo_dia_3']; ?></td>
-                                  <td><input type="checkbox" class="get_value" value="dia3_choosen"></td>
-                                  </tr>
-			<?php
-				 }
+			$recolha_dia_1 = "SELECT * FROM Recolha WHERE inst_id='$inst_id' AND vol_id='$user_id' AND info='dia1_choosen'";
+			$recolha_result_dia_1 = mysqli_query($conn, $recolha_dia_1);
+			$recolha_dia_2 = "SELECT * FROM Recolha WHERE inst_id='$inst_id' AND vol_id='$user_id' AND info='dia2_choosen'";
+			$recolha_result_dia_2 = mysqli_query($conn, $recolha_dia_2);
+			$recolha_dia_3 = "SELECT * FROM Recolha WHERE inst_id='$inst_id' AND vol_id='$user_id' AND info='dia3_choosen'";
+			$recolha_result_dia_3 = mysqli_query($conn, $recolha_dia_3);
+			if(mysqli_num_rows($doacao_result) > 0){
+			
+				echo "<tr>
+					<th>Dia</th>
+					<th>Horas</th>
+					<th>Tipo</th>
+					<th>Quantidade</th>
+					<th>Recolher</th>
+				</tr>";
+				
+				while($doacao_row = mysqli_fetch_assoc($doacao_result)){				
+				
+					if(mysqli_num_rows($recolha_result_dia_1) === 0 ){
+						echo "<tr>
+						<td>" . $doacao_row['dia_semana_1'] . "</td>
+						<td>" . $doacao_row['hr_inic_dia_1'] . "</td>
+						<td>" . $doacao_row['tipo_dia_1'] . "</td>
+						<td>" . $doacao_row['quant_dia_1'] . " " . $doacao_row['quant_tipo_dia_1'] . "</td>
+				  		<td><input type='checkbox' class='get_value' value='dia1_choosen'></td>
+				  		</tr>";
+					}
+					if(mysqli_num_rows($recolha_result_dia_2) === 0){
+						echo "<tr>
+						<td>" . $doacao_row['dia_semana_2'] . "</td>
+                                                <td>" . $doacao_row['hr_inic_dia_2'] . "</td>
+                                                <td>" . $doacao_row['tipo_dia_2'] . "</td>
+                                                <td>" . $doacao_row['quant_dia_2'] . " " . $doacao_row['quant_tipo_dia_2'] . "</td>
+                                                <td><input type='checkbox' class='get_value' value='dia2_choosen'></td>
+						</tr>";
+					}
+					if(mysqli_num_rows($recolha_result_dia_3) === 0){
+						echo "<tr>
+						<td>" . $doacao_row['dia_semana_3'] . "</td>
+                                                <td>" . $doacao_row['hr_inic_dia_3'] . "</td>
+                                                <td>" . $doacao_row['tipo_dia_3'] . "</td>
+                                                <td>" . $doacao_row['quant_dia_3'] . " " . $doacao_row['quant_tipo_dia_3'] . "</td>
+                                                <td><input type='checkbox' class='get_value' value='dia3_choosen'></td>
+						</tr>";
+					}
+				}
+			}else{
+				echo "A instituição em questão ainda não selecionou nenhuma data para as doações.";
+			}
 			?>
 	                </table>
-			<?php
-				}
-			?>
 			<button name="donation-submit-btn" id="donation-submit-btn" class="profile-form-btn m-0">Solicitar Recolha</button>
-		<!--</form>-->
-        </div>
+        	</form>
+	</div>
         <div class="col chat">
                 <h2 style="color: #EED202;">Chat</h2>
 		<div class="chat-area" id="chat-area">
@@ -198,8 +211,6 @@ if(isset($_POST['avaliacao'])){
 	</div>
 </div>
 
-<div id="result"></div>
-
 </div>
 
 <script type="text/javascript">
@@ -211,7 +222,7 @@ if(isset($_POST['avaliacao'])){
 			alert("Type something...");
 			return false;
 		}
-		const datastr = 'message='+textmsg+'&de='+de+'&para='+para;;
+		const datastr = 'message='+textmsg+'&de='+de+'&para='+para;
 
 		$.ajax({
 			url: 'chatlog.php',
@@ -230,7 +241,7 @@ if(isset($_POST['avaliacao'])){
 	$(document).ready(function(){
 		$('#donation-submit-btn').click(function(){
 			var donations = [];
-			
+
 			$('.get_value').each(function(){
 				if($(this).is(":checked")){
 					donations.push($(this).val());
@@ -243,9 +254,10 @@ if(isset($_POST['avaliacao'])){
 				method: "POST",
 				data: {donations:donations},
 				success:function(e){
-					$('#result').html(e);
+					alert("Pick up days choosen");
 				}
-			});	
+			});
+	
 		});
 	});
 </script>
