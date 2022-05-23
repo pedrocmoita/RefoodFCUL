@@ -95,7 +95,38 @@ if(isset($_POST['avaliacao'])){
                         </div>
                         <button type="submit" name="avaliacao" class="profile-form-btn m-0">Avaliar Instituição</button>
                 </form>
-                <p style="color: #EED202;"><button class="profile-form-btn m-0">Aceitar Recolha</button></p>
+                <div>
+		<h3 style="color: #EED202;">Dias de Levantamento</h3>
+			<?php 
+				$recolha_query = "SELECT * FROM Recolha WHERE inst_id='$user_id' AND vol_id='$vol_id'";
+				$recolha_result = mysqli_query($conn, $recolha_query);
+
+				if (mysqli_num_rows($recolha_result) > 0) {
+					echo "<p>Este voluntário tem recolhas previstas para o(s) dia(s):</p>";
+					while($pickup = mysqli_fetch_assoc($recolha_result)) {
+						$day = $pickup['info'];
+						if($day === 'dia1_choosen'){
+							$dia_semana_query = "SELECT * FROM Doacao";
+							$dia_semana_result = mysqli_query($conn, $dia_semana_query);
+							$dia_row = mysqli_fetch_assoc($dia_semana_result);
+							echo "<p>" . $dia_row['dia_semana_1'] . " ás " . $dia_row['hr_inic_dia_1'] . "</p>";
+						}else if($day === 'dia2_choosen'){
+							$dia_semana_query = "SELECT * FROM Doacao";
+                                                        $dia_semana_result = mysqli_query($conn, $dia_semana_query);
+                                                        $dia_row = mysqli_fetch_assoc($dia_semana_result);
+                                                        echo "<p>" . $dia_row['dia_semana_2'] . " ás " . $dia_row['hr_inic_dia_2'] . "</p>";
+						}else{
+							$dia_semana_query = "SELECT * FROM Doacao";
+                                                        $dia_semana_result = mysqli_query($conn, $dia_semana_query);
+                                                        $dia_row = mysqli_fetch_assoc($dia_semana_result);
+                                                        echo "<p>" . $dia_row['dia_semana_3'] . " ás " . $dia_row['hr_inic_dia_3'] . "</p>";
+						}
+					}
+                  		} else {
+                    			echo "<p style='opacity: 0.5; text-align: center;' class='mt-3 mb-3'>Este voluntário não tem nenhum dia de recolha previsto.</p>";
+                  		}
+                	?>
+		</div>
         </div>
         <div class="col chat">
                 <h2 style="color: #EED202;">Chat</h2>

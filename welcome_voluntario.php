@@ -162,36 +162,6 @@ $bd_periodo_2 = $row_dias['periodo_dia_2'];
 $bd_dia_semana_3 = $row_dias['dia_semana_3'];
 $bd_periodo_3 = $row_dias['periodo_dia_3'];
 
-if($bd_dia_semana_1 === 'no_day_selected'){
-	$bd_dia_semana_1 = '';
-}else{
-	$bd_dia_semana_1 = $row_dias['dia_semana_1'];
-}
-if($bd_dia_semana_2 === 'no_day_selected'){
-	$bd_dia_semana_2 = '';
-}else{
-	$bd_dia_semana_2 = $row_dias['dia_semana_2'];
-}
-if($bd_dia_semana_3 === 'no_day_selected'){
-	$bd_dia_semana_3 = '';
-}else{
-	$bd_dia_semana_3 = $row_dias['dia_semana_3'];
-}
-if($bd_periodo_1 === 'no_hour_selected'){
-	$bd_periodo_1 = '';
-}else{
-	$bd_periodo_1 = $row_dias['periodo_dia_1'];	
-}
-if($bd_periodo_2 === 'no_hour_selected'){
-	$bd_periodo_2 = '';
-}else{
-	$bd_periodo_2 = $row_dias['periodo_dia_2'];
-}
-if($bd_periodo_3 === 'no_hour_selected'){
-	$bd_periodo_3 = '';
-}else{
-	$bd_periodo_3 = $row_dias['periodo_dia_3'];
-}
 //-------------------------SEARCH BAR---------------------------
 if(isset($_POST['teste'])){
  		$searched_name = htmlspecialchars($_POST['searched_name']);
@@ -351,7 +321,7 @@ $users_maximumID = $users_stats_row['maximumID'];
                             </div>
                             <div class="mt-3 mb-3">
                               <select name="pickup_day_2">
-                                <option selected value="no_day_selected">None</option>
+                                <option selected value="">None</option>
                                 <option value="Segunda-feira">Segunda</option>
                                 <option value="Terça-feira">Terça</option>
                                 <option value="Quarta-feira">Quarta</option>
@@ -361,7 +331,7 @@ $users_maximumID = $users_stats_row['maximumID'];
                             </div>
                             <div class="mt-3 mb-3">
                               <select name="pickup_day_3">
-                                <option selected value="no_day_selected">None</option>
+                                <option selected value="">None</option>
                                 <option value="Segunda-feira">Segunda</option>
                                 <option value="Terça-feira">Terça</option>
                                 <option value="Quarta-feira">Quarta</option>
@@ -381,7 +351,7 @@ $users_maximumID = $users_stats_row['maximumID'];
                             </div>
                             <div class="mt-3 mb-3">
                               <select name="pickup_period_2">
-                                <option value="no_hour_selected">None</option>
+                                <option value="">None</option>
                                 <option value="Manha">Manhã</option>
                                 <option value="Tarde">Tarde</option>
                                 <option value="Noite">Noite</option>
@@ -389,7 +359,7 @@ $users_maximumID = $users_stats_row['maximumID'];
                             </div>
                             <div class="mt-3 mb-3">
                               <select name="pickup_period_3">
-                                <option value="no_hour_selected">None</option>
+                                <option value="">None</option>
                                 <option value="Manha">Manhã</option>
                                 <option value="Tarde">Tarde</option>
                                 <option value="Noite">Noite</option>

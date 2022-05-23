@@ -305,7 +305,7 @@ $users_maximumID = $users_stats_row['maximumID'];
                               </div>
                               <div>
                                 <select class="mt-2 mb-2" name="pickup_day2">
-                                  <option selected value="N/A">None</option>
+                                  <option selected value="">None</option>
                                   <option value="Segunda-feira">Segunda-feira</option>
                                   <option value="Terça-feira">Terça-feira</option>
                                   <option value="Quarta-feira">Quarta-feira</option>
@@ -315,7 +315,7 @@ $users_maximumID = $users_stats_row['maximumID'];
                               </div>
                               <div>
                                 <select class="mt-2 mb-2" name="pickup_day3">
-                                  <option selected value="N/A">None</option>
+                                  <option selected value="">None</option>
                                   <option value="Segunda-feira">Segunda-feira</option>
                                   <option value="Terça-feira">Terça-feira</option>
                                   <option value="Quarta-feira">Quarta-feira</option>
@@ -346,14 +346,14 @@ $users_maximumID = $users_stats_row['maximumID'];
                               </div>
                               <div>
                                 <select class="mt-2 mb-2" name="food_type_day2">
-				  <option selected value="N/A">None</option>
+				  <option selected value="">None</option>
                                   <option value="Consumo no dia">Consumo no dia</option>
                                   <option value="Longa duração">Longa duração</option>
                                 </select>
                               </div>
                               <div>
                                 <select class="mt-2 mb-2" name="food_type_day3">
-				  <option selected value="N/A">None</option>
+				  <option selected value="">None</option>
                                   <option value="Consumo no dia">Consumo no dia</option>
                                   <option value="Longa duração">Longa duração</option>
                                 </select>
@@ -371,7 +371,7 @@ $users_maximumID = $users_stats_row['maximumID'];
                               <div class="mt-2 mb-2">
                                 <input class="w-25" name="food_amount_day2" type="text">
                                   <select name="amount_type_day2">
-				    <option selected value="N/A">None</option>
+				    <option selected value="">None</option>
                                     <option value="Refeições">Refeições</option>
                                     <option value="Kg">Kg</option>
                                   </select>
@@ -379,7 +379,7 @@ $users_maximumID = $users_stats_row['maximumID'];
                                 <div class="mt-2 mb-2">
                                   <input class="w-25" name="food_amount_day3" type="text">
                                   <select name="amount_type_day3">
-				    <option selected value="N/A">None</option>
+				    <option selected value="">None</option>
                                     <option value="Refeições">Refeições</option>
                                     <option value="Kg">Kg</option>
                                   </select>
@@ -491,7 +491,7 @@ $users_maximumID = $users_stats_row['maximumID'];
                                     $query = "SELECT * FROM Voluntario WHERE id='$id'";
                                     $result = mysqli_query($conn, $query);
                                     $vol_row = mysqli_fetch_assoc($result);
-                                    echo "<li>" . $vol_row['nome'] . "</li>";
+                                    echo '<li>' . $vol_row['nome'] . '</li>';
                                 }					
                             }
                 echo "</ul>";

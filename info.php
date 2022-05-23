@@ -25,6 +25,10 @@ $nome = $row['nome']; //inst name
 $doacao_query = "SELECT * FROM Doacao WHERE id = '$inst_id'";
 $doacao_result = mysqli_query($conn, $doacao_query);
 
+$concelho_recolha_query = "SELECT concelho FROM Doacao WHERE id = '$inst_id'";
+$concelho_recolha_query_result = mysqli_query($conn, $concelho_recolha_query);
+$concelho_row = mysqli_fetch_assoc($concelho_recolha_query_result);
+$concelho_recolha = $concelho_row['concelho'];
 //-------------------------------EVALUATE INSTITUTION---------------------------------------
 if(isset($_POST['avaliacao'])){
   $rating = $_POST['rating'];
@@ -55,7 +59,7 @@ $classif = round($ruw['media'], 1);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReFood</title>
     <link rel="stylesheet" href="css/welcome.css">
-    <link rel="stylesheet" href="css/info.css">
+    <link rel="stylesheet" href="css/infoo.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -80,7 +84,7 @@ $classif = round($ruw['media'], 1);
                 <p><i class="fa-solid fa-phone mr-2" style="color: #EED202;"></i><?php echo $numero; ?></p>
                 <p><i class="fa-solid fa-envelope mr-2" style="color: #EED202;"></i><?php echo $email; ?></p>
 		<h3 style="color: #EED202;">Concelho Recolha</h3>
-		<p><i class="fa-solid fa-map-location-dot mr-2" style="color: #EED202;"></i><?php  ?></p>
+		<p><i class="fa-solid fa-map-location-dot mr-2" style="color: #EED202;"></i><?php echo $concelho_recolha; ?></p>
                 <form class="rating-css" method="post" action="">
                         <div class="star-icon">
                                 <input type="radio" name="rating" value="1" id="rating1">
@@ -98,7 +102,7 @@ $classif = round($ruw['media'], 1);
                 </form>
 		<h3 style="color: #EED202;">Dias de Recolha Disponiveis</h3>
 		<form method="POST" action="">
-			<table>
+			<table class="delivery">
 			<?php
 			$recolha_dia_1 = "SELECT * FROM Recolha WHERE inst_id='$inst_id' AND vol_id='$user_id' AND info='dia1_choosen'";
 			$recolha_result_dia_1 = mysqli_query($conn, $recolha_dia_1);
@@ -107,51 +111,61 @@ $classif = round($ruw['media'], 1);
 			$recolha_dia_3 = "SELECT * FROM Recolha WHERE inst_id='$inst_id' AND vol_id='$user_id' AND info='dia3_choosen'";
 			$recolha_result_dia_3 = mysqli_query($conn, $recolha_dia_3);
 			if(mysqli_num_rows($doacao_result) > 0){
-			
-				echo "<tr>
-					<th>Dia</th>
-					<th>Horas</th>
-					<th>Tipo</th>
-					<th>Quantidade</th>
-					<th>Recolher</th>
-				</tr>";
+				if(mysqli_num_rows($recolha_result_dia_1) > 0 && mysqli_num_rows($recolha_result_dia_2) > 0 && mysqli_num_rows($recolha_result_dia_3) > 0){
+					echo "<p style='opacity: 0.5; text-align: center;' class='mt-3 mb-3'>Os dias de recolha estão todos ocupados.</p>";
+				}else{
+					 
+					echo "<tr>
+						<th>Dia</th>
+						<th>Horas</th>
+						<th>Tipo</th>
+						<th>Quantidade</th>
+						<th>Recolher</th>
+					</tr>";
 				
-				while($doacao_row = mysqli_fetch_assoc($doacao_result)){				
-				
-					if(mysqli_num_rows($recolha_result_dia_1) === 0 ){
-						echo "<tr>
-						<td>" . $doacao_row['dia_semana_1'] . "</td>
-						<td>" . $doacao_row['hr_inic_dia_1'] . "</td>
-						<td>" . $doacao_row['tipo_dia_1'] . "</td>
-						<td>" . $doacao_row['quant_dia_1'] . " " . $doacao_row['quant_tipo_dia_1'] . "</td>
-				  		<td><input type='checkbox' class='get_value' value='dia1_choosen'></td>
-				  		</tr>";
-					}
-					if(mysqli_num_rows($recolha_result_dia_2) === 0){
-						echo "<tr>
-						<td>" . $doacao_row['dia_semana_2'] . "</td>
-                                                <td>" . $doacao_row['hr_inic_dia_2'] . "</td>
-                                                <td>" . $doacao_row['tipo_dia_2'] . "</td>
-                                                <td>" . $doacao_row['quant_dia_2'] . " " . $doacao_row['quant_tipo_dia_2'] . "</td>
-                                                <td><input type='checkbox' class='get_value' value='dia2_choosen'></td>
-						</tr>";
-					}
-					if(mysqli_num_rows($recolha_result_dia_3) === 0){
-						echo "<tr>
-						<td>" . $doacao_row['dia_semana_3'] . "</td>
-                                                <td>" . $doacao_row['hr_inic_dia_3'] . "</td>
-                                                <td>" . $doacao_row['tipo_dia_3'] . "</td>
-                                                <td>" . $doacao_row['quant_dia_3'] . " " . $doacao_row['quant_tipo_dia_3'] . "</td>
-                                                <td><input type='checkbox' class='get_value' value='dia3_choosen'></td>
-						</tr>";
+					while($doacao_row = mysqli_fetch_assoc($doacao_result)){				
+					
+						if(mysqli_num_rows($recolha_result_dia_1) === 0 ){
+							if(strlen($doacao_row['dia_semana_1']) > 0 && strlen($doacao_row['hr_inic_dia_1']) > 0){
+								echo "<tr>
+								<td>" . $doacao_row['dia_semana_1'] . "</td>
+								<td>" . $doacao_row['hr_inic_dia_1'] . "</td>
+								<td>" . $doacao_row['tipo_dia_1'] . "</td>
+								<td>" . $doacao_row['quant_dia_1'] . " " . $doacao_row['quant_tipo_dia_1'] . "</td>
+								<td><input type='checkbox' class='get_value' value='dia1_choosen'></td>
+								</tr>";
+							}
+						}
+						if(mysqli_num_rows($recolha_result_dia_2) === 0){
+							if(strlen($doacao_row['dia_semana_2']) > 0 && strlen($doacao_row['hr_inic_dia_2']) > 0){
+								echo "<tr>
+								<td>" . $doacao_row['dia_semana_2'] . "</td>
+								<td>" . $doacao_row['hr_inic_dia_2'] . "</td>
+								<td>" . $doacao_row['tipo_dia_2'] . "</td>
+								<td>" . $doacao_row['quant_dia_2'] . " " . $doacao_row['quant_tipo_dia_2'] . "</td>
+								<td><input type='checkbox' class='get_value' value='dia2_choosen'></td>
+								</tr>";
+							}
+						}
+						if(mysqli_num_rows($recolha_result_dia_3) === 0){
+							if(strlen($doacao_row['dia_semana_3']) > 0 && strlen($doacao_row['hr_inic_dia_3']) > 0){
+								echo "<tr>
+								<td>" . $doacao_row['dia_semana_3'] . "</td>
+								<td>" . $doacao_row['hr_inic_dia_3'] . "</td>
+								<td>" . $doacao_row['tipo_dia_3'] . "</td>
+								<td>" . $doacao_row['quant_dia_3'] . " " . $doacao_row['quant_tipo_dia_3'] . "</td>
+								<td><input type='checkbox' class='get_value' value='dia3_choosen'></td>
+								</tr>";
+							}
+						}
 					}
 				}
 			}else{
-				echo "A instituição em questão ainda não selecionou nenhuma data para as doações.";
+				echo "<p style='opacity: 0.5; text-align: center;' class='mt-3 mb-3'>A instituição em questão ainda não selecionou nenhuma data para as doações.</p>";
 			}
 			?>
 	                </table>
-			<button name="donation-submit-btn" id="donation-submit-btn" class="profile-form-btn m-0">Solicitar Recolha</button>
+			<button name="donation-submit-btn" id="donation-submit-btn" class="profile-form-btn mt-3">Solicitar Recolha</button>
         	</form>
 	</div>
         <div class="col chat">
