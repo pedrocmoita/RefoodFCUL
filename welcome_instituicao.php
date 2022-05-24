@@ -179,6 +179,23 @@ $users_stats_result = mysqli_query($conn, $users_stats);
 $users_stats_row = mysqli_fetch_assoc($users_stats_result);
 $users_maximumID = $users_stats_row['maximumID'];
 //---------------------------------------------------------
+$verifica_recolha_query = "SELECT * FROM Recolha WHERE inst_id='$user_id'";
+$verifica_recolha_result = mysqli_query($conn, $verifica_recolha_query);
+$resultado = 0;
+if(mysqli_num_rows($verifica_recolha_result) > 0){
+	$nomes = array();
+	while($recolha_id = mysqli_fetch_assoc($verifica_recolha_result)){
+        	$ids = $recolha_id['vol_id'];
+		$sql = "SELECT * FROM Voluntario WHERE id='$ids'";
+                $result_sql = mysqli_query($conn, $sql);
+                $row_sql = mysqli_fetch_assoc($result_sql);
+                $print = $row_sql['nome'];
+		array_push($nomes, $print);
+        }
+}
+
+
+//--------------------------------------------------------
 ?>
 <html lang="en">
 <head>
@@ -200,7 +217,7 @@ $users_maximumID = $users_stats_row['maximumID'];
     <header class="d-flex justify-content-between">
             <div>
               <p>Bem vinda  <span style="color: #EED202; margin-left: .125rem;"><?php echo $username ?></p>
-	      <p><i class="fa-regular fa-circle-left mt-1" data-toggle="modal" data-target="#logout"></i></p>
+	      <p><i class="fa-solid fa-right-from-bracket mt-1" data-toggle="modal" data-target="#logout"></i></p>
 	      <div class="modal fade" id="logout">
                <div class="modal-dialog">
                  <div class="modal-content text-center p-2">
@@ -504,6 +521,13 @@ $users_maximumID = $users_stats_row['maximumID'];
           </div>
         </div>
         <div class="main-section col-lg-10 p-0"> 
+	  <?php
+               $names_recolha = json_encode($nomes);
+               echo "<div style='margin: 0 auto; margin-top: 3rem;' class='w-50 text-center alert alert-warning alert-dismissible fade show' role='alert'>
+                     <strong>Tem recolhas previstas dos voluntários: " . $names_recolha ." </strong>
+                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+                     </div>";
+          ?>
           <div class="content">
             <form action="" method="post" class="search-bar">
               <input name="searched_name" class="form-control m-3" type="text" placeholder="Pesquise um voluntário...">

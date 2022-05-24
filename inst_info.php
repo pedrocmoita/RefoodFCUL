@@ -106,20 +106,44 @@ if(isset($_POST['avaliacao'])){
 					while($pickup = mysqli_fetch_assoc($recolha_result)) {
 						$day = $pickup['info'];
 						if($day === 'dia1_choosen'){
+							if(isset($_POST['cancel_pickup1'])){
+								$delete_pickup_query = "DELETE FROM Recolha WHERE info='dia1_choosen' AND inst_id='$user_id' AND vol_id='$vol_id'";
+								$delete_pickup_result = mysqli_query($conn, $delete_pickup_query);
+							}
 							$dia_semana_query = "SELECT * FROM Doacao";
 							$dia_semana_result = mysqli_query($conn, $dia_semana_query);
 							$dia_row = mysqli_fetch_assoc($dia_semana_result);
-							echo "<p>" . $dia_row['dia_semana_1'] . " ás " . $dia_row['hr_inic_dia_1'] . "</p>";
+							echo "<form method='post' ation=''>
+								<p>" . $dia_row['dia_semana_1'] . " ás " . $dia_row['hr_inic_dia_1'] . 
+								"<button type='submit' name='cancel_pickup1' class='profile-form-btn ml-3 mt-0'>Cancelar Recolha</button>
+								</p>
+								</form>";
 						}else if($day === 'dia2_choosen'){
+							if(isset($_POST['cancel_pickup2'])){
+								$delete_pickup_query = "DELETE FROM Recolha WHERE info='dia2_choosen' AND inst_id='$user_id' AND vol_id='$vol_id'";
+                                                                $delete_pickup_result = mysqli_query($conn, $delete_pickup_query);
+							}
 							$dia_semana_query = "SELECT * FROM Doacao";
                                                         $dia_semana_result = mysqli_query($conn, $dia_semana_query);
                                                         $dia_row = mysqli_fetch_assoc($dia_semana_result);
-                                                        echo "<p>" . $dia_row['dia_semana_2'] . " ás " . $dia_row['hr_inic_dia_2'] . "</p>";
+                                                        echo "<form action='' method='post'>
+								<p>" . $dia_row['dia_semana_2'] . " ás " . $dia_row['hr_inic_dia_2'] .
+								"<button type='submit' name='cancel_pickup2' class='profile-form-btn ml-3 mt-0'>Cancelar Recolha</button>
+								</p>
+								</form>";
 						}else{
+							if(isset($_POST['cancel_pickup3'])){
+                                                                $delete_pickup_query = "DELETE FROM Recolha WHERE info='dia3_choosen' AND inst_id='$user_id' AND vol_id='$vol_id'";
+                                                                $delete_pickup_result = mysqli_query($conn, $delete_pickup_query);
+							}
 							$dia_semana_query = "SELECT * FROM Doacao";
                                                         $dia_semana_result = mysqli_query($conn, $dia_semana_query);
                                                         $dia_row = mysqli_fetch_assoc($dia_semana_result);
-                                                        echo "<p>" . $dia_row['dia_semana_3'] . " ás " . $dia_row['hr_inic_dia_3'] . "</p>";
+                                                        echo "<form action='' method='post'>
+								<p>" . $dia_row['dia_semana_3'] . " ás " . $dia_row['hr_inic_dia_3'] .
+								"<button type='submit' name='cancel_pickup3' class='profile-form-btn ml-3 mt-0'>Cancelar Recolha</button>
+								</p>
+								</form>";
 						}
 					}
                   		} else {
