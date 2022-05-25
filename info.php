@@ -104,12 +104,13 @@ $classif = round($ruw['media'], 1);
 		<form method="POST" action="">
 			<table class="delivery">
 			<?php
-			$recolha_dia_1 = "SELECT * FROM Recolha WHERE inst_id='$inst_id' AND vol_id='$user_id' AND info='dia1_choosen'";
+			$recolha_dia_1 = "SELECT * FROM Recolha WHERE inst_id='$inst_id' AND info='dia1_choosen'";
 			$recolha_result_dia_1 = mysqli_query($conn, $recolha_dia_1);
-			$recolha_dia_2 = "SELECT * FROM Recolha WHERE inst_id='$inst_id' AND vol_id='$user_id' AND info='dia2_choosen'";
+			$recolha_dia_2 = "SELECT * FROM Recolha WHERE inst_id='$inst_id' AND info='dia2_choosen'";
 			$recolha_result_dia_2 = mysqli_query($conn, $recolha_dia_2);
-			$recolha_dia_3 = "SELECT * FROM Recolha WHERE inst_id='$inst_id' AND vol_id='$user_id' AND info='dia3_choosen'";
+			$recolha_dia_3 = "SELECT * FROM Recolha WHERE inst_id='$inst_id' AND info='dia3_choosen'";
 			$recolha_result_dia_3 = mysqli_query($conn, $recolha_dia_3);
+		
 			if(mysqli_num_rows($doacao_result) > 0){
 				if(mysqli_num_rows($recolha_result_dia_1) > 0 && mysqli_num_rows($recolha_result_dia_2) > 0 && mysqli_num_rows($recolha_result_dia_3) > 0){
 					echo "<p style='opacity: 0.5; text-align: center;' class='mt-3 mb-3'>Os dias de recolha estão todos ocupados.</p>";

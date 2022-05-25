@@ -468,16 +468,24 @@ if(mysqli_num_rows($verifica_recolha_result) > 0){
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas eligendi voluptatibus perferendis in consequuntur? Eveniet eos unde eligendi voluptas repellat?
-                  </p>
-                  <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Incidunt, unde.
-                  </p>
+                  <h4 style="color: #EED202;">O que é a barra do lado esquerdo com nomes de voluntários?</h4>
+			<p>A barra esquerda tem todas as correspondências entre os voluntários e a instituição.</p>
+                  <h4 style="color: #EED202;">As correspondências consistem no quê?</h4>
+			<p>As correspondências querem dizer que os seus dias de recolha e a localização estão de acordo com as preferências dos voluntários.</p>
+                  <h4 style="color: #EED202;">Como entro em contacto com um voluntário?</h4>
+			<p>Para entrar em contacto com um voluntário basta pesquisar o nome dele, por exemplo, e carregando no botão de informação, terá à sua disponibilidade
+			os vários contactos do mesmo assim como um sistema de gestão de recolhas e um chat pelo qual podem conversar.</p>
+		  <h4 style="color: #EED202;">Posso alterar as minhas preferências e/ou definições pessoais, e onde?</h4>
+			<p>Pode alterar todas as preferências e definições pessoais na área do perfil. (canto superior direito)</p>
+		  <h4 style="color: #EED202;">Quantos dias podemos doar por semana?</h4>
+			<p>De modo a tornar as coisas mais simples, organizadas e fluidas para todos, cada instituição tem um número máximo de 3 dias por semana para doar a quantidade
+			de alimentos que quiser, que pode posterioromente alterar quando quiser.</p>
+		  <h4 style="color: #EED202;">Posso cancelar alguma recolha de um certo voluntário?</h4>
+			<p class="m-0">No botão de informação adjacente a cada voluntário, após carregar no mesmo, pode sim cancelar uma recolha menos desejada.</p>
                 </div>
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                  <button type="button" data-dismiss="modal">Close</button>
+                  <button class="m-0" type="button" data-dismiss="modal">Close</button>
                 </div>
               </div>
             </div>
@@ -521,13 +529,13 @@ if(mysqli_num_rows($verifica_recolha_result) > 0){
           </div>
         </div>
         <div class="main-section col-lg-10 p-0"> 
-	  <?php
-               $names_recolha = json_encode($nomes);
-               echo "<div style='margin: 0 auto; margin-top: 3rem;' class='w-50 text-center alert alert-warning alert-dismissible fade show' role='alert'>
-                     <strong>Tem recolhas previstas dos voluntários: " . $names_recolha ." </strong>
-                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-                     </div>";
-          ?>
+		<div style='margin: 0 auto; margin-top: .5rem;' class='w-50 text-center alert alert-warning alert-dismissible fade show' role='alert'>
+			<strong class='m-0'>Tem recolhas previstas dos voluntários: </strong>
+			<?php foreach($nomes as $value): ?>
+        			<p class='m-0'><?php echo $value; ?></p>
+    			<?php endforeach; ?>
+		<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+		</div>
           <div class="content">
             <form action="" method="post" class="search-bar">
               <input name="searched_name" class="form-control m-3" type="text" placeholder="Pesquise um voluntário...">

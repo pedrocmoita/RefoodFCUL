@@ -421,16 +421,23 @@ $users_maximumID = $users_stats_row['maximumID'];
               </div>
               <!-- Modal body -->
               <div class="modal-body">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas eligendi voluptatibus perferendis in consequuntur? Eveniet eos unde eligendi voluptas repellat?
-                </p>
-                <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Incidunt, unde.
-                </p>
+                  <h4 style="color: #EED202;">O que é a barra do lado esquerdo com nomes de instituições?</h4>
+                        <p>A barra esquerda tem todas as correspondências entre o voluntário e as instituições.</p>
+                  <h4 style="color: #EED202;">As correspondências consistem no quê?</h4>
+                        <p>As correspondências querem dizer que os seus dias de recolha e a localização estão de acordo com as preferências das instituições.</p>
+                  <h4 style="color: #EED202;">Como entro em contacto com uma instituição?</h4>
+                        <p>Para entrar em contacto com uma instituição basta pesquisar o nome da mesma, por exemplo, e carregando no botão de informação, terá à sua disponibilidade
+                        os vários contactos assim como um chat pelo qual podem conversar.</p>
+                  <h4 style="color: #EED202;">Posso alterar as minhas preferências e/ou definições pessoais, e onde?</h4>
+                        <p>Pode alterar todas as preferências e definições pessoais na área do perfil. (canto superior direito)</p>
+                        de alimentos que quiser, que pode posterioromente alterar quando quiser.</p>
+		  <h4 style="color: #EED202;">Na barra de pesquisa se pesquisar por concelho, é o concelho de recolha?</h4>
+			<p class="m-0">Não, é o concelho que a instituição tem como concelho de residência. No entanto, normalmente os concelhos de recolha são os mesmo que os de residência das
+			instituições. Caso isto não se verifique, pode sempre entrar em contacto com a instituição para discutir pormenores.</p>
               </div>
               <!-- Modal footer -->
               <div class="modal-footer">
-                <button type="button" data-dismiss="modal">Close</button>
+                <button class="m-0" type="button" data-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
